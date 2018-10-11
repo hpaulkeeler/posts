@@ -1,4 +1,4 @@
-#Simulate a Poisson point process on a rectangle
+#Simulate a Poisson point process on a disk
 #Author: H. Paul Keeler, 2018.
 
 #Simulation window parameters
