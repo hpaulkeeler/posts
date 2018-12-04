@@ -1,11 +1,11 @@
-#Simulate a Poisson point process on a rectangle
+#Simulate a Poisson point process on a disk
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np
 import matplotlib.pyplot as plt
 
 #Simulation window parameters
-r=1;
+r=1;  #radius of disk
 xx0=0; yy0=0; #centre of disk
 
 areaTotal=np.pi*r**2; #area of disk
