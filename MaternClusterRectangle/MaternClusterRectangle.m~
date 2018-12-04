@@ -1,0 +1,43 @@
+
+
+clear; clc; close all;
+
+%Simulation window parameters
+xMin=-.5;xMax=.5;
+yMin=-.5;yMax=.5;
+xDelta=xMax-xMin;yDelta=yMax-yMin; %rectangle dimensions
+areaTotal=xDelta*yDelta; %area of rectangle
+
+%Point process parameters (for parents and daughters)
+lambdaParent=8;%density of parent Poisson point process
+lambdaDaugther=200*lambdaParent;%density of daughter Poisson point process
+radiusCluster=0.1;%radius of cluster disk (for daugther points)
+areaCluster=pi*radiusCluster^2; %area of cluster disk
+
+%Simulate Poisson point process for the parents
+numbPointsParent=poissrnd(areaTotal*lambdaParent,1,1);%Poisson number of points
+%x and y coordinates of Poisson points for the parent
+xxParent=xMin+xDelta*rand(numbPointsParent,1);
+yyParent=yMin+yDelta*rand(numbPointsParent,1);
+
+%Simulate Poisson point process for the daugthers (ie final poiint process)
+numbPointsDaugther=poissrnd(areaCluster*lambdaDaugther,numbPointsParent,1); 
+numbPoints=sum(numbPointsDaugther); %total number of points
+
+%Use polar coodinates for daugther points
+theta=2*pi*rand(numbPoints,1); %angular coordinates 
+rhoRand=radiusCluster*sqrt(rand(numbPoints,1)); %radial coordinates 
+
+%Convert from polar to Cartesian coordinates
+[xx0,yy0]=pol2cart(theta,rhoRand);
+
+%replicate parent points (ie centres of disks/clusters) and translate points
+xx=repelem(xxParent,numbPointsDaugther)+xx0;
+yy=repelem(yyParent,numbPointsDaugther)+yy0;
+
+%Plotting
+scatter(xx,yy);
+
+
+%scatter(xxParent,yyParent);
+%hold on;

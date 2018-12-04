@@ -2,7 +2,6 @@
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np
-import scipy.stats
 import matplotlib.pyplot as plt
 
 #Simulation window parameters
@@ -15,9 +14,9 @@ areaTotal=np.pi*r**2; #area of disk
 lambda0=100; #intensity (ie mean density) of the Poisson process
 
 #Simulate Poisson point process
-numbPoints = scipy.stats.poisson( lambda0*areaTotal ).rvs();#Poisson number of points
-theta = 2*np.pi*scipy.stats.uniform.rvs(0,1,((numbPoints,1)));#angular coordinates of Poisson points
-rho = r*np.sqrt(scipy.stats.uniform.rvs(0,1,((numbPoints,1))));#radial coordinates of Poisson points
+numbPoints = np.random.poisson(lambda0*areaTotal);#Poisson number of points
+theta=2*np.pi*np.random.uniform(0,1,numbPoints); #angular coordinates 
+rho=r*np.sqrt(np.random.uniform(0,1,numbPoints)); #radial coordinates 
 
 #Convert from polar to Cartesian coordinates
 xx = rho * np.cos(theta);
