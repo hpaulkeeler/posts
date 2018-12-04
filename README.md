@@ -5,4 +5,4 @@ The code is mostly in MATLAB, R and Python. Most of it concerns simulating point
 
 Examples including simulating a homogeneous Poisson point process on a disk and triangle. 
 
-See that individual posts for more details. 
+See the individual posts for more details. 
