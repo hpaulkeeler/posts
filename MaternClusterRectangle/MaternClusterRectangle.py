@@ -1,4 +1,4 @@
-#Simulate a Poisson point process on a rectangle
+#Simulate a Matern point process on a rectangle
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
