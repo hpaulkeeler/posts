@@ -7,8 +7,8 @@ import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt
 
 #Simulation window parameters
-xMin=0;xMax=1;
-yMin=0;yMax=1;
+xMin=-1;xMax=1;
+yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
 areaTotal=xDelta*yDelta;
 

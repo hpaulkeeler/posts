@@ -4,8 +4,8 @@
 #Author: H. Paul Keeler, 2019.
 
 #Simulation window parameters
-xMin=0;xMax=1;
-yMin=0;yMax=1;
+xMin=-1;xMax=1;
+yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
 areaTotal=xDelta*yDelta;
 
