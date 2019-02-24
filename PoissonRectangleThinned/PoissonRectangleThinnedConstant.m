@@ -15,7 +15,6 @@ lambda=100; %intensity (ie mean density) of the Poisson process
 %Thinning probability paramters
 sigma=1;
 p=0.25; %thinning probability
-fun_p=@(x,y)(exp(-(x.^2+y.^2))/sigma^2);
 
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points

@@ -33,4 +33,3 @@ xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];
 par(pty="s")
 plot(xxRetained,yyRetained,'p',xlab='x',ylab='y',col='blue'); #plot retained points
 points(xxThinned,yyThinned,col='red'); #plot thinned points
-

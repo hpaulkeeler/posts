@@ -98,28 +98,3 @@ ax = plt.axes(projection='3d');
 surf = ax.plot_surface(X, Y,p_Exact,cmap=plt.cm.plasma);
 plt.xlabel("x"); plt.ylabel("y");
 plt.title('$\lambda(x)$ normalized'); 
-
-#These links may help in plotting.
-#https://matplotlib.org/gallery/mplot3d/hist3d.html
-#https://matplotlib.org/mpl_toolkits/mplot3d/tutorial.html#bar-plots
-#https://plot.ly/python/3d-surface-plots/
-#https://chrisalbon.com/python/basics/set_the_color_of_a_matplotlib/
-#https://matplotlib.org/examples/color/colormaps_reference.html
-
-
-
-#funNeg=@(x)(-lambda(x(1),x(2)));
-#funPos=@(x)(lambda(x(1),x(2)));
-
-
-
-#def funAuxMaxIntensity(fun_lambda,boxSample):
-#    def fun_Neg(x):
-#        return -fun_lambda(x[0],x[1]); #negative of lambda 
-#    
-#    xy0=[(boxSample[0]+boxSample[1])/2,(boxSample[2]+boxSample[3])/2];#initial value(ie centre)
-#    #Find largest lambda value
-#    resultsOpt=minimize(fun_Neg,xy0,bounds=((boxSample[0], boxSample[1]), (boxSample[2], boxSample[3])));
-#    lambdaNegMin=resultsOpt.fun;
-#    lambdaMax=-lambdaNegMin;
-#    return lambdaMax; #retrieve minimum value
