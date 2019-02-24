@@ -1,6 +1,8 @@
 #Simulate an inhomogeneous Poisson point process on a rectangle
 #This is done by simulating a homogeneous Poisson process, which is then
-#thinned according to a (spatially *dependent*) p-thinning
+#thinned according to a (spatially *dependent*) p-thinning.
+#The intensity function is 
+# lambda(x,y)=80*exp(-(x^2+y^2)/s^2)+100*exp(-(x^2+y^2)/s^2), where s>0.
 #Author: H. Paul Keeler, 2019.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
@@ -20,6 +22,7 @@ s=0.5; #scale parameter
 
 #Point process parameters
 def fun_lambda(x,y):
+	#intensity function
     lambdaValue=80*np.exp(-((x+0.5)**2+(y+0.5)**2)/s**2)+100*np.exp(-((x-0.5)**2+(y-0.5)**2)/s**2);
     return lambdaValue;
 

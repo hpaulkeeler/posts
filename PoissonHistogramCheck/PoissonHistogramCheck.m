@@ -1,6 +1,8 @@
 %Simulate and check an inhomogeneous Poisson point process on a rectangle
 %This is done by first simulating a homogeneous Poisson process, which is then
 %thinned according to a (spatially *dependent*) p-thinning.
+%The intensity function is 
+%lambda(x,y)=80*exp(-(x^2+y^2)/s^2)+100*exp(-(x^2+y^2)/s^2), where s>0.
 %Author: H. Paul Keeler, 2019.
 
 close all;
@@ -74,9 +76,11 @@ yyValues=(yyEdges(2:end)+yyEdges(1:end-1))/2;
 [X, Y]=meshgrid(xxValues,yyValues);
 figure;
 surf(X,Y,p_Estimate); colormap spring;
+xlabel("x"); ylabel("y");
 title('Estimate of \lambda(x) normalized'); 
 
 p_Exact=fun_p(X,Y);
 figure;
 surf(X,Y,p_Exact);  colormap spring;
+xlabel("x"); ylabel("y");
 title('\lambda(x) normalized'); 
