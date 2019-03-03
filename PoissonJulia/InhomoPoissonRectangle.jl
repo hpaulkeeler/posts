@@ -51,7 +51,7 @@ yy=yDelta*(rand(numbPoints,1)).+yMin;#y coordinates of Poisson points
 #calculate spatially-dependent thinning probabilities
 p=fun_p(xx,yy);
 #Generate Bernoulli variables (ie coin flips) for thinning
-booleRetained=rand(numbPoints,1).<p; #points to be thinned
+booleRetained=rand(numbPoints,1).<p; #points to be retained
 xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];
 
 #Plotting

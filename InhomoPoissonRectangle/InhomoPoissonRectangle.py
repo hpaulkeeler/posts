@@ -52,7 +52,7 @@ for ii in range(numbSim):
     p=fun_p(xx,yy); 
     
     #Generate Bernoulli variables (ie coin flips) for thinning
-    booleRetained=np.random.uniform(0,1,((numbPoints,1)))<p; #points to be thinned
+    booleRetained=np.random.uniform(0,1,((numbPoints,1)))<p; #points to be retained
     
     #x/y locations of retained points
     xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];

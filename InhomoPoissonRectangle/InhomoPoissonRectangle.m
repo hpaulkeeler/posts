@@ -48,7 +48,7 @@ for ii=1:numbSim
     p=fun_p(xx,yy);
     
     %Generate Bernoulli variables (ie coin flips) for thinning
-    booleRetained=rand(numbPoints,1)<p; %points to be thinned
+    booleRetained=rand(numbPoints,1)<p; %points to be retained
     
     %x/y locations of retained points
     xxRetained=xx(booleRetained); yyRetained=yy(booleRetained);
