@@ -36,7 +36,7 @@ lambdaMax=-lambdaNegMin;
 fun_p=@(x,y)(fun_lambda(x,y)/lambdaMax);
 
 %for collecting statistics -- set numbSim=1 for one simulation
-numbSim=10^0; %number of simulations
+numbSim=10^3; %number of simulations
 numbPointsRetained=zeros(numbSim,1); %vector to record number of points
 for ii=1:numbSim
     %Simulate Poisson point process
@@ -52,13 +52,20 @@ for ii=1:numbSim
     
     %x/y locations of retained points
     xxRetained=xx(booleRetained); yyRetained=yy(booleRetained);
+    
+    %collect number of points simulated
+    numbPointsRetained(ii)=length(xxRetained);
 end
 
 %Plotting
 plot(xxRetained,yyRetained,'bo'); %plot retained points
 xlabel('x');ylabel('y');
 
-%total mean measure (average number of points)
-LambdaNumerical=integral2(fun_lambda,xMin,xMax,yMin,yMax);
-%Test: as numbSim increases, LambdaEmpirical converges to LambdaNumerical
-LambdaEmpirical=mean(numbPointsRetained);
+%run empirical test on number of points generated
+if numbSim>1
+    %total mean measure (average number of points)
+    LambdaNumerical=integral2(fun_lambda,xMin,xMax,yMin,yMax);
+    %Test: as numbSim increases, LambdaEmpirical converges to numbPointsMean
+    numbPointsMean=mean(numbPointsRetained); 
+    numbPointsVar=var(numbPointsRetained);    
+end

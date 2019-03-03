@@ -40,7 +40,7 @@ def fun_p(x,y):
     return fun_lambda(x,y)/lambdaMax;    
 
 #for collecting statistics -- set numbSim=1 for one simulation
-numbSim=10**0;  #number of simulations
+numbSim=10**3;  #number of simulations
 numbPointsRetained=np.zeros(numbSim); #vector to record number of points
 for ii in range(numbSim):
     #Simulate a Poisson point process
@@ -63,7 +63,11 @@ plt.scatter(xxRetained,yyRetained, edgecolor='b', facecolor='none', alpha=0.5 );
 plt.xlabel("x"); plt.ylabel("y");
 plt.show(); 
 
-#total mean measure (average number of points)
-LambdaNumerical=integrate.dblquad(fun_lambda,xMin,xMax,lambda x: yMin,lambda y: yMax)[0];
-#Test: as numbSim increases, LambdaEmpirical converges to LambdaNumerical
-LambdaEmpirical=np.mean(numbPointsRetained);
+#run empirical test on number of points generated
+if numbSim>1:
+    #total mean measure (average number of points)
+    LambdaNumerical=integrate.dblquad(fun_lambda,xMin,xMax,lambda x: yMin,lambda y: yMax)[0];
+    #Test: as numbSim increases, LambdaEmpirical converges to numbPointsMean
+    numbPointsMean=np.mean(numbPointsRetained);
+    numbPointsVar=np.var(numbPointsRetained);   
+    
