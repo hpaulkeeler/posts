@@ -37,5 +37,5 @@ ppPoisson=rpoispp(lambda,win=windowTriangle)
 plot(ppPoisson); #Plot point pattern object
 #retrieve x/y values from point pattern object
 xx=ppPoisson$x; 
-yy=ppPoisson$y;
+; yy=ppPoisson$y;
 

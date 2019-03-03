@@ -44,7 +44,7 @@ numbSim=10**3;  #number of simulations
 numbPointsRetained=np.zeros(numbSim); #vector to record number of points
 for ii in range(numbSim):
     #Simulate a Poisson point process
-    numbPoints = np.random.poisson(lambdaMax*areaTotal);#Poisson number of points
+    numbPoints = np.random.poisson(areaTotal*lambdaMax);#Poisson number of points
     xx = np.random.uniform(0,xDelta,((numbPoints,1)))+xMin;#x coordinates of Poisson points
     yy = np.random.uniform(0,yDelta,((numbPoints,1)))+yMin;#y coordinates of Poisson points
     

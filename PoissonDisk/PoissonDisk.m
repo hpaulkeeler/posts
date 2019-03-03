@@ -4,7 +4,6 @@
 %Simulation window parameters
 r=1; %radius of disk
 xx0=0; yy0=0; %centre of disk
-
 areaTotal=pi*r^2; %area of disk
  
 %Point process parameters
