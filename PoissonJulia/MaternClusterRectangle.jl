@@ -38,20 +38,9 @@ rho=radiusCluster*sqrt.(rand(numbPoints)); #radial coordinates
 xx0=rho.*cos.(theta);
 yy0=rho.*sin.(theta);
 
-##START -- replicate parent points (ie centres of disks/clusters) -- START
-#create xx/yy start/finish indices for each value in xxParent
-indexLast=(cumsum(numbPointsDaughter));
-indexFirst=ones(size(indexLast));
-indexFirst[2:end]=indexFirst[2:end]+indexLast[1:end-1];
-#need to convert floats to integers for indices
-indexFirst=floor.(Int,indexFirst);indexLast=floor.(Int,indexLast);
-xx=zeros(numbPoints,1);yy=zeros(numbPoints,1); #initiate arrays
-for ii=1:numbPointsParent
-    #Note need .= for assignment
-    xx[indexFirst[ii]:indexLast[ii]].=xxParent[ii];
-    yy[indexFirst[ii]:indexLast[ii]].=yyParent[ii];
-end
-##END -- replicate parent points (ie centres of disks/clusters) -- END
+#replicate parent points (ie centres of disks/clusters)
+xx=vcat(fill.(xxParent, numbPointsDaughter)...);
+yy=vcat(fill.(yyParent, numbPointsDaughter)...);
 
 #Shift centre of disk to (xx0,yy0)
 xx=xx.+xx0;

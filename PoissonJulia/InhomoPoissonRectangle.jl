@@ -6,10 +6,11 @@
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
+#Need xMin, xMax, yMin, yMax to be floats eg xMax=1.;
 
 using Distributions #For random simulations
 using Plots #For plotting
-using Optim #For optimizing
+using BlackBoxOptim #For blackbox optimizing
 
 #Simulation window parameters
 xMin=-1;xMax=1;
@@ -32,9 +33,12 @@ function fun_Neg(x)
      -fun_lambda(x[1],x[2]); #negative of lambda
 end
 xy0=[(xMin+xMax)/2,(yMin+yMax)/2];#initial value(ie centre)
+
 #Find largest lambda value
-resultsOpt=optimize(fun_Neg, xy0);
-lambdaNegMin=Optim.minimum(resultsOpt); #retrieve minimum value found by minimize
+#WARNING: Values of boundSearch cannot be integers!
+boundSearch=[(1.0xMin,1.0xMax), (1.0yMin, 1.0yMax)];
+resultsOpt=bboptimize(fun_Neg;SearchRange = boundSearch);
+lambdaNegMin=best_fitness(resultsOpt); #retrieve minimum value found by bboptimize
 lambdaMax=-lambdaNegMin;
 ###END -- find maximum lambda -- END ###
 
