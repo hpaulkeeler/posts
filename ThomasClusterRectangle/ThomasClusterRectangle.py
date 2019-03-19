@@ -2,7 +2,7 @@
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
-import matplotlib.pyplot as plt; 
+import matplotlib.pyplot as plt #For plotting
 
 #Simulation window parameters
 xMin=-.5;xMax=.5;

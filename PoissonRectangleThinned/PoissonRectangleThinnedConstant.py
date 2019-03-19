@@ -4,7 +4,7 @@
 #Author: H. Paul Keeler, 2019.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt #For plotting
 
 #Simulation window parameters
 xMin=-1;xMax=1;
@@ -20,11 +20,11 @@ p=0.25;
 
 #Simulate a Poisson point process
 numbPoints = np.random.poisson(lambda0*areaTotal);#Poisson number of points
-xx = np.random.uniform(0,xDelta,((numbPoints,1)))+xMin;#x coordinates of Poisson points
-yy = np.random.uniform(0,yDelta,((numbPoints,1)))+yMin;#y coordinates of Poisson points
+xx = xDelta*np.random.uniform(0,1,numbPoints)+xMin;#x coordinates of Poisson points
+yy = yDelta*np.random.uniform(0,1,numbPoints)+yMin;#y coordinates of Poisson points
 
 #Generate Bernoulli variables (ie coin flips) for thinning
-booleThinned=np.random.uniform(0,1,((numbPoints,1)))<p; #points to be thinned
+booleThinned=np.random.uniform(0,1,numbPoints)<p; #points to be thinned
 booleRetained=~booleThinned; #points to be retained
 
 #x/y locations of thinned points

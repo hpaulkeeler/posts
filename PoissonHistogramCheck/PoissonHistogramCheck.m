@@ -13,9 +13,9 @@ yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; %rectangle dimensions
 areaTotal=xDelta*yDelta; %area of rectangle
 
-s=.5; %scale parameter
-
 %Point process parameters
+s=.5; %scale parameter
+%intensity function
 fun_lambda=@(x,y)(80*exp(-((x+0.5).^2+(y+0.5).^2)/s^2)+100*exp(-((x-0.5).^2+(y-0.5).^2)/s^2));%intensity function
 
 %%%START -- find maximum lambda -- START %%%
@@ -68,6 +68,7 @@ LambdaNumerical=integral2(fun_lambda,xMin,xMax,yMin,yMax);
 %Test: as numbSim increases, LambdaEmpirical converges to LambdaNumerical
 LambdaEmpirical=mean(numbPointsRetained);
 
+%Histogram section
 xxVectorAll=cell2mat(xxCell); yyVectorAll=cell2mat(yyCell);
 xyAll=[xxVectorAll,yyVectorAll];
 [p_Estimate,xxEdges,yyEdges]=histcounts2(xxVectorAll,yyVectorAll,40,'Normalization','pdf');

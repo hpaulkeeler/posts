@@ -8,9 +8,9 @@
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
 #Need xMin, xMax, yMin, yMax to be floats eg xMax=1.;
 
-using Distributions #For random simulations
-using Plots #For plotting
-using BlackBoxOptim #For blackbox optimizing
+using Distributions #for random simulations
+using Plots #for plotting
+using BlackBoxOptim #for blackbox optimizing
 
 #Simulation window parameters
 xMin=-1;xMax=1;
@@ -21,7 +21,7 @@ areaTotal=xDelta*yDelta;
 s=0.5; #scale parameter
 
 #Point process parameters
-function  fun_lambda(x,y)
+function fun_lambda(x,y)
     100*exp.(-(x.^2+y.^2)/s^2); #intensity function
 end
 
@@ -35,8 +35,8 @@ end
 xy0=[(xMin+xMax)/2,(yMin+yMax)/2];#initial value(ie centre)
 
 #Find largest lambda value
-#WARNING: Values of boundSearch cannot be integers!
 boundSearch=[(1.0xMin,1.0xMax), (1.0yMin, 1.0yMax)];
+#WARNING: Values of boundSearch cannot be integers!
 resultsOpt=bboptimize(fun_Neg;SearchRange = boundSearch);
 lambdaNegMin=best_fitness(resultsOpt); #retrieve minimum value found by bboptimize
 lambdaMax=-lambdaNegMin;

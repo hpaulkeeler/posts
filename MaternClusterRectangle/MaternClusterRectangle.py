@@ -2,14 +2,13 @@
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
-import matplotlib.pyplot as plt; 
+import matplotlib.pyplot as plt #For plotting
 
 #Simulation window parameters
 xMin=-.5;xMax=.5;
 yMin=-.5;yMax=.5;
 xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
 areaTotal=xDelta*yDelta; #area of rectangle
-
 
 #Parameters for the parent and daughter point processes 
 lambdaParent=10;#density of parent Poisson point process

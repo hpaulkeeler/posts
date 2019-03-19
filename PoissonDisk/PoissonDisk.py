@@ -1,8 +1,8 @@
 #Simulate a Poisson point process on a disk
 #Author: H. Paul Keeler, 2018.
 
-import numpy as np
-import matplotlib.pyplot as plt
+import numpy as np; #NumPy package for arrays, random number generation, etc
+import matplotlib.pyplot as plt #for plotting
 
 #Simulation window parameters
 r=1;  #radius of disk

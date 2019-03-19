@@ -7,7 +7,7 @@
 import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt #For plotting
 from scipy.optimize import minimize #For optimizing
-from scipy import integrate
+from scipy import integrate #For integrating
  
 #Simulation window parameters
 xMin=-1;xMax=1;

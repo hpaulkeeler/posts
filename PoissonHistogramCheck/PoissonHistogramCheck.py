@@ -6,12 +6,14 @@
 #Author: H. Paul Keeler, 2019.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
-import matplotlib.pyplot as plt #For plotting
+import matplotlib.pyplot as plt #for plotting
 from matplotlib import cm #for heatmap plotting
 from mpl_toolkits import mplot3d #for 3-D plots
-from scipy.optimize import minimize #For optimizing
-from scipy import integrate
- 
+from scipy.optimize import minimize #for optimizing
+from scipy import integrate #for integrating
+
+plt.close("all"); #close all previous plots
+
 #Simulation window parameters
 xMin=-1;xMax=1;
 yMin=-1;yMax=1;
@@ -52,14 +54,14 @@ xxArrayAll=[]; yyArrayAll=[];
 for ii in range(numbSim):
     #Simulate a Poisson point process
     numbPoints = np.random.poisson(lambdaMax*areaTotal);#Poisson number of points
-    xx = np.random.uniform(0,xDelta,((numbPoints,1)))+xMin;#x coordinates of Poisson points
-    yy = np.random.uniform(0,yDelta,((numbPoints,1)))+yMin;#y coordinates of Poisson points
+    xx = xDelta*np.random.uniform(0,1,numbPoints)+xMin;#x coordinates of Poisson points
+    yy = yDelta*np.random.uniform(0,1,numbPoints)+yMin;#y coordinates of Poisson points
     
     #calculate spatially-dependent thinning probabilities
     p=fun_p(xx,yy); 
     
     #Generate Bernoulli variables (ie coin flips) for thinning
-    booleRetained=np.random.uniform(0,1,((numbPoints,1)))<p; #points to be thinned
+    booleRetained=np.random.uniform(0,1,numbPoints)<p; #points to be thinned
     
     #x/y locations of retained points
     xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];
@@ -82,8 +84,12 @@ p_Estimate, xxEdges, yyEdges = np.histogram2d(xxArrayAll, yyArrayAll,bins=40,nor
 xxValues=(xxEdges[1:]+xxEdges[0:xxEdges.size-1])/2;
 yyValues=(yyEdges[1:]+yyEdges[0:yyEdges.size-1])/2;
 
-X, Y = np.meshgrid(xxValues,yyValues)
+X, Y = np.meshgrid(xxValues,yyValues) #create x/y matrices for plotting
 
+#analytic solution of probability density
+p_Exact=fun_p(X,Y);
+
+#Plot empirical estimate
 fig2 = plt.figure();
 ax = plt.axes(projection='3d');  
 plt.rc('text', usetex=True)
@@ -92,8 +98,7 @@ surf = ax.plot_surface(X, Y,p_Estimate,cmap=plt.cm.plasma);
 plt.xlabel("x"); plt.ylabel("y");
 plt.title('Estimate of $\lambda(x)$ normalized'); 
 
-
-p_Exact=fun_p(X,Y);
+#Plot exact expression
 fig3 = plt.figure();
 plt.rc('text', usetex=True)
 plt.rc('font', family='serif')
