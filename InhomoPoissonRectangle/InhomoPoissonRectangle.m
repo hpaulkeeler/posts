@@ -12,6 +12,8 @@ yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; %rectangle dimensions
 areaTotal=xDelta*yDelta; %area of rectangle
 
+numbSim=10^4; %number of simulations
+
 s=0.5; %scale parameter
 
 %Point process parameters
@@ -36,7 +38,6 @@ lambdaMax=-lambdaNegMin;
 fun_p=@(x,y)(fun_lambda(x,y)/lambdaMax);
 
 %for collecting statistics -- set numbSim=1 for one simulation
-numbSim=10^4; %number of simulations
 numbPointsRetained=zeros(numbSim,1); %vector to record number of points
 for ii=1:numbSim
     %Simulate Poisson point process
@@ -62,28 +63,12 @@ plot(xxRetained,yyRetained,'bo'); %plot retained points
 xlabel('x');ylabel('y');
 
 %run empirical test on number of points generated
-if numbSim>1
+if numbSim>=10
     %total mean measure (average number of points)
     LambdaNumerical=integral2(fun_lambda,xMin,xMax,yMin,yMax)
-    %Test: as numbSim increases, LambdaEmpirical converges to numbPointsMean
+    %Test: as numbSim increases, numbPointsMean converges to LambdaNumerical
     numbPointsMean=mean(numbPointsRetained)
+    %Test: as numbSim increases, numbPointsVar converges to LambdaNumerical
     numbPointsVar=var(numbPointsRetained)
-    
-    if numbSim>10^3        
-        numbBins=30; %number of bins for histogram
-        %histogram section: empirical probability mass function
-        [pdfEmp,binEdges]=histcounts(numbPointsRetained,numbBins,'BinMethod','integers','Normalization','pdf');
-        nValues=(binEdges(1:end-1)+binEdges(2:end))/2; %mid-points of bins
         
-        %analytic solution of probability density
-        pdfExact=poisspdf(nValues,LambdaNumerical);
-        
-        %Plotting
-        figure;
-        plot(nValues,pdfExact,'o');
-        hold on;
-        plot(nValues,pdfEmp,'x');
-        xlabel('n');ylabel('Prob(N=n)');
-    end
-    
 end

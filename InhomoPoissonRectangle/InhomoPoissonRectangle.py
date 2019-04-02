@@ -8,12 +8,14 @@ import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt #For plotting
 from scipy.optimize import minimize #For optimizing
 from scipy import integrate #For integrating
- 
+
 #Simulation window parameters
 xMin=-1;xMax=1;
 yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
 areaTotal=xDelta*yDelta;
+
+numbSim=10**3;  #number of simulations
 
 s=0.5; #scale parameter
 
@@ -40,7 +42,6 @@ def fun_p(x,y):
     return fun_lambda(x,y)/lambdaMax;    
 
 #for collecting statistics -- set numbSim=1 for one simulation
-numbSim=10**3;  #number of simulations
 numbPointsRetained=np.zeros(numbSim); #vector to record number of points
 for ii in range(numbSim):
     #Simulate a Poisson point process
@@ -64,10 +65,10 @@ plt.xlabel("x"); plt.ylabel("y");
 plt.show(); 
 
 #run empirical test on number of points generated
-if numbSim>1:
-    #total mean measure (average number of points)
-    LambdaNumerical=integrate.dblquad(fun_lambda,xMin,xMax,lambda x: yMin,lambda y: yMax)[0];
-    #Test: as numbSim increases, LambdaEmpirical converges to numbPointsMean
-    numbPointsMean=np.mean(numbPointsRetained);
-    numbPointsVar=np.var(numbPointsRetained);   
-    
+if numbSim>=10:
+        #total mean measure (average number of points)
+        LambdaNumerical=integrate.dblquad(fun_lambda,xMin,xMax,lambda x: yMin,lambda y: yMax)[0];
+        #Test: as numbSim increases, numbPointsMean converges to LambdaNumerical
+        numbPointsMean=np.mean(numbPointsRetained);
+        #Test: as numbSim increases, numbPointsVar converges to LambdaNumerical
+        numbPointsVar=np.var(numbPointsRetained);  

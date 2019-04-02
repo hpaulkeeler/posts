@@ -6,7 +6,6 @@
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
-#Need xMin, xMax, yMin, yMax to be floats eg xMax=1.;
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -29,10 +28,12 @@ end
 #For an intensity function lambda, given by function fun_lambda,
 #finds the maximum of lambda in a rectangular region given by
 #[xMin,xMax,yMin,yMax].
+#NOTE: Need xMin, xMax, yMin, yMax to be floats eg xMax=1. See boundSearch
+
 function fun_Neg(x)
      -fun_lambda(x[1],x[2]); #negative of lambda
 end
-xy0=[(xMin+xMax)/2,(yMin+yMax)/2];#initial value(ie centre)
+xy0=[(xMin+xMax)/2.0,(yMin+yMax)/2.0];#initial value(ie centre)
 
 #Find largest lambda value
 boundSearch=[(1.0xMin,1.0xMax), (1.0yMin, 1.0yMax)];
