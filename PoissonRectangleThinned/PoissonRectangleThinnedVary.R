@@ -19,7 +19,6 @@ fun_p <- function(s,x,y) {
   exp(-(x^2 + y^2)/s^2);
 }
 
-
 #Simulate a Poisson point process
 numbPoints=rpois(1,areaTotal*lambda);#Poisson number of points
 xx=xDelta*runif(numbPoints)+xMin;#x coordinates of Poisson points
@@ -41,4 +40,3 @@ xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];
 par(pty="s")
 plot(xxRetained,yyRetained,'p',xlab='x',ylab='y',col='blue'); #plot retained points
 points(xxThinned,yyThinned,col='red'); #plot thinned points
-
