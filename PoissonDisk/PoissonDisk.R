@@ -23,7 +23,7 @@ xx=xx+xx0;
 yy=yy+yy0;
 
 #Plotting
-par(pty="s")
+par(pty="s"); #use square plotting region
 plot(xx,yy,'p',xlab='x',ylab='y',col='blue');
 
 #Simulate a Poisson point process with spatstat library

@@ -65,9 +65,11 @@ for ii=1:numbSim
 end
 %%% END -- Simulation section -- END %%%
 
-%Plotting simulation
+%Plotting a simulation
 plot(xxRetained,yyRetained,'bo'); %plot retained points
 xlabel('x');ylabel('y');
+title('A single realization of a Poisson point process');
+
 
 %%%START -- Checking number of points -- START%%%
 %total mean measure (average number of points)
@@ -91,32 +93,34 @@ plot(nValues,pdfExact,'s');
 hold on;
 plot(nValues,pdfEmp,'+');
 xlabel('n');ylabel('P(N=n)');
+title('Distribution of the number of points');
 legend('Exact','Empirical');
 %%%END -- Checking number of points -- END%%%
 
 %%%START -- Checking locations -- START%%%
 %2-D Histogram section
-xxVectorAll=cell2mat(xxCell); yyVectorAll=cell2mat(yyCell);
-xyAll=[xxVectorAll,yyVectorAll];
-[p_Estimate,xxEdges,yyEdges]=histcounts2(xxVectorAll,yyVectorAll,numbBins,'Normalization','pdf');
+xxAll=cell2mat(xxCell); yyAll=cell2mat(yyCell);
+[p_Estimate,xxEdges,yyEdges]=histcounts2(xxAll,yyAll,numbBins,'Normalization','pdf');
+lambda_Estimate=p_Estimate*numbPointsMean;
 xxValues=(xxEdges(2:end)+xxEdges(1:end-1))/2;
 yyValues=(yyEdges(2:end)+yyEdges(1:end-1))/2;
 [X, Y]=meshgrid(xxValues,yyValues);
 
 %analytic solution of probability density
-p_Exact=fun_p(X,Y);
+lambda_Exact=fun_lambda(X,Y);
 
 %Plot empirical estimate
 figure;
 subplot(2,1,1);
-surf(X,Y,p_Estimate); colormap spring;
+surf(X,Y,lambda_Estimate); colormap spring;
+view(31.5,26.4); %change the plot view
 xlabel("x"); ylabel("y");
-title('Estimate of \lambda(x) normalized');
+title('Estimate of \lambda(x)');
 
 %Plot exact expression
 subplot(2,1,2);
-surf(X,Y,p_Exact);  colormap spring;
+surf(X,Y,lambda_Exact);  colormap spring;
+view(31.5,26.4); %change the plot view
 xlabel("x"); ylabel("y");
-title('\lambda(x) normalized');
-
+title('True \lambda(x)');
 %%%END -- Checking locations -- END%%%

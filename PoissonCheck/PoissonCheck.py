@@ -23,9 +23,12 @@ yMin=-1;yMax=1;
 xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
 areaTotal=xDelta*yDelta;
 
-s=0.5; #scale parameter
+numbSim=10**4; #number of simulations
+numbBins=30; #number of bins for histogram
 
 #Point process parameters
+s=0.5; #scale parameter
+
 def fun_lambda(x,y):
     #intensity function
     lambdaValue=80*np.exp(-((x+0.5)**2+(y+0.5)**2)/s**2)+100*np.exp(-((x-0.5)**2+(y-0.5)**2)/s**2);
@@ -50,9 +53,8 @@ def fun_p(x,y):
     return fun_lambda(x,y)/lambdaMax;
 
 #for collecting statistics -- set numbSim=1 for one simulation
-numbSim=10**4;  #number of simulations
 numbPointsRetained=np.zeros(numbSim); #vector to record number of points
-xxArrayAll=[]; yyArrayAll=[];
+xxAll=[]; yyAll=[];
 
 ### START -- Simulation section -- START ###
 for ii in range(numbSim):
@@ -70,13 +72,14 @@ for ii in range(numbSim):
     #x/y locations of retained points
     xxRetained=xx[booleRetained]; yyRetained=yy[booleRetained];
     numbPointsRetained[ii]=xxRetained.size;
-    xxArrayAll.extend(xxRetained); yyArrayAll.extend(yyRetained);
+    xxAll.extend(xxRetained); yyAll.extend(yyRetained);
 ### END -- Simulation section -- END ###
 
-#Plotting simulation
+#Plotting a simulation
 fig1 = plt.figure();
 plt.scatter(xxRetained,yyRetained, edgecolor='b', facecolor='none');
 plt.xlabel("x"); plt.ylabel("y");
+plt.title('A single realization of a Poisson point process');
 plt.show();
 
 #run empirical test on number of points generated
@@ -87,10 +90,10 @@ LambdaNumerical=integrate.dblquad(fun_lambda,xMin,xMax,lambda x: yMin,lambda y: 
 numbPointsMean=np.mean(numbPointsRetained);
 #Test: as numbSim increases, numbPointsVar converges to LambdaNumerical
 numbPointsVar=np.var(numbPointsRetained);
-binEdges=np.arange(min(numbPointsRetained),max((numbPointsRetained)+1))-0.5;
+binEdges=np.arange(numbPointsRetained.min(),(numbPointsRetained.max()+1))-0.5;
 pdfEmp, binEdges=np.histogram(numbPointsRetained, bins=binEdges,density=True);
 
-nValues=np.arange(min(numbPointsRetained),max((numbPointsRetained)));
+nValues=np.arange(numbPointsRetained.min(),numbPointsRetained.max());
 #analytic solution of probability density
 pdfExact=(poisson.pmf(nValues,LambdaNumerical));
 
@@ -98,33 +101,42 @@ pdfExact=(poisson.pmf(nValues,LambdaNumerical));
 fig2 = plt.figure();
 plt.scatter(nValues,pdfExact, color='b', marker='s',facecolor='none',label='Exact');
 plt.scatter(nValues,pdfEmp, color='r', marker='+',label='Empirical');
+plt.autoscale(enable=True, axis='y', tight=True)
 plt.xlabel("n"); plt.ylabel("P(N=n)");
+plt.title('Distribution of the number of points');
 plt.legend();
 plt.show();
  ###END -- Checking number of points -- END###
 
  ###START -- Checking locations -- START###
 #2-D Histogram section
-p_Estimate, xxEdges, yyEdges = np.histogram2d(xxArrayAll, yyArrayAll,bins=40,normed='pdf');
+p_Estimate, xxEdges, yyEdges = np.histogram2d(xxAll, yyAll,bins=numbBins,density=True);
+lambda_Estimate=p_Estimate*numbPointsMean;
 
 xxValues=(xxEdges[1:]+xxEdges[0:xxEdges.size-1])/2;
 yyValues=(yyEdges[1:]+yyEdges[0:yyEdges.size-1])/2;
 X, Y = np.meshgrid(xxValues,yyValues) #create x/y matrices for plotting
 
 #analytic solution of probability density
-p_Exact=fun_p(X,Y);
+lambda_Exact=fun_lambda(X,Y);
 
 #Plot empirical estimate
 fig3 = plt.figure();
 plt.rc('text', usetex=True);
 plt.rc('font', family='serif');
 ax=plt.subplot(211,projection='3d');
-surf = ax.plot_surface(X, Y,p_Estimate,cmap=plt.cm.plasma);
+surf = ax.plot_surface(X, Y,lambda_Estimate,cmap=plt.cm.plasma);
 plt.xlabel("x"); plt.ylabel("y");
-plt.title('Estimate of $\lambda(x)$ normalized');
+plt.title('Estimate of $\lambda(x)$');
+plt.locator_params(axis='x', nbins=3);
+plt.locator_params(axis='y', nbins=3);
+plt.locator_params(axis='z', nbins=3);
 #Plot exact expression
 ax=plt.subplot(212,projection='3d');
-surf = ax.plot_surface(X, Y,p_Exact,cmap=plt.cm.plasma);
+surf = ax.plot_surface(X, Y,lambda_Exact,cmap=plt.cm.plasma);
 plt.xlabel("x"); plt.ylabel("y");
-plt.title('$\lambda(x)$ normalized');
+plt.title('True $\lambda(x)$');
+plt.locator_params(axis='x', nbins=3);
+plt.locator_params(axis='y', nbins=3);
+plt.locator_params(axis='z', nbins=3);
 ###END -- Checking locations -- END###
