@@ -19,8 +19,11 @@ https://hpaulkeeler.com/simulating-a-matern-cluster-point-process/
 PoissonDisk
 https://hpaulkeeler.com/simulating-a-poisson-point-process-on-a-disk/
 
-PoissonHistogramCheck
-PoissonJulia
+PoissonCheck
+https://hpaulkeeler.com/checking-poisson-point-process-simulations/
+
+TestingJulia
+https://hpaulkeeler.com/testing-the-julia-language-with-point-process-simulations/
 
 PoissonRectangle
 https://hpaulkeeler.com/poisson-point-process-simulation/
