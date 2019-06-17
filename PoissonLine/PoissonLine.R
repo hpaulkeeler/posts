@@ -3,7 +3,7 @@
 
 ###START Parameters START###
 #Poisson line process parameters
-lambda=4; #intensity (ie mean density) of the Poisson *line* process
+lambda=4; #intensity (ie mean density) of the Poisson line process
 
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
@@ -31,7 +31,7 @@ yy2=yy0+p*sin_theta+q*cos_theta;
 ###END Simulate a Poisson line process on a disk END###
 
 ### START Plotting ###START
-#plot circle
+#draw circle
 t=seq(0,2*pi,len=100);
 xp=r*cos(t); yp=r*sin(t);
 par(pty="s"); #use square plotting region

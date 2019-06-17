@@ -35,9 +35,9 @@ for jj=1:numbSteps
     %p(z|x)=e(-(z-x)^2/2)/sqrt(2*pi)
     probProposal=fun_p(zxRand,zyRand); %proposed probability
     
-    %acceptance rejection step
+    %acceptance-rejection step
     booleAccept=rand(simNumb,1) < probProposal./probCurrent;
-    %update state of random walk/Marjov chain
+    %update state of random walk/Markov chain
     xRand(booleAccept)=zxRand(booleAccept);
     yRand(booleAccept)=zyRand(booleAccept);
 

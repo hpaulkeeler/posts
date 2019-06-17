@@ -1,7 +1,4 @@
 # Simulate a Cox point process on a disk. 
-# This Cox point process is formed by first simulating a uniform Poisson 
-# line process. On each line (or segment) an independent Poisson point 
-# process is then simulated.
 # Author: H. Paul Keeler, 2019.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
@@ -12,7 +9,7 @@ plt.close("all"); # close all figures
 
 ###START Parameters START###
 #Poisson line process parameters
-lambda0=4; #intensity (ie mean density) of the Poisson *line* process
+lambda0=4; #intensity (ie mean density) of the Poisson line process
 
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
@@ -40,7 +37,7 @@ yy2=yy0+p*sin_theta+q*cos_theta;
 ###END Simulate a Poisson line process on a disk END###
 
 ### START Plotting ###START
-#plot circle
+#draw circle
 t=np.linspace(0,2*np.pi,100);
 xp=r*np.cos(t); yp=r*np.sin(t);
 fig, ax = plt.subplots();

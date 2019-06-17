@@ -5,7 +5,7 @@ close all; clearvars; clc;
 
 %%%START Parameters START%%%
 %Poisson line process parameters
-lambda=2; %intensity (ie mean density) of the Poisson *line* process
+lambda=2; %intensity (ie mean density) of the Poisson line process
 
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk
@@ -33,7 +33,7 @@ yy2=yy0+p.*sin_theta+q.*cos_theta;
 
 
 %%% START Plotting %%%START
-%plot circle
+%draw circle
 t=linspace(0,2*pi,100);
 xp=r*cos(t); yp=r*sin(t);
 plot(xx0+xp,yy0+yp);
