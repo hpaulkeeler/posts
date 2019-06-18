@@ -10,7 +10,7 @@ close all; clearvars; clc;
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk
 r=1; %disk radius
-numbLines=100;%number of lines
+numbLines=200;%number of lines
 %%%END Parameters END%%%
 
 %%%START Simulate three solutions on a disk START%%%
@@ -63,46 +63,23 @@ xxC0=(xxC1+xxC2)/2; yyC0=(yyC1+yyC2)/2;
 %%%END Simulate three solutions on a disk END%%%
 
 %create points for circle
-t=linspace(0,2*pi,100);
+t=linspace(0,2*pi,200);
 xp=r*cos(t); yp=r*sin(t);
 
 %%% START Plotting %%%START
-%Segments
 %Solution A
 figure;
+subplot(1,2,1);
 %draw circle
-plot(xx0+xp,yy0+yp);
+plot(xx0+xp,yy0+yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
-title('Solution A');
+title('Segments of Solution A');
 %plot segments of Solution A
 plot([xxA1';xxA2'],[yyA1';yyA2'],'r');
-
-%Solution B
-figure;
+subplot(1,2,2);
 %draw circle
-plot(xx0+xp,yy0+yp);
-axis square; hold on;
-xlabel('x'); ylabel('y');
-title('Solution B');
-%plot segments of Solution B
-plot([xxB1';xxB2'],[yyB1';yyB2'],'k');
-
-%Solution C
-figure;
-%draw circle
-plot(xx0+xp,yy0+yp);
-axis square; hold on;
-xlabel('x'); ylabel('y');
-title('Solution C');
-%plot segments of Solution C
-plot([xxC1';xxC2'],[yyC1';yyC2'],'g');
-
-%Mid points
-%Solution A
-figure;
-%draw circle
-plot(xx0+xp,yy0+yp);
+plot(xx0+xp,yy0+yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
 title('Midpoints of Solution A');
@@ -111,18 +88,36 @@ plot(xxA0,yyA0,'r.','MarkerSize',10);
 
 %Solution B
 figure;
+subplot(1,2,1);
 %draw circle
-plot(xx0+xp,yy0+yp);
+plot(xx0+xp,yy0+yp,'k');
+axis square; hold on;
+xlabel('x'); ylabel('y');
+title('Segments of Solution B');
+%plot segments of Solution B
+plot([xxB1';xxB2'],[yyB1';yyB2'],'b');
+subplot(1,2,2);
+%draw circle
+plot(xx0+xp,yy0+yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
 title('Midpoints of Solution B');
 %plot midpoints of Solution B
-plot(xxB0,yyB0,'k.','MarkerSize',10);
+plot(xxB0,yyB0,'b.','MarkerSize',10);
 
-%Solution B
+%Solution C
 figure;
+subplot(1,2,1);
 %draw circle
-plot(xx0+xp,yy0+yp);
+plot(xx0+xp,yy0+yp,'k');
+axis square; hold on;
+xlabel('x'); ylabel('y');
+title('Segments of Solution C');
+%plot segments of Solution C
+plot([xxC1';xxC2'],[yyC1';yyC2'],'g');
+subplot(1,2,2);
+%draw circle
+plot(xx0+xp,yy0+yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
 title('Midpoints of Solution C');

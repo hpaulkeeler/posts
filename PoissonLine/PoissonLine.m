@@ -34,13 +34,13 @@ yy2=yy0+p.*sin_theta+q.*cos_theta;
 
 %%% START Plotting %%%START
 %draw circle
-t=linspace(0,2*pi,100);
+t=linspace(0,2*pi,200);
 xp=r*cos(t); yp=r*sin(t);
-plot(xx0+xp,yy0+yp);
+plot(xx0+xp,yy0+yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
 
 %plot segments of Poisson line process
-plot([xx1';xx2'],[yy1';yy2'],'k');
+plot([xx1';xx2'],[yy1';yy2'],'b');
 %%%END Plotting END%%%
 

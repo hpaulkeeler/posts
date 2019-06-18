@@ -8,7 +8,7 @@
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
 r=1; #disk radius
-numbLines=100;#number of lines
+numbLines=200;#number of lines
 ###END Parameters END###
 
 ###START Simulate three solutions on a disk START###
@@ -61,52 +61,46 @@ xxC0=(xxC1+xxC2)/2; yyC0=(yyC1+yyC2)/2;
 ###END Simulate three solutions on a disk END###
 
 #create points for circle 
-t=seq(0,2*pi,len=100);
+t=seq(0,2*pi,len=200);
 xp=r*cos(t); yp=r*sin(t);
 
 ### START Plotting START###
-#Segments
 #Solution A
-#draw circle
+#plot.new();
+par(mfrow=c(1,2));
 par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Solution A');
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution A');
 #plot segments of Solution A
 segments(xxA1,yyA1,xxA2,yyA2,col='red'); 
+#draw circle
+par(pty="s"); #use square plotting region
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Midpoints of Solution A');
+#plot midpoints of Solution A
+points(xxA0,yyA0,pch=20,col='red');  
 
 #Solution B
+#plot.new();
+par(mfrow=c(1,2));
+par(pty="s"); #use square plotting region
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution B');
+#plot segments of Solution B
+segments(xxB1,yyB1,xxB2,yyB2,col='blue'); 
 #draw circle
 par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Solution B');
-#plot segments of Solution B
-segments(xxB1,yyB1,xxB2,yyB2,col='black'); 
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Midpoints of Solution B');
+#plot midpoints of Solution B
+points(xxB0,yyB0,pch=20,col='blue'); 
 
 #Solution C
-#draw circle
+#plot.new();
+par(mfrow=c(1,2));
 par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Solution C');
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution C');
 #plot segments of Solution C
 segments(xxC1,yyC1,xxC2,yyC2,col='green'); 
-
-#Midpoints
-#Solution A
 #draw circle
 par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Midpoints of Solution A');
-#plot midpoints of Solution A
-points(xxA0,yyA0,col='red',pch=20);  
-
-#Solution B
-#draw circle
-par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Midpoints of Solution B');
-#plot midpoints of Solution B
-points(xxB0,yyB0,col='black',pch=20);  
-
-#Solution C
-#draw circle
-par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='blue',main='Midpoints of Solution C');
+plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Midpoints of Solution C');
 #plot midpoints of Solution C
-points(xxC0,yyC0,col='green',pch=20); 
+points(xxC0,yyC0,pch=20,col='green'); 
 ###END Plotting END###
-

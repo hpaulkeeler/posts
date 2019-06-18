@@ -14,7 +14,7 @@ plt.close("all"); # close all figures
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
 r=1; #disk radius
-numbLines=100;#number of lines
+numbLines=200;#number of lines
 ###END Parameters END###
 
 ###START Simulate three solutions on a disk START###
@@ -67,84 +67,73 @@ xxC0=(xxC1+xxC2)/2; yyC0=(yyC1+yyC2)/2;
 ###END Simulate three solutions on a disk END###
 
 #create points for circle 
-t=np.linspace(0,2*np.pi,100);
+t=np.linspace(0,2*np.pi,200);
 xp=r*np.cos(t); yp=r*np.sin(t);
 
 ### START Plotting START###
-#Segments
 #Solution A
 #draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Solution A');
+fig, ax = plt.subplots(1,2);
+ax[0].plot(xx0+xp,yy0+yp,color='k');
+ax[0].axis('equal');
+ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
+ax[0].set_title('Segments of Solution A');
 #plot segments of Solution A
 #need to create a list to plot the segments (probably a better way to do this)
 segments=[]; #initiate list
 for i in range(numbLines):
     segments.append([(xxA1[i],yyA1[i]),(xxA2[i],yyA2[i])]);    
-lc = mc.LineCollection(segments,colors="red")
-ax.add_collection(lc) #plot segments
+lc = mc.LineCollection(segments,colors='r');
+ax[0].add_collection(lc) #plot segments of Solution A
+#draw circle
+ax[1].plot(xx0+xp,yy0+yp,color='k');
+ax[1].axis('equal');
+ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
+ax[1].set_title('Midpoints of Solution A');
+#plot midpoints of Solution A
+ax[1].plot(xxA0,yyA0,'r.');
 
 #Solution B
 #draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Solution B');
+fig, ax = plt.subplots(1,2);
+ax[0].plot(xx0+xp,yy0+yp,color='k');
+ax[0].axis('equal');
+ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
+ax[0].set_title('Segments of Solution B');
 #plot segments of Solution B
 #need to create a list to plot the segments (probably a better way to do this)
 segments=[]; #initiate list
 for i in range(numbLines):
     segments.append([(xxB1[i],yyB1[i]),(xxB2[i],yyB2[i])]);    
-lc = mc.LineCollection(segments,colors='black')
-ax.add_collection(lc) #plot segments
-
-#Solution B
+lc = mc.LineCollection(segments,colors='b');
+ax[0].add_collection(lc) #plot segments of Solution B
 #draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Solution C');
+ax[1].plot(xx0+xp,yy0+yp,color='k');
+ax[1].axis('equal');
+ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
+ax[1].set_title('Midpoints of Solution B');
+#plot midpoints of Solution B
+ax[1].plot(xxB0,yyB0,'b.');
+
+#Solution C
+#draw circle
+fig, ax = plt.subplots(1,2);
+ax[0].plot(xx0+xp,yy0+yp,color='k');
+ax[0].axis('equal');
+ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
+ax[0].set_title('Segments of Solution C');
 #plot segments of Solution C
 #need to create a list to plot the segments (probably a better way to do this)
 segments=[]; #initiate list
 for i in range(numbLines):
     segments.append([(xxC1[i],yyC1[i]),(xxC2[i],yyC2[i])]);    
-lc = mc.LineCollection(segments,colors='green')
-ax.add_collection(lc) #plot segments
-
-#Midpoints
-#Solution A
+lc = mc.LineCollection(segments,colors='g');
+ax[0].add_collection(lc) #plot segments of Solution C
 #draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Midpoints of Solution A');
-#plot midpoints of Solution A
-ax.scatter(xxA0,yyA0,s=5, edgecolor='r', facecolor='r');
-
-#Solution B
-#draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Midpoints of Solution B');
-#plot midpoints of Solution B
-ax.scatter(xxB0,yyB0,s=5, edgecolor='k', facecolor='k');
-
-#Solution C
-#draw circle
-fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.axis('equal');
-plt.xlabel('x'); plt.ylabel('y');
-plt.title('Midpoints of Solution C');
+ax[1].plot(xx0+xp,yy0+yp,color='k');
+ax[1].axis('equal');
+ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
+ax[1].set_title('Midpoints of Solution C');
 #plot midpoints of Solution C
-ax.scatter(xxC0,yyC0,s=5, edgecolor='g', facecolor='g');
+ax[1].plot(xxC0,yyC0,'g.');
 ###END Plotting END###

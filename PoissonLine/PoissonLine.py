@@ -38,11 +38,11 @@ yy2=yy0+p*sin_theta+q*cos_theta;
 
 ### START Plotting ###START
 #draw circle
-t=np.linspace(0,2*np.pi,100);
+t=np.linspace(0,2*np.pi,200);
 xp=r*np.cos(t); yp=r*np.sin(t);
 fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp);
-plt.xlabel("x"); plt.ylabel("y");
+ax.plot(xx0+xp,yy0+yp,color='black');
+plt.xlabel('x'); plt.ylabel('y');
 plt.axis('equal');
 
 #plot segments of Poisson line process
@@ -50,7 +50,6 @@ plt.axis('equal');
 segments=[]; #initiate list
 for i in range(numbLines):
     segments.append([(xx1[i],yy1[i]),(xx2[i],yy2[i])]);    
-lc = mc.LineCollection(segments,colors="black")
+lc = mc.LineCollection(segments,colors='blue');
 ax.add_collection(lc) #plot segments
-
 ###END Plotting END###
