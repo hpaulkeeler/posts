@@ -1,8 +1,10 @@
-#Simulate a Poisson point process on a rectangle
+#Simulate a Poisson point process on a rectangle.
 #Author: H. Paul Keeler, 2018.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt #for plotting
+
+plt.close("all"); # close all figures
 
 #Simulation window parameters
 xMin=0;xMax=1;

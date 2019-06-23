@@ -1,4 +1,4 @@
-# Illustrate the three solutions of the Betrand paradox on a disk.
+# Illustrate the three solutions of the Bertrand paradox on a disk.
 # The three solutions are labelled A, B and C, which correspond to
 # solutions 1, 2 and 3 in, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)
@@ -80,10 +80,8 @@ ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
 ax[0].set_title('Segments of Solution A');
 #plot segments of Solution A
 #need to create a list to plot the segments (probably a better way to do this)
-segments=[]; #initiate list
-for i in range(numbLines):
-    segments.append([(xxA1[i],yyA1[i]),(xxA2[i],yyA2[i])]);    
-lc = mc.LineCollection(segments,colors='r');
+segmentsA=[[(xxA1[i],yyA1[i]),(xxA2[i],yyA2[i])] for i in range(numbLines)];
+lc = mc.LineCollection(segmentsA,colors='r');
 ax[0].add_collection(lc) #plot segments of Solution A
 #draw circle
 ax[1].plot(xx0+xp,yy0+yp,color='k');
@@ -102,10 +100,8 @@ ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
 ax[0].set_title('Segments of Solution B');
 #plot segments of Solution B
 #need to create a list to plot the segments (probably a better way to do this)
-segments=[]; #initiate list
-for i in range(numbLines):
-    segments.append([(xxB1[i],yyB1[i]),(xxB2[i],yyB2[i])]);    
-lc = mc.LineCollection(segments,colors='b');
+segmentsB=[[(xxB1[i],yyB1[i]),(xxB2[i],yyB2[i])] for i in range(numbLines)];
+lc = mc.LineCollection(segmentsB,colors='b');
 ax[0].add_collection(lc) #plot segments of Solution B
 #draw circle
 ax[1].plot(xx0+xp,yy0+yp,color='k');
@@ -124,10 +120,8 @@ ax[0].set_xlabel('x'); ax[0].set_ylabel('y');
 ax[0].set_title('Segments of Solution C');
 #plot segments of Solution C
 #need to create a list to plot the segments (probably a better way to do this)
-segments=[]; #initiate list
-for i in range(numbLines):
-    segments.append([(xxC1[i],yyC1[i]),(xxC2[i],yyC2[i])]);    
-lc = mc.LineCollection(segments,colors='g');
+segmentsC=[[(xxC1[i],yyC1[i]),(xxC2[i],yyC2[i])] for i in range(numbLines)];   
+lc = mc.LineCollection(segmentsC,colors='g');
 ax[0].add_collection(lc) #plot segments of Solution C
 #draw circle
 ax[1].plot(xx0+xp,yy0+yp,color='k');

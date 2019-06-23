@@ -1,4 +1,4 @@
-# Simulate a Cox point process on a disk. 
+# Simulate a uniform Poisson line process on a disk. 
 # Author: H. Paul Keeler, 2019.
 
 import numpy as np; #NumPy package for arrays, random number generation, etc
@@ -14,15 +14,15 @@ lambda0=4; #intensity (ie mean density) of the Poisson line process
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
 r=1; #disk radius
-massLine=2*np.pi*r*lambda0; #total measure of line process
+massLine=2*np.pi*r*lambda0;  #total measure/mass of the line process
 ###END Parameters END###
 
 ###START Simulate a Poisson line process on a disk START###
 #Simulate Poisson point process
 numbLines=np.random.poisson(massLine);#Poisson number of points
 
-theta=2*np.pi*np.random.uniform(0,1,numbLines); #choose angular component uniformly
-p=r*np.random.uniform(0,1,numbLines); #choose radial component uniformly
+theta=2*np.pi*np.random.rand(numbLines); #choose angular component uniformly
+p=r*np.random.rand(numbLines); #choose radial component uniformly
 q=np.sqrt(r**2-p**2); #distance to circle edge (alonge line)
 
 #calculate trig values
@@ -41,15 +41,14 @@ yy2=yy0+p*sin_theta+q*cos_theta;
 t=np.linspace(0,2*np.pi,200);
 xp=r*np.cos(t); yp=r*np.sin(t);
 fig, ax = plt.subplots();
-ax.plot(xx0+xp,yy0+yp,color='black');
+ax.plot(xx0+xp,yy0+yp,color='k');
 plt.xlabel('x'); plt.ylabel('y');
-plt.axis('equal');
+plt.axis('equal'); 
 
 #plot segments of Poisson line process
 #need to create a list to plot the segments (probably a better way to do this)
 segments=[]; #initiate list
-for i in range(numbLines):
-    segments.append([(xx1[i],yy1[i]),(xx2[i],yy2[i])]);    
-lc = mc.LineCollection(segments,colors='blue');
+segments=[[(xx1[i],yy1[i]),(xx2[i],yy2[i])] for i in range(numbLines)];   
+lc = mc.LineCollection(segments,colors='b');
 ax.add_collection(lc) #plot segments
 ###END Plotting END###

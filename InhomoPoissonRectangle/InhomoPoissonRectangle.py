@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt #For plotting
 from scipy.optimize import minimize #For optimizing
 from scipy import integrate #For integrating
 
+plt.close("all"); # close all figures
+
 #Simulation window parameters
 xMin=-1;xMax=1;
 yMin=-1;yMax=1;

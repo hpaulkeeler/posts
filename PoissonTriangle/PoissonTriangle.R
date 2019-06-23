@@ -1,4 +1,4 @@
-#Simulate a Poisson point process on a triangle
+#Simulate a Poisson point process on a triangle.
 #Author: H. Paul Keeler, 2018.
 
 #Simulation window parameters -- points A,B,C of a triangle

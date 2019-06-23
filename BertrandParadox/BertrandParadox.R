@@ -1,4 +1,4 @@
-# Illustrate the three solutions of the Betrand paradox on a disk.
+# Illustrate the three solutions of the Bertrand paradox on a disk.
 # The three solutions are labelled A, B and C, which correspond to
 # solutions 1, 2 and 3 in, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)

@@ -1,8 +1,10 @@
-#Simulate a binomial point process on a unit square
+#Simulate a binomial point process on a unit square.
 #Author: H. Paul Keeler, 2018
 
 import numpy as np
 import matplotlib.pyplot as plt
+
+plt.close("all"); # close all figures
 
 numbPoints=10; #number of points
 

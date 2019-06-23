@@ -7,7 +7,7 @@
 import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt #For plotting
 
-plt.close("all");
+plt.close("all"); # close all figures
 
 simNumb=10**4; #number of random variables simulated
 numbSteps=25; #number of steps for the Markov process

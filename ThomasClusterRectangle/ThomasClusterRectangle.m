@@ -1,4 +1,4 @@
-%Simulate a Thomas cluster point process on a rectangle
+%Simulate a Thomas cluster point process on a rectangle.
 %Author: H. Paul Keeler, 2018.
 
 %Simulation window parameters

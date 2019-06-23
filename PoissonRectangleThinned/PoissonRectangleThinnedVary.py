@@ -6,6 +6,8 @@
 import numpy as np; #NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt #For plotting
 
+plt.close("all"); # close all figures
+
 #Simulation window parameters
 xMin=-1;xMax=1;
 yMin=-1;yMax=1;

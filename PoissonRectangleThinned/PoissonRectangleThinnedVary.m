@@ -1,4 +1,4 @@
-%Simulate a Poisson point process on a rectangle
+%Simulate a Poisson point process on a rectangle.
 %Then thin the Poisson point process according to a (spatially *dependent*) 
 %p-thinning 
 %Author: H. Paul Keeler, 2019.

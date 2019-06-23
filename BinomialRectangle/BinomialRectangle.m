@@ -1,4 +1,4 @@
-%Simulate a binomial point process on a unit square
+%Simulate a binomial point process on a unit square.
 %Author: H. Paul Keeler, 2018.
 
 numbPoints=10; %number of points

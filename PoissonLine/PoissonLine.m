@@ -1,4 +1,4 @@
-% Simulate a Poisson line process on a disk.
+% Simulate a uniform Poisson line process on a disk.
 % Author: H. Paul Keeler, 2019.
 
 close all; clearvars; clc;
@@ -10,7 +10,7 @@ lambda=2; %intensity (ie mean density) of the Poisson line process
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk
 r=1; %disk radius
-massLine=2*pi*r*lambda; %total measure of line process
+massLine=2*pi*r*lambda; %total measure/mass of the line process
 %%%END Parameters END%%%
 
 %%%START Simulate a Poisson line process on a disk START%%%
