@@ -21,7 +21,7 @@ from matplotlib import collections  as mc #for plotting line segments
 import time
 
 ###START Parameters START###
-numbSim=10**5; #number of simulations
+numbSim=10**6; #number of simulations
 
 #Point process parameters
 lambda0=20; #intensity (ie mean density) of Poisson point process

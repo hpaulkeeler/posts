@@ -5,7 +5,7 @@ close all; clearvars; clc;
 
 %%%START Parameters START%%%
 %Poisson line process parameters
-lambda=2; %intensity (ie mean density) of the Poisson line process
+lambda=3; %intensity (ie mean density) of the Poisson line process
 
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk

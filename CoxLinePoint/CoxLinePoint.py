@@ -12,7 +12,7 @@ plt.close("all"); # close all figures
 
 ###START -- Parameters -- START###
 #Cox (ie Poisson line-point) process parameters
-lambda0=1; #intensity (ie mean density) of the Poisson *line* process
+lambda0=4; #intensity (ie mean density) of the Poisson *line* process
 mu=5; #intensity (ie mean density) of the Poisson *point* process
 
 #Simulation disk dimensions

@@ -16,7 +16,7 @@
 % Author: H. Paul Keeler, 2019.
 
 %%%START Parameters START%%%
-numbSim=10^5; %number of simulations
+numbSim=10^6; %number of simulations
 
 %Point process parameters
 lambda=20; %intensity (ie mean density) of Poisson point process

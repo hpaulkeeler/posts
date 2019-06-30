@@ -9,7 +9,7 @@ plt.close("all"); # close all figures
 
 ###START Parameters START###
 #Poisson line process parameters
-lambda0=4; #intensity (ie mean density) of the Poisson line process
+lambda0=3; #intensity (ie mean density) of the Poisson line process
 
 #Simulation disk dimensions
 xx0=0; yy0=0; #center of disk
