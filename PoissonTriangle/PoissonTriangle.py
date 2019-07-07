@@ -8,7 +8,7 @@ plt.close("all"); # close all figures
 
 #Simulation window parameters -- points A,B,C of a triangle
 xA=0;xB=1;xC=1; #x values of three points
-yA=0;yB=0;yC=1; #y values of three points;
+yA=0;yB=0;yC=1; #y values of three points
 
 #Point process parameters
 lambda0=100; #ntensity (ie mean density) of the Poisson process

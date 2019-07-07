@@ -45,15 +45,15 @@ yyAll=yDelta*(np.random.rand(numbPointsTotal))+yMin;#y coordinates of Poisson po
 
 #convert Poisson point processes into lists
 indexPoints=np.cumsum(numbPointsA[0:-1]); #index for creating lists
-xxListA=np.split(xxAll,indexPoints,axis=0);
-yyListA=np.split(yyAll,indexPoints,axis=0)
+xxListA=np.split(xxAll,indexPoints,axis=0); #list for x values
+yyListA=np.split(yyAll,indexPoints,axis=0) #list for y values
 numbListA=np.split(numbPointsA,1);
-###END Method A: Generate *all* ensembles at once END###
-
-###START Method B: Generate each ensemble separately START###
 t1 = time.time(); #finish timing
 print('Elapsed time is ', (t1 - t0),  'seconds.');
 
+###END Method A: Generate *all* ensembles at once END###
+
+###START Method B: Generate each ensemble separately START###
 t0= time.time(); #start timing
 xxListB=[]; yyListB=[]; 
 numbPointsB=np.zeros(numbSim);
@@ -68,7 +68,7 @@ t1 = time.time(); #finish timing
 print('Elapsed time is ', (t1 - t0),  'seconds.');
 ###END Method B: Generate each ensemble separately END###
 ###END Simulation section END###
-
+x``
 ####START Create point pattern structures START###
 ##create vector for describing the window
 #windowSim=[xMin,xMax,yMin,yMax];

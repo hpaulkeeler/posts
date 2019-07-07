@@ -39,8 +39,8 @@ xxAll=xDelta*(rand(numbPointsTotal,1))+xMin;%x coordinates of Poisson points
 yyAll=yDelta*(rand(numbPointsTotal,1))+yMin;%y coordinates of Poisson points
 
 %convert Poisson point processes into cells
-xxCellA=mat2cell(xxAll,numbPointsA);
-yyCellA=mat2cell(yyAll,numbPointsA);
+xxCellA=mat2cell(xxAll,numbPointsA); %cell for x values
+yyCellA=mat2cell(yyAll,numbPointsA); %cell for y values
 toc;
 %%%END Method A: Generate *all* ensembles at once END%%%
 

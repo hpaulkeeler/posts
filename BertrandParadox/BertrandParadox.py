@@ -104,7 +104,7 @@ if numbLines<1000:
     ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution A');
     #plot midpoints of Solution A
-    ax[1].plot(xxA0,yyA0,'r.');
+    ax[1].plot(xxA0,yyA0,'r.',markersize=20);
     
     #Solution B
     #draw circle
@@ -124,7 +124,7 @@ if numbLines<1000:
     ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution B');
     #plot midpoints of Solution B
-    ax[1].plot(xxB0,yyB0,'b.');
+    ax[1].plot(xxB0,yyB0,'b.',markersize=20);
     
     #Solution C
     #draw circle
@@ -144,5 +144,5 @@ if numbLines<1000:
     ax[1].set_xlabel('x'); ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution C');
     #plot midpoints of Solution C
-    ax[1].plot(xxC0,yyC0,'g.');
+    ax[1].plot(xxC0,yyC0,'g.',markersize=20);
     ###END Plotting END###

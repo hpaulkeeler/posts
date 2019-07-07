@@ -14,13 +14,20 @@ t=linspace(0,2*pi,200);
 xp=r*cos(t); yp=r*sin(t);
 
 %angles of triangle corners
-theta1=2*pi*rand(1);
-theta2=theta1+2*pi/3;
-theta3=theta1-2*pi/3;
+thetaTri1=2*pi*rand(1);
+thetaTri2=thetaTri1+2*pi/3;
+thetaTri3=thetaTri1-2*pi/3;
 %points for equalateral triangle
-x1=x0+r*cos(theta1);y1=x0+r*sin(theta1);
-x2=x0+r*cos(theta2);y2=x0+r*sin(theta2);
-x3=x0+r*cos(theta3);y3=x0+r*sin(theta3);
+xTri1=x0+r*cos(thetaTri1);y1=x0+r*sin(thetaTri1);
+xTri2=x0+r*cos(thetaTri2);y2=x0+r*sin(thetaTri2);
+xTri3=x0+r*cos(thetaTri3);y3=x0+r*sin(thetaTri3);
+
+%angles of chords 
+thetaChord1=2*pi*rand(1);
+thetaChord2=2*pi*rand(1);
+%points chord
+xChord1=x0+r*cos(thetaChord1);yChord1=x0+r*sin(thetaChord1);
+xChord2=x0+r*cos(thetaChord2);yChord2=x0+r*sin(thetaChord2);
 
 %Plotting
 %draw circle
@@ -30,8 +37,10 @@ axis tight;
 xticks([]);yticks([]);
 
 %draw triangle
-plot([x1,x2],[y1,y2],'b','LineWidth',2);
-plot([x2,x3],[y2,y3],'b','LineWidth',2);
-plot([x3,x1],[y3,y1],'b','LineWidth',2);
+plot([xTri1,xTri2],[y1,y2],'k','LineWidth',2);
+plot([xTri2,xTri3],[y2,y3],'k','LineWidth',2);
+plot([xTri3,xTri1],[y3,y1],'k','LineWidth',2);
 
+%draw chord
+plot([xChord1,xChord2],[yChord1,yChord2],'r','LineWidth',2);
     
