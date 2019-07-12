@@ -1,7 +1,7 @@
 # posts
-A repository of code that has appeared on my blog: http://hpaulkeeler.com/posts/
+A repository of code that I have mentioned or used on my blog: http://hpaulkeeler.com/posts/
 
-Feel free to use any of the code for whatever purporses. If you publish a paper using any of the code, please cite this repository. 
+Feel free to use any of the code for whatever purposes. If you publish a paper using any of the code, please cite this repository. 
 
 I have written the code mostly in MATLAB, R and Python. Most of it concerns simulating point processes, which are also called random point fields or random counting measures.
 
