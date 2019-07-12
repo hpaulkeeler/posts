@@ -36,7 +36,7 @@ for jj in range(numbSteps):
 
 #histogram section: empirical probability density
 pdfEmp, binEdges= np.histogram(xRand,bins=numbBins,density=bool);    
-xValues=(binEdges[1:]+binEdges[0:binEdges.size-1])/2; #mid-points of bins
+xValues=(binEdges[1:]+binEdges[:-1])/2; #mid-points of bins
 
 #analytic solution of probability density
 pdfExact=fun_p(xValues);
