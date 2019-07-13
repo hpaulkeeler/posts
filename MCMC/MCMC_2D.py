@@ -19,7 +19,7 @@ yMin=-1;yMax=1;
 numbSim=10**5; #number of random variables simulated
 numbSteps=25; #number of steps for the Markov process
 numbBins=50; #number of bins for histogram
-sigma=1; #standard deviation for normal random steps
+sigma=2; #standard deviation for normal random steps
 
 #probability density parameters
 s=.5; #scale parameter for distribution to be simulated

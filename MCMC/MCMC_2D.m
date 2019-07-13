@@ -16,8 +16,9 @@ numbBins=25; %number of bins for histogram
 sigma=2; %standard deviation for normal random steps
 
 %probability density parameters
-s=.4; %scale parameter for distribution to be simulated
-fun_lambda=@(x,y)(80*exp(-((x+0.5).^2+(y+0.5).^2)/s^2)+100*exp(-((x-0.5).^2+(y-0.5).^2)/s^2));
+s=.5; %scale parameter for distribution to be simulated
+fun_lambda=@(x,y)(100*exp(-(x.^2+y.^2)/s^2));    
+
 %normalization constant
 consNorm=integral2(fun_lambda,xMin,xMax,yMin,yMax);
 fun_p=@(x,y)((fun_lambda(x,y)/consNorm).*(x>=xMin).*(y>=yMin).*(x<=xMax).*(y<=yMax));
