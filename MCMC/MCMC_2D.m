@@ -10,7 +10,7 @@ clearvars;clc;close all;
 xMin=-1;xMax=1;
 yMin=-1;yMax=1;
 
-simNumb=10^5; %number of random variables simulated
+numbSim=10^5; %number of random variables simulated
 numbSteps=30; %number of steps for the Markov process
 numbBins=25; %number of bins for histogram
 sigma=2; %standard deviation for normal random steps
@@ -22,8 +22,8 @@ fun_lambda=@(x,y)(80*exp(-((x+0.5).^2+(y+0.5).^2)/s^2)+100*exp(-((x-0.5).^2+(y-0
 consNorm=integral2(fun_lambda,xMin,xMax,yMin,yMax);
 fun_p=@(x,y)((fun_lambda(x,y)/consNorm).*(x>=xMin).*(y>=yMin).*(x<=xMax).*(y<=yMax));
 
-xRand=(xMax-xMin)*rand(simNumb,1)+xMin; %random intial values
-yRand=(yMax-yMin)*rand(simNumb,1)+yMin; %random intial values
+xRand=(xMax-xMin)*rand(numbSim,1)+xMin; %random intial values
+yRand=(yMax-yMin)*rand(numbSim,1)+yMin; %random intial values
 
 probCurrent=fun_p(xRand,yRand); %current transition probabilities
 
@@ -36,7 +36,7 @@ for jj=1:numbSteps
     probProposal=fun_p(zxRand,zyRand); %proposed probability
     
     %acceptance-rejection step
-    booleAccept=rand(simNumb,1) < probProposal./probCurrent;
+    booleAccept=rand(numbSim,1) < probProposal./probCurrent;
     %update state of random walk/Markov chain
     xRand(booleAccept)=zxRand(booleAccept);
     yRand(booleAccept)=zyRand(booleAccept);

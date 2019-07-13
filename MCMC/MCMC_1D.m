@@ -6,7 +6,7 @@
 
 clearvars;clc;close all;
 
-simNumb=10^4; %number of random variables simulated
+numbSim=10^4; %number of random variables simulated
 numbSteps=25; %number of steps for the Markov process
 numbBins=50; %number of bins for histogram
 
@@ -14,7 +14,7 @@ sigma=1; %standard deviation for normal random steps
 m=2; %parameter (ie mean) for distribution to be simulated
 fun_p=@(x)((exp(-x/m)/m).*(x>=0));
 
-xRand=rand(simNumb,1); %random intial values
+xRand=rand(numbSim,1); %random intial values
 probCurrent=fun_p(xRand); %current transition probabilities
 
 for jj=1:numbSteps
@@ -23,7 +23,7 @@ for jj=1:numbSteps
     probProposal=fun_p(zRand); %proposed probability
     
     %acceptance rejection step
-    booleAccept=rand(simNumb,1) < probProposal./probCurrent;
+    booleAccept=rand(numbSim,1) < probProposal./probCurrent;
     %update state of random walk/Markov chain
     xRand(booleAccept)=zRand(booleAccept);
     %update transition probabilities

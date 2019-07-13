@@ -1,7 +1,14 @@
-% Illustrates the three solutions of the Betrand paradox on a disk.
+% Illustrate the three solutions of the Bertrand paradox on a disk.
+% The paradox asks what is the probability of a random chord in a 
+% circle being greater than a side of equalateral triangle inscribed in
+% the circle. Tradionally this problem has three different solutions.
 % The three solutions are labelled A, B and C, which correspond to
 % solutions 1, 2 and 3 in, for example, the Wikipedia article:
 % https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)
+% The empirical estimates are also done for the probability of the chord 
+% length being greater than the side of the triangle. 
+% The results are not plotted if the number of lines is equal to or 
+% greater than a thousand (ie numbLines<1000 for plotting).
 % Author: H. Paul Keeler, 2019.
 
 close all; clearvars; clc;
@@ -10,7 +17,7 @@ close all; clearvars; clc;
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk
 r=1; %disk radius
-numbLines=10^2;%number of lines
+numbLines=10^5;%number of lines
 %%%END Parameters END%%%
 
 %%%START Simulate three solutions on a disk START%%%

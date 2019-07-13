@@ -9,7 +9,7 @@ import matplotlib.pyplot as plt #For plotting
 
 plt.close("all"); # close all figures
 
-simNumb=10**4; #number of random variables simulated
+numbSim=10**4; #number of random variables simulated
 numbSteps=25; #number of steps for the Markov process
 numbBins=50; #number of bins for histogram
 
@@ -19,16 +19,16 @@ m=2; #parameter (ie mean) for distribution to be simulated
 def fun_p(x):
     return (np.exp(-x/m)/m)*(x>=0); #intensity function
 
-xRand=np.random.uniform(0,1,simNumb); #random intial values
+xRand=np.random.uniform(0,1,numbSim); #random intial values
 probCurrent=fun_p(xRand); #current transition probabilities
 
 for jj in range(numbSteps):
-    zRand= xRand +sigma*np.random.normal(0,1,simNumb);#take a (normally distributed) random step        
+    zRand= xRand +sigma*np.random.normal(0,1,numbSim);#take a (normally distributed) random step        
 	#zRand= xRand +2*sigma*np.random.uniform(0,1,simNumb);#take a (uniformly distributed) random step    
     probProposal=fun_p(zRand); #proposed probability
     
     #acceptance rejection step
-    booleAccept=np.random.uniform(0,1,simNumb) < probProposal/probCurrent;
+    booleAccept=np.random.uniform(0,1,numbSim) < probProposal/probCurrent;
     #update state of random walk/Markov chain
     xRand[booleAccept]=zRand[booleAccept];
     #update transition probabilities
