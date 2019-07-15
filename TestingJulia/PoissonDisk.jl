@@ -17,7 +17,7 @@ lambda=100; #intensity (ie mean density) of the Poisson process
 
 #Simulate Poisson point process
 numbPoints=rand(Poisson(areaTotal*lambda)); #Poisson number of points
-theta=2*pi*(rand(numbPoints,1));#angular  of Poisson points
+theta=2*pi*(rand(numbPoints,1));#angular coordinates  of Poisson points
 rho=r*sqrt.(rand(numbPoints,1));#radial coordinates of Poisson points
 
 #Convert polar to Cartesian coordinates
