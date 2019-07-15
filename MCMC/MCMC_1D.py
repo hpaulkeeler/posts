@@ -24,7 +24,7 @@ probCurrent=fun_p(xRand); #current transition probabilities
 
 for jj in range(numbSteps):
     zRand= xRand +sigma*np.random.normal(0,1,numbSim);#take a (normally distributed) random step        
-	#zRand= xRand +2*sigma*np.random.uniform(0,1,simNumb);#take a (uniformly distributed) random step    
+    #zRand= xRand +2*sigma*np.random.uniform(0,1,simNumb);#take a (uniformly distributed) random step    
     probProposal=fun_p(zRand); #proposed probability
     
     #acceptance rejection step
