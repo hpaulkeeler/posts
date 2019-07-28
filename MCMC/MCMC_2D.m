@@ -60,11 +60,11 @@ p_Exact=fun_p(X,Y);
 %Plot empirical estimate
 figure;
 surf(X,Y,p_Estimate); colormap spring; axis tight;
-xlabel("x"); ylabel("y");
+xlabel('x'); ylabel('y');
 title('p(x,y) Estimate');
 
 %Plot exact expression
 figure;
 surf(X,Y,p_Exact);  colormap spring; axis tight;
-xlabel("x"); ylabel("y");
+xlabel('x'); ylabel('y');
 title('p(x,y) Exact expression');

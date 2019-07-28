@@ -114,13 +114,13 @@ figure;
 subplot(2,1,1);
 surf(X,Y,lambda_Estimate); colormap spring;
 view(31.5,26.4); %change the plot view
-xlabel("x"); ylabel("y");
+xlabel('x'); ylabel('y');
 title('Estimate of \lambda(x)');
 
 %Plot exact expression
 subplot(2,1,2);
 surf(X,Y,lambda_Exact);  colormap spring;
 view(31.5,26.4); %change the plot view
-xlabel("x"); ylabel("y");
+xlabel('x'); ylabel('y');
 title('True \lambda(x)');
 %%%END -- Checking locations -- END%%%
