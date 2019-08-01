@@ -1,7 +1,7 @@
 # Illustrate the three solutions of the Bertrand paradox on a disk.
 # The paradox asks what is the probability of a random chord in a 
-# circle being greater than a side of equalateral triangle inscribed in
-# the circle. Tradionally this problem has three different solutions.
+# circle being greater than a side of equilateral triangle inscribed in
+# the circle. Traditionally this problem has three different solutions.
 # The three solutions are labelled A, B and C, which correspond to
 # solutions 1, 2 and 3 in, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)

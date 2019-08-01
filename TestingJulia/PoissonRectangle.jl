@@ -2,7 +2,7 @@
 #Author: H. Paul Keeler, 2019.
 
 #Note: Need the .+ for adding a scalar to an array
-#Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
+#Also need . for sqrt, exp, cos, sin etc and assigning scalars to arrays
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -22,5 +22,5 @@ xx=xDelta*rand(numbPoints,1).+xMin;#x coordinates of Poisson points
 yy=yDelta*(rand(numbPoints,1)).+yMin;#y coordinates of Poisson points
 
 #Plotting
-plot1=scatter(xx,yy,xlabel ="x",ylabel ="y", leg=false);
+plot1=scatter(xx, yy, xlabel ="x",ylabel ="y",leg = false);
 display(plot1);

@@ -1,7 +1,7 @@
 # Illustrate the three solutions of the Bertrand paradox on a disk.
 # The paradox asks what is the probability of a random chord in a 
-# circle being greater than a side of equalateral triangle inscribed in
-# the circle. Tradionally this problem has three different solutions.
+# circle being greater than a side of equilateral triangle inscribed in
+# the circle. Traditionally this problem has three different solutions.
 # The three solutions are labelled A, B and C, which correspond to
 # solutions 1, 2 and 3 in, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)
@@ -112,7 +112,8 @@ if numbLines<1000:
     ax[1].set_title('Midpoints of Solution A');
     #plot midpoints of Solution A
     ax[1].plot(xxA0,yyA0,'r.',markersize=20);
-    
+    plt.show();
+
     #Solution B
     #draw circle
     fig, ax = plt.subplots(1,2);
@@ -132,6 +133,7 @@ if numbLines<1000:
     ax[1].set_title('Midpoints of Solution B');
     #plot midpoints of Solution B
     ax[1].plot(xxB0,yyB0,'b.',markersize=20);
+    plt.show();
     
     #Solution C
     #draw circle
@@ -152,4 +154,5 @@ if numbLines<1000:
     ax[1].set_title('Midpoints of Solution C');
     #plot midpoints of Solution C
     ax[1].plot(xxC0,yyC0,'g.',markersize=20);
+    plt.show();
     ###END Plotting END###
