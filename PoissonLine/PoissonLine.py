@@ -51,4 +51,5 @@ segments=[]; #initiate list
 segments=[[(xx1[i],yy1[i]),(xx2[i],yy2[i])] for i in range(numbLines)];   
 lc = mc.LineCollection(segments,colors='b');
 ax.add_collection(lc) #plot segments
+plt.show();
 ###END Plotting END###
