@@ -17,7 +17,7 @@ fun_p<-function(x){
   
 }
 
-xRand=runif(numbSim); #random intial values
+xRand=runif(numbSim); #random initial values
 probCurrent=fun_p(xRand); #current transition probabilities
 
 for (jj in 1:numbSteps){

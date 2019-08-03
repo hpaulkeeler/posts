@@ -34,7 +34,7 @@ xxA0=(xxA1+xxA2)/2; yyA0=(yyA1+yyA2)/2;
 #Solution B
 thetaB=2*pi*runif(numbLines); #choose angular component uniformly
 pB=r*runif(numbLines); #choose radial component uniformly
-qB=sqrt(r^2-pB^2); #distance to circle edge (alonge line)
+qB=sqrt(r^2-pB^2); #distance to circle edge (along line)
 
 #calculate trig values
 sin_thetaB=sin(thetaB);

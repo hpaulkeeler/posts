@@ -14,7 +14,7 @@ sigma=1; %standard deviation for normal random steps
 m=2; %parameter (ie mean) for distribution to be simulated
 fun_p=@(x)((exp(-x/m)/m).*(x>=0));
 
-xRand=rand(numbSim,1); %random intial values
+xRand=rand(numbSim,1); %random initial values
 probCurrent=fun_p(xRand); %current transition probabilities
 
 for jj=1:numbSteps

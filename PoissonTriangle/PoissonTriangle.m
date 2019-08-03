@@ -8,7 +8,7 @@ yA=0;yB=0;yC=1; %y values of three points
 %Point process parameters
 lambda=100; %intensity (ie mean density) of the Poisson process
 
-%calculate sides of trinagle
+%calculate sides of triangle
 a=sqrt((xA-xB)^2+(yA-yB)^2); 
 b=sqrt((xB-xC)^2+(yB-yC)^2); 
 c=sqrt((xC-xA)^2+(yC-yA)^2); 

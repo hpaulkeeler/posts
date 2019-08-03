@@ -23,8 +23,8 @@ fun_lambda=@(x,y)(100*exp(-(x.^2+y.^2)/s^2));
 consNorm=integral2(fun_lambda,xMin,xMax,yMin,yMax);
 fun_p=@(x,y)((fun_lambda(x,y)/consNorm).*(x>=xMin).*(y>=yMin).*(x<=xMax).*(y<=yMax));
 
-xRand=(xMax-xMin)*rand(numbSim,1)+xMin; %random intial values
-yRand=(yMax-yMin)*rand(numbSim,1)+yMin; %random intial values
+xRand=(xMax-xMin)*rand(numbSim,1)+xMin; %random initial values
+yRand=(yMax-yMin)*rand(numbSim,1)+yMin; %random initial values
 
 probCurrent=fun_p(xRand,yRand); %current transition probabilities
 

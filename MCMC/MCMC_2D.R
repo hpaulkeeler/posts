@@ -39,8 +39,8 @@ fun_p<-function(x,y){
   return((fun_lambda(x,y)/consNorm)*(x>=xMin)*(y>=yMin)*(x<=xMax)*(y<=yMax));
 }
 
-xRand=runif(numbSim,xMin,xMax); #random intial values
-yRand=runif(numbSim,yMin,yMax); #random intial values
+xRand=runif(numbSim,xMin,xMax); #random initial values
+yRand=runif(numbSim,yMin,yMax); #random initial values
 
 probCurrent=fun_p(xRand,yRand); #current transition probabilities
 

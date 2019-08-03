@@ -4,7 +4,7 @@
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting
 
-plt.close("all");  # close all figures
+plt.close('all');  # close all figures
 
 # Simulation window parameters -- points A,B,C of a triangle
 xA = 0;
@@ -15,15 +15,15 @@ yB = 0;
 yC = 1;  # y values of three points
 
 # Point process parameters
-lambda0 = 100;  # ntensity (ie mean density) of the Poisson process
+lambda0 = 100;  # intensity (ie mean density) of the Poisson process
 
-# calculate sides of trinagle
+# calculate sides of triangle
 a = np.sqrt((xA - xB) ** 2 + (yA - yB) ** 2);
 b = np.sqrt((xB - xC) ** 2 + (yB - yC) ** 2);
 c = np.sqrt((xC - xA) ** 2 + (yC - yA) ** 2);
 s = (a + b + c) / 2;  # calculate semi-perimeter
 
-# Use Herron's forumula to calculate area -- or use polyarea
+# Use Herron's forumula to calculate area
 areaTotal = np.sqrt(s * (s - a) * (s - b) * (s - c));  # area of triangle
 
 # Simulate a Poisson point process
