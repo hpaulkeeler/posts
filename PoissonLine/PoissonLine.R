@@ -37,5 +37,5 @@ xp=xx0+r*cos(t); yp=yy0+r*sin(t);
 par(pty="s"); #use square plotting region
 plot(xp,yp,xlab='x',ylab='y',type="l", col='black');
 #plot segments of Poisson line process
-segments(xx1,yy1,xx2,yy2,col='blue');
+segments(xx1,yy1,xx2,yy2,col='blue',lwd=2);
 ###END Plotting END###

@@ -5,7 +5,7 @@ close all; clearvars; clc;
 
 %%%START Parameters START%%%
 %Poisson line process parameters
-lambda=3; %intensity (ie mean density) of the Poisson line process
+lambda=4; %intensity (ie mean density) of the Poisson line process
 
 %Simulation disk dimensions
 xx0=0; yy0=0; %center of disk
@@ -38,9 +38,11 @@ t=linspace(0,2*pi,200);
 xp=xx0+r*cos(t); yp=yy0+r*sin(t);
 plot(xp,yp,'k');
 axis square; hold on;
-xlabel('x'); ylabel('y');
+axis tight;
+xticks([]);yticks([]);
+set(gca,'Visible','off');
 
 %plot segments of Poisson line process
-plot([xx1';xx2'],[yy1';yy2'],'b');
+plot([xx1';xx2'],[yy1';yy2'],'b','LineWidth',2);
 %%%END Plotting END%%%
 
