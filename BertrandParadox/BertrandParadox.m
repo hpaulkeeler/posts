@@ -96,7 +96,7 @@ if numbLines<1000
     plot(xx0+xp,yy0+yp,'k');
     axis square; hold on;
     xlabel('x'); ylabel('y');
-    title('chords of Solution A');
+    title('Chords of Solution A');
     %plot chords of Solution A
     plot([xxA1';xxA2'],[yyA1';yyA2'],'r');
     subplot(1,2,2);
@@ -115,7 +115,7 @@ if numbLines<1000
     plot(xx0+xp,yy0+yp,'k');
     axis square; hold on;
     xlabel('x'); ylabel('y');
-    title('chords of Solution B');
+    title('Chords of Solution B');
     %plot chords of Solution B
     plot([xxB1';xxB2'],[yyB1';yyB2'],'b');
     subplot(1,2,2);
@@ -134,7 +134,7 @@ if numbLines<1000
     plot(xx0+xp,yy0+yp,'k');
     axis square; hold on;
     xlabel('x'); ylabel('y');
-    title('chords of Solution C');
+    title('Chords of Solution C');
     %plot chords of Solution C
     plot([xxC1';xxC2'],[yyC1';yyC2'],'g');
     subplot(1,2,2);

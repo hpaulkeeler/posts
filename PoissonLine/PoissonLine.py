@@ -40,10 +40,10 @@ yy2 = yy0 + p * sin_theta + q * cos_theta;
 ### START Plotting ###START
 # draw circle
 t = np.linspace(0, 2 * np.pi, 200);
-xp = r * np.cos(t);
-yp = r * np.sin(t);
+xp = xx0 + r * np.cos(t);
+yp = yy0 + r * np.sin(t);
 fig, ax = plt.subplots();
-ax.plot(xx0 + xp, yy0 + yp, color='k');
+ax.plot(xp, yp, color='k');
 plt.xlabel('x');
 plt.ylabel('y');
 plt.axis('equal');

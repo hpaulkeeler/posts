@@ -78,7 +78,7 @@ if (numbLines<1000) {
   #plot.new();
   par(mfrow=c(1,2));
   par(pty="s"); #use square plotting region
-  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution A');
+  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Chords of Solution A');
   #plot segments of Solution A
   segments(xxA1,yyA1,xxA2,yyA2,col='red'); 
   #draw circle
@@ -91,7 +91,7 @@ if (numbLines<1000) {
   #plot.new();
   par(mfrow=c(1,2));
   par(pty="s"); #use square plotting region
-  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution B');
+  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Chords of Solution B');
   #plot segments of Solution B
   segments(xxB1,yyB1,xxB2,yyB2,col='blue'); 
   #draw circle
@@ -104,7 +104,7 @@ if (numbLines<1000) {
   #plot.new();
   par(mfrow=c(1,2));
   par(pty="s"); #use square plotting region
-  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Segments of Solution C');
+  plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black',main='Chords of Solution C');
   #plot segments of Solution C
   segments(xxC1,yyC1,xxC2,yyC2,col='green'); 
   #draw circle

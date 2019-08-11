@@ -35,8 +35,8 @@ yy2=yy0+p.*sin_theta+q.*cos_theta;
 %%% START Plotting %%%START
 %draw circle
 t=linspace(0,2*pi,200);
-xp=r*cos(t); yp=r*sin(t);
-plot(xx0+xp,yy0+yp,'k');
+xp=xx0+r*cos(t); yp=yy0+r*sin(t);
+plot(xp,yp,'k');
 axis square; hold on;
 xlabel('x'); ylabel('y');
 

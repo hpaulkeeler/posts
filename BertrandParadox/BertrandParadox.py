@@ -105,7 +105,7 @@ if numbLines < 1000:
     ax[0].axis('equal');
     ax[0].set_xlabel('x');
     ax[0].set_ylabel('y');
-    ax[0].set_title('chords of Solution A');
+    ax[0].set_title('Chords of Solution A');
     # plot chords of Solution A
     # need to create a list to plot the chords (probably a better way to do this)
     chordsA = [[(xxA1[i], yyA1[i]), (xxA2[i], yyA2[i])] for i in range(numbLines)];
@@ -118,8 +118,9 @@ if numbLines < 1000:
     ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution A');
     # plot midpoints of Solution A
-    ax[1].plot(xxA0, yyA0, 'r.', markersize=20);
-
+    ax[1].plot(xxA0, yyA0, 'r.', markersize=10);
+    plt.show()    
+    
     # Solution B
     # draw circle
     fig, ax = plt.subplots(1, 2);
@@ -127,7 +128,7 @@ if numbLines < 1000:
     ax[0].axis('equal');
     ax[0].set_xlabel('x');
     ax[0].set_ylabel('y');
-    ax[0].set_title('chords of Solution B');
+    ax[0].set_title('Chords of Solution B');
     # plot chords of Solution B
     # need to create a list to plot the chords (probably a better way to do this)
     chordsB = [[(xxB1[i], yyB1[i]), (xxB2[i], yyB2[i])] for i in range(numbLines)];
@@ -140,7 +141,8 @@ if numbLines < 1000:
     ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution B');
     # plot midpoints of Solution B
-    ax[1].plot(xxB0, yyB0, 'b.', markersize=20);
+    ax[1].plot(xxB0, yyB0, 'b.', markersize=10);
+    plt.show()
 
     # Solution C
     # draw circle
@@ -149,7 +151,7 @@ if numbLines < 1000:
     ax[0].axis('equal');
     ax[0].set_xlabel('x');
     ax[0].set_ylabel('y');
-    ax[0].set_title('chords of Solution C');
+    ax[0].set_title('Chords of Solution C');
     # plot chords of Solution C
     # need to create a list to plot the chords (probably a better way to do this)
     chordsC = [[(xxC1[i], yyC1[i]), (xxC2[i], yyC2[i])] for i in range(numbLines)];
@@ -162,5 +164,6 @@ if numbLines < 1000:
     ax[1].set_ylabel('y');
     ax[1].set_title('Midpoints of Solution C');
     # plot midpoints of Solution C
-    ax[1].plot(xxC0, yyC0, 'g.', markersize=20);
+    ax[1].plot(xxC0, yyC0, 'g.', markersize=10);
+    plt.show()    
     ###END Plotting END###
