@@ -27,6 +27,9 @@ https://hpaulkeeler.com/simulating-a-poisson-point-process-on-a-disk/
 PoissonCheck
 https://hpaulkeeler.com/checking-poisson-point-process-simulations/
 
+PoissonLine
+https://hpaulkeeler.com/simulating-a-poisson-line-process/
+
 PoissonRectangle
 https://hpaulkeeler.com/poisson-point-process-simulation/
 
