@@ -9,7 +9,7 @@ plt.close('all');  # close all figures
 
 ###START Parameters START###
 # Poisson line process parameters
-lambda0 = 3;  # intensity (ie mean density) of the Poisson line process
+lambda0 = 4;  # intensity (ie mean density) of the Poisson line process
 
 # Simulation disk dimensions
 xx0 = 0;
@@ -44,9 +44,9 @@ xp = r * np.cos(t);
 yp = r * np.sin(t);
 fig, ax = plt.subplots();
 ax.plot(xx0 + xp, yy0 + yp, color='k');
-plt.xlabel('x');
-plt.ylabel('y');
 plt.axis('equal');
+plt.autoscale(enable=True, axis='x', tight=True)
+plt.axis('off');
 
 # plot segments of Poisson line process
 # need to create a list to plot the segments (probably a better way to do this)

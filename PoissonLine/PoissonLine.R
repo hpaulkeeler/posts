@@ -35,7 +35,7 @@ yy2=yy0+p*sin_theta+q*cos_theta;
 t=seq(0,2*pi,len=200);
 xp=r*cos(t); yp=r*sin(t);
 par(pty="s"); #use square plotting region
-plot(xx0+xp,yy0+yp,xlab='x',ylab='y',type="l", col='black');
+plot(xx0+xp,yy0+yp,xlab='',ylab='',type="l", col='black',axes=FALSE,lwd=2);
 #plot segments of Poisson line process
-segments(xx1,yy1,xx2,yy2,col='blue');
+segments(xx1,yy1,xx2,yy2,col='blue',lwd=2);
 ###END Plotting END###
