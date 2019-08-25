@@ -28,7 +28,7 @@ s = 0.5;  # scale parameter
 # Point process parameters
 def fun_lambda(x, y):
     return 100 * np.exp(-(x ** 2 + y ** 2) / s ** 2);  # intensity function
-
+#fun_lambda = lambda x,y: 100 * np.exp(-(x ** 2 + y ** 2) / s ** 2);
 
 ###START -- find maximum lambda -- START ###
 # For an intensity function lambda, given by function fun_lambda,
@@ -36,7 +36,7 @@ def fun_lambda(x, y):
 # [xMin,xMax,yMin,yMax].
 def fun_Neg(x):
     return -fun_lambda(x[0], x[1]);  # negative of lambda
-
+#fun_Neg = lambda x: -fun_lambda(x[0], x[1]);  # negative of lambda
 
 xy0 = [(xMin + xMax) / 2, (yMin + yMax) / 2];  # initial value(ie centre)
 # Find largest lambda value
@@ -50,7 +50,7 @@ lambdaMax = -lambdaNegMin;
 # define thinning probability function
 def fun_p(x, y):
     return fun_lambda(x, y) / lambdaMax;
-
+#fun_p = lambda x, y: fun_lambda(x, y) / lambdaMax;
 
 # for collecting statistics -- set numbSim=1 for one simulation
 numbPointsRetained = np.zeros(numbSim);  # vector to record number of points
