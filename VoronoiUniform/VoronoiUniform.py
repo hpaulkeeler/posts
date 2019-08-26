@@ -39,98 +39,84 @@ yMin = 0;
 yMax = 1;
 xDelta = xMax - xMin;
 yDelta = yMax - yMin;  # rectangle dimensions
-areaTotal = xDelta * yDelta;
+areaTotal = xDelta * yDelta; #area of similation window
 
-## Point process parameters
-#lambda0 = 10;  # intensity (ie mean density) of the Poisson process
-#
-## Simulate a Poisson point process
-#numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
-#xx = xDelta * np.random.uniform(0, 1, numbPoints) + xMin;  # x coordinates of Poisson points
-#yy = yDelta * np.random.uniform(0, 1, numbPoints) + yMin;  # y coordinates of Poisson points
+# Point process parameters
+lambda0 = 10;  # intensity (ie mean density) of the Poisson process
 
-#TEMP: a non-random example
-xx=np.array([1,3,5,6,3,2,12,1,3,8]);
-yy=np.array([2,3,5,1,7,4,3,14,14,13]);
-numbPoints=len(xx);
+# Simulate a Poisson point process
+numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
+xx = xDelta * np.random.uniform(0, 1, numbPoints) + xMin;  # x coordinates of Poisson points
+yy = yDelta * np.random.uniform(0, 1, numbPoints) + yMin;  # y coordinates of Poisson points
 
 xxyy=np.stack((xx,yy), axis=1); #combine x and y coordinates
 ##Perform Voroin tesseslation using built-in function
 voronoiData=Voronoi(xxyy);
 vertexAll=voronoiData.vertices; #retrieve x/y coordiantes of all vertices
-cellAll=voronoiData.regions; #may contain empty sets
-#cellAll = [x for x in cellAllTemp if x != []]; #remove empty sets
+cellAll=voronoiData.regions; #may contain empty array/set
 numbCells=numbPoints; #number of Voronoi cells (including unbounded)
 
-indexCells=[np.where(voronoiData.point_region == x) for x in  range(numbCells)]
-indexP2C=voronoiData.point_region;
+indexP2C=voronoiData.point_region; #index mapping between cells and points
 
 ##initiate arrays
 booleBounded=np.zeros(numbCells,dtype=bool);
 uu=np.zeros(numbCells);
 vv=np.zeros(numbCells);
 
-numbSim=10**4;
-uuCentEmp=np.zeros(numbCells);
-vvCentEmp=np.zeros(numbCells);
-for ss in range(numbSim):
-    ##Loop through for all Voronoi cells
-    for ii in range(numbCells):        
-        booleBounded[ii]=not(any(np.array(cellAll[indexP2C[ii]])==-1));
-        #checks if the Voronoi cell is bounded. if bounded, calculates its area 
-        #and assigns a single point uniformally in the Voronoi cell.
+##Loop through for all Voronoi cells
+for ii in range(numbCells):        
+    booleBounded[ii]=not(any(np.array(cellAll[indexP2C[ii]])==-1));
+    #checks if the Voronoi cell is bounded. if bounded, calculates its area 
+    #and assigns a single point uniformally in the Voronoi cell.
+    
+    ### START -- Randomly place a point in a Voronoi cell -- START###
+    if booleBounded[ii]:               
+        xx0=xx[ii];yy0=yy[ii]; #the (Poisson) point of the Voronoi cell
         
-        ### START -- Randomly place a point in a Voronoi cell -- START###
-        if booleBounded[ii]:               
-            xx0=xx[ii];yy0=yy[ii]; #the (Poisson) point of the Voronoi cell
-            
-            #print(jj,xx0,yy0)        
-            #x/y values for current cell
-            xxCell=vertexAll[cellAll[indexP2C[ii]],0];        
-            yyCell=vertexAll[cellAll[indexP2C[ii]],1];
+        #print(jj,xx0,yy0)        
+        #x/y values for current cell
+        xxCell=vertexAll[cellAll[indexP2C[ii]],0];        
+        yyCell=vertexAll[cellAll[indexP2C[ii]],1];
+                
+        ### START -- Caclulate areas of triangles -- START###
+        #calculate area of triangles of bounded cell (ie irregular polygon)
+        numbTri=len(xxCell); #number of triangles        
+        
+        #create some indices for calculating triangle areas
+        indexVertex= np.arange(numbTri+1); #number vertices
+        indexVertex[-1]=0; #repeat first index (ie returns to the start)
+        indexVertex1=indexVertex[np.arange(numbTri)]; #first vertex index
+        indexVertex2=indexVertex[np.arange(numbTri)+1];  #second vertex index
+        #using area equation for a triangle
+        areaTri=abs((xxCell[indexVertex1]-xx0)*(yyCell[indexVertex2]-yy0)\
+                    -(xxCell[indexVertex2]-xx0)*(yyCell[indexVertex1]-yy0))/2;            
+        areaPoly=sum(areaTri);        
+        ###END-- Caclulate areas of triangles -- END###
+        
+        ###START -- Randomly placing point -- START###
+        ### place a point uniformaly in the (bounded) polygon
+        #randomly choose the triangle (from the set that forms the polygon)
+        cdfArea=np.cumsum(areaTri)/areaPoly; #create triangle CDF
+        indexTri=(np.random.rand() <= cdfArea).argmax(); #use CDF to choose #
                     
-            ### START -- Caclulate areas of triangles -- START###
-            #calculate area of triangles of bounded cell (ie irregular polygon)
-            numbTri=len(xxCell); #number of triangles        
-            
-            #create some indices for calculating triangle areas
-            indexVertex= np.arange(numbTri+1); #number vertices
-            indexVertex[-1]=0; #repeat first index (ie returns to the start)
-            indexVertex1=indexVertex[np.arange(numbTri)]; #first vertex index
-            indexVertex2=indexVertex[np.arange(numbTri)+1];  #second vertex index
-            #using area equation for a triangle
-            areaTri=abs((xxCell[indexVertex1]-xx0)*(yyCell[indexVertex2]-yy0)\
-                        -(xxCell[indexVertex2]-xx0)*(yyCell[indexVertex1]-yy0))/2;            
-            areaPoly=sum(areaTri);        
-            ###END-- Caclulate areas of triangles -- END###
-            
-            ###START -- Randomly placing point -- START###
-            ### place a point uniformaly in the (bounded) polygon
-            #randomly choose the triangle (from the set that forms the polygon)
-            cdfArea=np.cumsum(areaTri)/areaPoly; #create triangle CDF
-            indexTri=(np.random.rand() <= cdfArea).argmax(); #use CDF to choose #
-                        
-            indexVertex1=indexVertex[indexTri]; #first vertex index
-            indexVertex2=indexVertex[indexTri+1]; #second vertex index
-            #for all triangles except the last one
-            xxTri=[xx0, xxCell[indexVertex1],xxCell[indexVertex2]];
-            yyTri=[yy0, yyCell[indexVertex1],yyCell[indexVertex2]];
-            
-            #create two uniform random variables on unit interval
-            uniRand1=np.random.rand(); uniRand2=np.random.rand();
-            
-            #x coordinate
-            uu[ii]=(1-np.sqrt(uniRand1))*xxTri[0]\
-            +np.sqrt(uniRand1)*(1-uniRand2)*xxTri[1]\
-            +np.sqrt(uniRand1)*uniRand2*xxTri[2]
-            #y coordinate
-            vv[ii]=(1-np.sqrt(uniRand1))*yyTri[0]\
-            +np.sqrt(uniRand1)*(1-uniRand2)*yyTri[1]\
-            +np.sqrt(uniRand1)*uniRand2*yyTri[2];
-            ###END -- Randomly placing point -- END###
-    uuCentEmp=uuCentEmp+uu;
-    vvCentEmp=vvCentEmp+vv;
-
+        indexVertex1=indexVertex[indexTri]; #first vertex index
+        indexVertex2=indexVertex[indexTri+1]; #second vertex index
+        #for all triangles except the last one
+        xxTri=[xx0, xxCell[indexVertex1],xxCell[indexVertex2]];
+        yyTri=[yy0, yyCell[indexVertex1],yyCell[indexVertex2]];
+        
+        #create two uniform random variables on unit interval
+        uniRand1=np.random.rand(); uniRand2=np.random.rand();
+        
+        #x coordinate
+        uu[ii]=(1-np.sqrt(uniRand1))*xxTri[0]\
+        +np.sqrt(uniRand1)*(1-uniRand2)*xxTri[1]\
+        +np.sqrt(uniRand1)*uniRand2*xxTri[2]
+        #y coordinate
+        vv[ii]=(1-np.sqrt(uniRand1))*yyTri[0]\
+        +np.sqrt(uniRand1)*(1-uniRand2)*yyTri[1]\
+        +np.sqrt(uniRand1)*uniRand2*yyTri[2];
+        ###END -- Randomly placing point -- END###
 
 ### END -- Randomly place a point in a Voronoi cell -- END###
 
@@ -138,34 +124,6 @@ indexBound=np.arange(numbCells)[booleBounded]; #find bounded cells
 uu=uu[indexBound]; vv=vv[indexBound]; #remove unbounded cells
 numbBound=len(indexBound); #number of bounded cells
 percentBound=numbBound/numbCells #percent of bounded Voronoi cells
-
-#estimate empirical centroids
-xCentEmp=uuCentEmp[indexBound]/numbSim; 
-yCentEmp=vvCentEmp[indexBound]/numbSim;
-
-#create a function for calculating the centroid of a polgyon. 
-#For the formula, see, for example:
-#https://en.wikipedia.org/wiki/Centroid#Of_a_polygon
-#http://demonstrations.wolfram.com/CenterOfMassOfAPolygon/
-def funCentroid(x,y):          
-    indexCent=np.arange(len(x)); #create index 
-    #loop back arrays tos start
-    x=np.append(x,x[0]); 
-    y=np.append(y,y[0]);
-    xyStep=x[indexCent]*y[indexCent+1]-x[indexCent+1]*y[indexCent];                
-    areaPoly=sum(xyStep)/2
-    xCentroid = sum((x[indexCent]+x[indexCent+1])*xyStep)/areaPoly/6;
-    yCentroid = sum((y[indexCent]+y[indexCent+1])*xyStep)/areaPoly/6; 
-    return(xCentroid, yCentroid)
-    
-#calculate centroids
-#initiate arrays    
-xCentExact=np.zeros(numbBound); yCentExact=np.zeros(numbBound);
-for ii in range(numbBound):
-    xxCell=vertexAll[cellAll[indexP2C[indexBound[ii]]],0];
-    yyCell=vertexAll[cellAll[indexP2C[indexBound[ii]]],1];
-    xCent,yCent = funCentroid(xxCell,yyCell);
-    xCentExact[ii]=xCent; yCentExact[ii]=yCent;
 
 ####START -- Plotting section -- START###
 if (numbBound>0) and (boolePlot):
