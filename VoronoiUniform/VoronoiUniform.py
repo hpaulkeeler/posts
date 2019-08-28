@@ -12,7 +12,7 @@
 # The placement step is repeated for all bounded Voronoi cells.
 # A Voronoi diagram is displayed over the PPP. Points of the underlying PPP
 # are marked green and blue if they are located respectively in bounded and
-# unbounded Voronoi cells. The uniformally placed points in the bounded
+# unbounded Voronoi cells. The uniformly placed points in the bounded
 # cells are marked red.
 # If there are no bounded Voronoi cells, no diagram is created.
 #
@@ -37,8 +37,9 @@ xMin = 0;
 xMax = 1;
 yMin = 0;
 yMax = 1;
-xDelta = xMax - xMin;
-yDelta = yMax - yMin;  # rectangle dimensions
+# rectangle dimensions
+xDelta = xMax - xMin; #width
+yDelta = yMax - yMin #height
 areaTotal = xDelta * yDelta; #area of similation window
 
 # Point process parameters
@@ -67,7 +68,7 @@ vv=np.zeros(numbCells);
 for ii in range(numbCells):        
     booleBounded[ii]=not(any(np.array(cellAll[indexP2C[ii]])==-1));
     #checks if the Voronoi cell is bounded. if bounded, calculates its area 
-    #and assigns a single point uniformally in the Voronoi cell.
+    #and assigns a single point uniformly in the Voronoi cell.
     
     ### START -- Randomly place a point in a Voronoi cell -- START###
     if booleBounded[ii]:               
@@ -116,26 +117,28 @@ for ii in range(numbCells):
         vv[ii]=(1-np.sqrt(uniRand1))*yyTri[0]\
         +np.sqrt(uniRand1)*(1-uniRand2)*yyTri[1]\
         +np.sqrt(uniRand1)*uniRand2*yyTri[2];
-        ###END -- Randomly placing point -- END###
+        
+    ###END -- Randomly placing point -- END###
 
 ### END -- Randomly place a point in a Voronoi cell -- END###
 
-indexBound=np.arange(numbCells)[booleBounded]; #find bounded cells
-uu=uu[indexBound]; vv=vv[indexBound]; #remove unbounded cells
-numbBound=len(indexBound); #number of bounded cells
-percentBound=numbBound/numbCells #percent of bounded Voronoi cells
+indexBounded=np.arange(numbCells)[booleBounded]; #find bounded cells
+uu=uu[indexBounded]; vv=vv[indexBounded]; #remove unbounded cells
+numbBounded=len(indexBounded); #number of bounded cells
+percentBound=numbBounded/numbCells #percent of bounded Voronoi cells
 
 ####START -- Plotting section -- START###
-if (numbBound>0) and (boolePlot):
-#    figure; grid; hold on;
-    #plotting points in PPP
-    voronoi_plot_2d(voronoiData); #create voronoi diagram on the PPP
-    #put a red o uniformally in each bounded Voronoi cell
+if (numbBounded>0) and (boolePlot):
+    #create voronoi diagram on the point pattern
+    voronoi_plot_2d(voronoiData, show_points=False,show_vertices=False); 
+    #plot the underlying point pattern
+    plt.scatter(xx, yy, edgecolor='b', facecolor='none');
+    #put a red o uniformly in each bounded Voronoi cell
     plt.scatter(uu, vv, edgecolor='r', facecolor='none');
     #put a green star on the base station of each Voronoi bounded cell
-    plt.scatter(xx[indexBound], yy[indexBound], edgecolor='g', marker='*');
+    plt.scatter(xx[indexBounded], yy[indexBounded], color='g', marker='*');
     #number the points
     for ii in range(numbPoints):
-        plt.text(xx[ii], yy[ii], ii);   
+        plt.text(xx[ii]+xDelta/50, yy[ii]+yDelta/50, ii);   
    
 ####END -- Plotting section -- END###

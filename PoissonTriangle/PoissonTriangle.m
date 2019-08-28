@@ -14,7 +14,7 @@ b=sqrt((xB-xC)^2+(yB-yC)^2);
 c=sqrt((xC-xA)^2+(yC-yA)^2); 
 s=(a+b+c)/2; %calculate semi-perimeter
 
-%Use Herron's forumula -- or use polyarea
+%Use Herron's formula -- or use polyarea
 areaTotal=sqrt(s*(s-a)*(s-b)*(s-c)); %area of triangle
 
 %Simulate Poisson point process
@@ -22,6 +22,7 @@ numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points
 U=(rand(numbPoints,1));%uniform random variables
 V=(rand(numbPoints,1));%uniform random variables
 
+%places points uniformly on triangle
 xx=sqrt(U)*xA+sqrt(U).*(1-V)*xB+sqrt(U).*V*xC;%x coordinates of points
 yy=sqrt(U)*yA+sqrt(U).*(1-V)*yB+sqrt(U).*V*yC;%y coordinates of points
 

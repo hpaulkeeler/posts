@@ -12,7 +12,7 @@
 % The placement step is repeated for all bounded Voronoi cells.
 % A Voronoi diagram is displayed over the PPP. Points of the underlying PPP
 % are marked green and blue if they are located respectively in bounded and
-% unbounded Voronoi cells. The uniformally placed points in the bounded
+% unbounded Voronoi cells. The uniformly placed points in the bounded
 % cells are marked red.
 %
 % If there are no bounded Voronoi cells, no diagram is created.
@@ -30,9 +30,13 @@ clearvars; close all; clc;
 boolePlot=1; % set to 1 for plot, 0 for no plot
 
 %Simulation window parameters
-xMin=0;xMax=1;
-yMin=0;yMax=1;
-xDelta=xMax-xMin;yDelta=yMax-yMin; %rectangle dimensions
+xMin=0;
+xMax=1;
+yMin=0;
+yMax=1;
+%rectangle dimensions
+xDelta=xMax-xMin; %width 
+yDelta=yMax-yMin; %height
 areaTotal=xDelta*yDelta; %area of simulation window
 
 %Point process parameters
@@ -65,7 +69,7 @@ for ii=1:numbCells
     booleBounded(ii)=~(any((cellAll{ii})==1));
     
     %checks if the Voronoi cell is bounded. if bounded, calculates its area
-    %and assigns a single point uniformally in the Voronoi cell.
+    %and assigns a single point uniformly in the Voronoi cell.
     
     %%%START-- Randomly place a point in a bounded Voronoi cell --START%%%
     if booleBounded(ii)
@@ -103,7 +107,7 @@ for ii=1:numbCells
         %create two uniform random variables on unit interval
         uniRand1=rand(1,1); uniRand2=rand(1,1);
         
-        %point is uniformally placed in the triangle via equation (1)in [2]
+        %point is uniformly placed in the triangle via equation (1)in [2]
         %x coordinate
         uu(ii)=(1-sqrt(uniRand1))*xxTri(1)...
             +sqrt(uniRand1)*(1-uniRand2)*xxTri(2)...
@@ -118,27 +122,26 @@ for ii=1:numbCells
     %%% END -- Randomly place a point in a Voronoi cell -- END%%%
 end
 
-indexBound=find(booleBounded==1); %find bounded cells
-uu=uu(indexBound); vv=vv(indexBound); %remove unbounded cells
-numbBound=length(indexBound); %number of bounded cells
-percentBound=numbBound/numbCells; %percent of bounded Voronoi cells
-
+indexBounded=find(booleBounded==1); %find bounded cells
+uu=uu(indexBounded); vv=vv(indexBounded); %remove unbounded cells
+numbBounded=length(indexBounded); %number of bounded cells
+percentBound=numbBounded/numbCells; %percent of bounded Voronoi cells
 
 %%%START -- Plotting section -- START%%%
-if (numbBound>0)&&boolePlot
-    figure; grid; hold on;
-    %plotting points in PPP
-    scatter(xx,yy);
-    voronoi(xx,yy); %create voronoi diagram on the PPP
-    %put a red o uniformally in each bounded Voronoi cell
+if (numbBounded>0)&&boolePlot
+    figure; hold on;
+    %create voronoi diagram on the point pattern
+    voronoi(xx,yy);
+    %plot the underlying point pattern
+    scatter(xx,yy,'bo');
+    %put a red o uniformly in each bounded Voronoi cell
     scatter(uu,vv,'ro');
     % put a green * on the base station of each Voronoi bounded cell
-    scatter(xx(indexBound),yy(indexBound),'g*');
+    scatter(xx(indexBounded),yy(indexBounded),'g*');
     
     %number the points/cells
     labels=cellstr(num2str((1:numbPoints)'));%labels correspond to their order
     text(xx, yy, labels, 'VerticalAlignment','bottom', ...
-        'HorizontalAlignment','right');
-    
+        'HorizontalAlignment','right');    
 end
 %%%END -- Plotting section -- END%%%

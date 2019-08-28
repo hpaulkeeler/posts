@@ -23,7 +23,7 @@ b = np.sqrt((xB - xC) ** 2 + (yB - yC) ** 2);
 c = np.sqrt((xC - xA) ** 2 + (yC - yA) ** 2);
 s = (a + b + c) / 2;  # calculate semi-perimeter
 
-# Use Herron's forumula to calculate area
+# Use Herron's formula to calculate area
 areaTotal = np.sqrt(s * (s - a) * (s - b) * (s - c));  # area of triangle
 
 # Simulate a Poisson point process
@@ -31,6 +31,7 @@ numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
 U = np.random.uniform(0, 1, numbPoints);  # uniform random variables
 V = np.random.uniform(0, 1, numbPoints);  # uniform random variables
 
+#places points uniformly on triangle
 xx = np.sqrt(U) * xA + np.sqrt(U) * (1 - V) * xB + np.sqrt(U) * V * xC;  # x coordinates of points
 yy = np.sqrt(U) * yA + np.sqrt(U) * (1 - V) * yB + np.sqrt(U) * V * yC;  # y coordinates of points
 
