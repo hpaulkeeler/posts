@@ -41,6 +41,7 @@ xxyy=[xx(:) yy(:)]; %combine x and y coordinates
 figure; hold on;
 %create voronoi diagram on the point pattern
 voronoi(xx,yy);
+%plot underlying point pattern (ie a realization of a Poisson point process)
 plot(xx,yy,'b.','MarkerSize',20);
 %number/label the points/cells
 labels=cellstr(num2str((1:numbPoints)'));%labels correspond to their order

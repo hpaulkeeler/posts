@@ -45,7 +45,7 @@ cellAll=voronoiData.regions; #may contain empty array/set
 ####START -- Plotting section -- START###
 #create voronoi diagram on the point pattern
 voronoi_plot_2d(voronoiData, show_points=False,show_vertices=False); 
-#plot the underlying point pattern
+#plot underlying point pattern (ie a realization of a Poisson point process)
 plt.scatter(xx, yy, edgecolor='b', facecolor='b');
 #number the points
 for ii in range(numbPoints):
