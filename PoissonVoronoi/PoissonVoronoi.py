@@ -1,8 +1,13 @@
-# This code generates a Voronoi-Poisson tessellation.
+# This code generates a Voronoi-Poisson tessellation, meaning it generates
+# a Poisson point process and then uses it to generate a corresponding 
+# Voronoi tesselation. A Voronoi tesselation is also known as a Dirichlet
+# tesselation or Voronoi diagram.
+#
 # A (homogeneous) Poisson point process (PPP) is created on a rectangle.
-# Then the Voronoi tesselation is found using the SciPy function[1], which is based on 
-# the Qhull project[2] .
-# All points (or cells) of the PPP are numbered arbitrarily.
+# Then the Voronoi tesselation is found using the SciPy function 
+# Voronoi[1], which is based on the Qhull project[2] .
+#
+# All points and Voronoi cells of the PPP are numbered arbitrarily.
 #
 # Author: H.Paul Keeler, 2019
 #
