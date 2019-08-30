@@ -1,5 +1,4 @@
-
-%Simulate a Matern cluster point process on a rectangle.
+%Simulate a Thomas cluster point process on a rectangle.
 %Author: H. Paul Keeler, 2018.
 
 %Simulation window parameters
@@ -9,10 +8,11 @@ yMin=-.5;yMax=.5;
 %Parameters for the parent and daughter point processes 
 lambdaParent=10;%density of parent Poisson point process
 lambdaDautgher=100;%mean number of points in each cluster
-radiusCluster=0.1;%radius of cluster disk (for daughter points)
+sigma=0.05;%sigma for normal variables (ie random locations) of daughters
 
 %Extended simulation windows parameters
-rExt=radiusCluster; %extension parameter -- use cluster radius
+rExt=7*sigma; %extension parameter -- use factor of deviation
+%1-normcdf(7*sigma,0,sigma) is probability of  
 xMinExt=xMin-rExt;
 xMaxExt=xMax+rExt;
 yMinExt=yMin-rExt;
@@ -32,13 +32,10 @@ yyParent=yMinExt+yDeltaExt*rand(numbPointsParent,1);
 numbPointsDaughter=poissrnd(lambdaDautgher,numbPointsParent,1); 
 numbPoints=sum(numbPointsDaughter); %total number of points
 
-%Generate the (relative) locations in polar coordinates by 
-%simulating independent variables.
-theta=2*pi*rand(numbPoints,1); %angular coordinates 
-rho=radiusCluster*sqrt(rand(numbPoints,1)); %radial coordinates 
-
-%Convert from polar to Cartesian coordinates
-[xx0,yy0]=pol2cart(theta,rho);
+%Generate the (relative) locations in Cartesian coordinates by 
+%simulating independent normal variables
+xx0=normrnd(0,sigma,numbPoints,1);
+yy0=normrnd(0,sigma,numbPoints,1);
 
 %replicate parent points (ie centres of disks/clusters) 
 xx=repelem(xxParent,numbPointsDaughter);

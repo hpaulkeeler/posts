@@ -11,20 +11,29 @@ xMin = -.5;
 xMax = .5;
 yMin = -.5;
 yMax = .5;
-xDelta = xMax - xMin;
-yDelta = yMax - yMin;  # rectangle dimensions
-areaTotal = xDelta * yDelta;  # area of rectangle
 
 # Parameters for the parent and daughter point processes
 lambdaParent = 10;  # density of parent Poisson point process
 lambdaDaughter = 100;  # mean number of points in each cluster
-sigma = 0.1;  # sigma for normal variables (ie random locations) of daughters
+sigma = 0.05;  # sigma for normal variables (ie random locations) of daughters
+
+#Extended simulation windows parameters
+rExt=7*sigma; #extension parameter 
+#for rExt, use factor of deviation sigma eg 6 or 7
+xMinExt = xMin - rExt;
+xMaxExt = xMax + rExt;
+yMinExt = yMin - rExt;
+yMaxExt = yMax + rExt;
+# rectangle dimensions
+xDeltaExt = xMaxExt - xMinExt;
+yDeltaExt = yMaxExt - yMinExt;
+areaTotalExt = xDeltaExt * yDeltaExt;  # area of extended rectangle
 
 # Simulate Poisson point process for the parents
-numbPointsParent = np.random.poisson(areaTotal * lambdaParent);  # Poisson number of points
+numbPointsParent = np.random.poisson(areaTotalExt * lambdaParent);# Poisson number of points
 # x and y coordinates of Poisson points for the parent
-xxParent = xMin + xDelta * np.random.uniform(0, 1, numbPointsParent);
-yyParent = yMin + yDelta * np.random.uniform(0, 1, numbPointsParent);
+xxParent = xMinExt + xDeltaExt * np.random.uniform(0, 1, numbPointsParent);
+yyParent = yMinExt + yDeltaExt * np.random.uniform(0, 1, numbPointsParent);
 
 # Simulate Poisson point process for the daughters (ie final poiint process)
 numbPointsDaughter = np.random.poisson(lambdaDaughter, numbPointsParent);
@@ -42,6 +51,12 @@ yy = np.repeat(yyParent, numbPointsDaughter);
 # translate points (ie parents points are the centres of cluster disks)
 xx = xx + xx0;
 yy = yy + yy0;
+
+# thin points if outside the simulation window
+booleInside = ((xx >= xMin) & (xx <= xMax) & (yy >= yMin) & (yy <= yMax));
+# retain points inside simulation window
+xx = xx[booleInside];  
+yy = yy[booleInside];
 
 # Plotting
 plt.scatter(xx, yy, edgecolor='b', facecolor='none', alpha=0.5);

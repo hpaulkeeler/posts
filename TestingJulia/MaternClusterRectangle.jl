@@ -8,22 +8,33 @@ using Distributions #for random simulations
 using Plots #for plotting
 
 #Simulation window parameters
-xMin=-.5;xMax=.5;
-yMin=-.5;yMax=.5;
-xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
-areaTotal=xDelta*yDelta; #area of rectangle
+xMin=-.5;
+xMax=.5;
+yMin=-.5;
+yMax=.5;
 
 #Parameters for the parent and daughter point processes
 lambdaParent=10;#density of parent Poisson point process
 lambdaDaughter=10;#mean number of points in each cluster
 radiusCluster=0.1;#radius of cluster disk (for daughter points)
 
+#Extended simulation windows parameters
+rExt=radiusCluster; #extension parameter -- use cluster radius
+xMinExt=xMin-rExt;
+xMaxExt=xMax+rExt;
+yMinExt=yMin-rExt;
+yMaxExt=yMax+rExt;
+#rectangle dimensions
+xDeltaExt=xMaxExt-xMinExt;
+yDeltaExt=yMaxExt-yMinExt;
+areaTotalExt=xDeltaExt*yDeltaExt; #area of extended rectangle
+
 #Simulate Poisson point process
-numbPointsParent=rand(Poisson(areaTotal*lambdaParent)); #Poisson number of points
+numbPointsParent=rand(Poisson(areaTotalExt*lambdaParent)); #Poisson number of points
 
 #x and y coordinates of Poisson points for the parent
-xxParent=xDelta*rand(numbPointsParent,1).+xMin;
-yyParent=yDelta*(rand(numbPointsParent,1)).+yMin;
+xxParent=xMinExt.+xDeltaExt*rand(numbPointsParent,1);
+yyParent=yMinExt.+yDeltaExt*rand(numbPointsParent,1);
 
 #Simulate Poisson point process for the daughters (ie final poiint process)
 numbPointsDaughter=rand(Poisson(lambdaDaughter),numbPointsParent);
@@ -45,6 +56,12 @@ yy=vcat(fill.(yyParent, numbPointsDaughter)...);
 #Shift centre of disk to (xx0,yy0)
 xx=xx.+xx0;
 yy=yy.+yy0;
+
+#thin points if outside the simulation window
+booleInside=((xx.>=xMin).&(xx.<=xMax).&(yy.>=yMin).&(yy.<=yMax));
+#retain points inside simulation window
+xx=xx[booleInside];
+yy=yy[booleInside];
 
 #Plotting
 plot1=scatter(xx,yy,xlabel ="x",ylabel ="y", leg=false);

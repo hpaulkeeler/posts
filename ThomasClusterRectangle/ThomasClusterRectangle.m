@@ -2,21 +2,33 @@
 %Author: H. Paul Keeler, 2018.
 
 %Simulation window parameters
-xMin=-.5;xMax=.5;
-yMin=-.5;yMax=.5;
-xDelta=xMax-xMin;yDelta=yMax-yMin; %rectangle dimensions
-areaTotal=xDelta*yDelta; %area of rectangle
+xMin=-.5;
+xMax=.5;
+yMin=-.5;
+yMax=.5;
 
 %Parameters for the parent and daughter point processes 
 lambdaParent=10;%density of parent Poisson point process
 lambdaDautgher=100;%mean number of points in each cluster
-sigma=0.1;%sigma for normal variables (ie random locations) of daughters
+sigma=0.05;%sigma for normal variables (ie random locations) of daughters
+
+%Extended simulation windows parameters
+rExt=7*sigma; %extension parameter -- use factor of deviation
+%for rExt, use factor of deviation sigma eg 6 or 7
+xMinExt=xMin-rExt;
+xMaxExt=xMax+rExt;
+yMinExt=yMin-rExt;
+yMaxExt=yMax+rExt;
+%rectangle dimensions
+xDeltaExt=xMaxExt-xMinExt;
+yDeltaExt=yMaxExt-yMinExt;
+areaTotalExt=xDeltaExt*yDeltaExt; %area of extended rectangle
 
 %Simulate Poisson point process for the parents
-numbPointsParent=poissrnd(areaTotal*lambdaParent,1,1);%Poisson number of points
+numbPointsParent=poissrnd(areaTotalExt*lambdaParent,1,1);%Poisson number 
 %x and y coordinates of Poisson points for the parent
-xxParent=xMin+xDelta*rand(numbPointsParent,1);
-yyParent=yMin+yDelta*rand(numbPointsParent,1);
+xxParent=xMinExt+xDeltaExt*rand(numbPointsParent,1);
+yyParent=yMinExt+yDeltaExt*rand(numbPointsParent,1);
 
 %Simulate Poisson point process for the daughters (ie final poiint process)
 numbPointsDaughter=poissrnd(lambdaDautgher,numbPointsParent,1); 
@@ -33,6 +45,12 @@ yy=repelem(yyParent,numbPointsDaughter);
 %translate points (ie parents points are the centres of cluster disks)
 xx=xx(:)+xx0;
 yy=yy(:)+yy0;
+
+%thin points if outside the simulation window
+booleInside=((xx>=xMin)&(xx<=xMax)&(yy>=yMin)&(yy<=yMax));
+%retain points inside simulation window
+xx=xx(booleInside); 
+yy=yy(booleInside); 
 
 %Plotting
 scatter(xx,yy);
