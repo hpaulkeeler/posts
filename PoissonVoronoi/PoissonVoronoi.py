@@ -13,9 +13,6 @@
 #
 # [1] http://scipy.github.io/devdocs/generated/scipy.spatial.Voronoi.html
 # [2] http://www.qhull.org/
-# [2] Osada, R., Funkhouser, T., Chazelle, B. and Dobkin. D.,
-# "Shape distributions", ACM Transactions on Graphics, vol 21, issue 4,
-# 2002
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting
