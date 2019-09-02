@@ -9,7 +9,7 @@ yMax=.5;
 
 %Parameters for the parent and daughter point processes 
 lambdaParent=10;%density of parent Poisson point process
-lambdaDautgher=100;%mean number of points in each cluster
+lambdaDaughter=100;%mean number of points in each cluster
 sigma=0.05;%sigma for normal variables (ie random locations) of daughters
 
 %Extended simulation windows parameters
@@ -31,7 +31,7 @@ xxParent=xMinExt+xDeltaExt*rand(numbPointsParent,1);
 yyParent=yMinExt+yDeltaExt*rand(numbPointsParent,1);
 
 %Simulate Poisson point process for the daughters (ie final poiint process)
-numbPointsDaughter=poissrnd(lambdaDautgher,numbPointsParent,1); 
+numbPointsDaughter=poissrnd(lambdaDaughter,numbPointsParent,1); 
 numbPoints=sum(numbPointsDaughter); %total number of points
 
 %Generate the (relative) locations in Cartesian coordinates by 
