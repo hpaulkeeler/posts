@@ -13,9 +13,6 @@
 %
 % [1] http://www.mathworks.com.au/help/matlab/ref/voronoin.html
 % [2] http://www.qhull.org/
-% [2] Osada, R., Funkhouser, T., Chazelle, B. and Dobkin. D.,
-% "Shape distributions", ACM Transactions on Graphics, vol 21, issue 4,
-% 2002
 
 clearvars; close all; clc;
 
