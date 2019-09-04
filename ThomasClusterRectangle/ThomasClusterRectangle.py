@@ -17,9 +17,9 @@ lambdaParent = 10;  # density of parent Poisson point process
 lambdaDaughter = 100;  # mean number of points in each cluster
 sigma = 0.05;  # sigma for normal variables (ie random locations) of daughters
 
-#Extended simulation windows parameters
-rExt=6*sigma; #extension parameter 
-#for rExt, use factor of deviation sigma eg 5 or 6
+# Extended simulation windows parameters
+rExt=6*sigma; # extension parameter 
+# for rExt, use factor of deviation sigma eg 5 or 6
 xMinExt = xMin - rExt;
 xMaxExt = xMax + rExt;
 yMinExt = yMin - rExt;

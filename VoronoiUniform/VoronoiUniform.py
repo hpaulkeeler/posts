@@ -10,6 +10,7 @@
 # The i th triangle is then randomly chosen based on the ratio of areas.
 # A point is then uniformly placed on the i th triangle (via eq. 1 in [3]).
 # The placement step is repeated for all bounded Voronoi cells.
+#
 # A Voronoi diagram is displayed over the PPP. Points of the underlying PPP
 # are marked green and blue if they are located respectively in bounded and
 # unbounded Voronoi cells. The uniformly placed points in the bounded
@@ -29,8 +30,6 @@ import matplotlib.pyplot as plt  # for plotting
 from scipy.spatial import Voronoi, voronoi_plot_2d #for voronoi tessellation
 
 plt.close('all');  # close all figures
-
-boolePlot=True; # set to True for plot, False for no plot
 
 # Simulation window parameters
 xMin = 0;
@@ -88,17 +87,17 @@ for ii in range(numbCells):
         indexVertex[-1]=0; #repeat first index (ie returns to the start)
         indexVertex1=indexVertex[np.arange(numbTri)]; #first vertex index
         indexVertex2=indexVertex[np.arange(numbTri)+1];  #second vertex index
-        #using area equation for a triangle
+        #calculate areas of triangles using shoelace formula
         areaTri=abs((xxCell[indexVertex1]-xx0)*(yyCell[indexVertex2]-yy0)\
                     -(xxCell[indexVertex2]-xx0)*(yyCell[indexVertex1]-yy0))/2;            
-        areaPoly=sum(areaTri);        
+        areaPoly=sum(areaTri);  #total area of cell/polygon      
         ###END-- Caclulate areas of triangles -- END###
         
         ###START -- Randomly placing point -- START###
         ### place a point uniformaly in the (bounded) polygon
         #randomly choose the triangle (from the set that forms the polygon)
-        cdfArea=np.cumsum(areaTri)/areaPoly; #create triangle CDF
-        indexTri=(np.random.rand() <= cdfArea).argmax(); #use CDF to choose #
+        cdfTri=np.cumsum(areaTri)/areaPoly; #create triangle CDF
+        indexTri=(np.random.rand() <= cdfTri).argmax(); #use CDF to choose #
                     
         indexVertex1=indexVertex[indexTri]; #first vertex index
         indexVertex2=indexVertex[indexTri+1]; #second vertex index
@@ -106,14 +105,14 @@ for ii in range(numbCells):
         xxTri=[xx0, xxCell[indexVertex1],xxCell[indexVertex2]];
         yyTri=[yy0, yyCell[indexVertex1],yyCell[indexVertex2]];
         
-        #create two uniform random variables on unit interval
+        #create two sets of uniform random variables on unit interval
         uniRand1=np.random.rand(); uniRand2=np.random.rand();
         
-        #x coordinate
+        #x coordinate (via eq. 1 in [3])
         uu[ii]=(1-np.sqrt(uniRand1))*xxTri[0]\
         +np.sqrt(uniRand1)*(1-uniRand2)*xxTri[1]\
         +np.sqrt(uniRand1)*uniRand2*xxTri[2]
-        #y coordinate
+        #y coordinate (via eq. 1 in [3])
         vv[ii]=(1-np.sqrt(uniRand1))*yyTri[0]\
         +np.sqrt(uniRand1)*(1-uniRand2)*yyTri[1]\
         +np.sqrt(uniRand1)*uniRand2*yyTri[2];
@@ -123,12 +122,14 @@ for ii in range(numbCells):
 ### END -- Randomly place a point in a Voronoi cell -- END###
 
 indexBounded=np.arange(numbCells)[booleBounded]; #find bounded cells
-uu=uu[indexBounded]; vv=vv[indexBounded]; #remove unbounded cells
+#remove unbounded cells
+uu=uu[indexBounded]; 
+vv=vv[indexBounded]; 
 numbBounded=len(indexBounded); #number of bounded cells
 percentBound=numbBounded/numbCells #percent of bounded Voronoi cells
 
 ####START -- Plotting section -- START###
-if (numbBounded>0) and (boolePlot):
+if (numbBounded>0):
     #create voronoi diagram on the point pattern
     voronoi_plot_2d(voronoiData, show_points=False,show_vertices=False); 
     #plot the underlying point pattern

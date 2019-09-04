@@ -60,4 +60,3 @@ plot(xx,yy,'p',xlab='x',ylab='y',col='blue');
 library(spatstat);
 #Simulate and plot (in one line) Matern cluster point process 
 plot(rMatClust(lambdaParent,radiusCluster,lambdaDaughter,c(xMin,xMax,yMin,yMax)));
-
