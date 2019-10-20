@@ -52,7 +52,7 @@ plt.axis('off');
 
 # plot segments of Poisson line process
 # need to create a list to plot the segments (probably a better way to do this)
-segments = [];  # initiate list
+segments = [];  # initialize  list
 segments = [[(xx1[i], yy1[i]), (xx2[i], yy2[i])] for i in range(numbLines)];
 lc = mc.LineCollection(segments, colors='b');
 ax.add_collection(lc)  # plot segments

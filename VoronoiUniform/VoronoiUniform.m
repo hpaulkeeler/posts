@@ -52,7 +52,7 @@ xxyy=[xx(:) yy(:)]; %combine x and y coordinates
 %vertexAll is x/y coordinates of all vertices
 numbCells=numbPoints; %number of Voronoi cells (including unbounded)
 
-%initiate arrays
+%initialize  arrays
 booleBounded=zeros(numbCells,1);
 uu=zeros(numbCells,1);
 vv=zeros(numbCells,1);
