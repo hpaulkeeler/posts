@@ -39,7 +39,7 @@ yDelta=yMax-yMin; %height
 areaTotal=xDelta*yDelta; %area of simulation window
 
 %Point process parameters
-lambda=10; %intensity (ie mean density) of the Poisson process
+lambda=20; %intensity (ie mean density) of the Poisson process
 
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points
@@ -129,11 +129,9 @@ if (numbBounded>0)
     %create voronoi diagram on the point pattern
     voronoi(xx,yy);
     %plot the underlying point pattern
-    scatter(xx,yy,'bo');
-    %put a red o uniformly in each bounded Voronoi cell
-    scatter(uu,vv,'ro');
-    % put a green * on the base station of each Voronoi bounded cell
-    scatter(xx(indexBounded),yy(indexBounded),'g*');
+    plot(xx,yy,'b.','MarkerSize',20);        
+    %put a red point uniformly in each bounded Voronoi cell
+    plot(uu,vv,'r.','MarkerSize',20);
     
     %number the points/cells
     labels=cellstr(num2str((1:numbPoints)'));%labels correspond to their order
