@@ -1,6 +1,6 @@
 // Author: H. Paul Keeler, 2019.
+// github.com/hpaulkeeler
 // hpaulkeeler.com/
-
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,8 +55,11 @@ int main()
     //calculate statistics
     double meanPoisson = sumPoisson / ((double)numbSim);                             //need to cast before doing divisions
     double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
+	
+	///print statistics
     printf("The average of the Poisson variables is %f\n", meanPoisson);
     printf("The variance of the Poisson variables is %f\n", varPoisson);
+	printf("For Poisson random variables, the mean and variance will more agree as the number of simuations increases.");
 
     //END Collect statistists on Poisson variables
 
@@ -72,7 +75,7 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
     double *p_uu = (double *)malloc(sizeof(double));
     double randExpTemp; //exponential variable
     double randUni;
-    double sum_exp; //sum of exponential variable s
+    double sum_exp; //sum of exponential variables
 
     //loop through for all  random variables to be generated
     for (int i = 0; i < n_output; i++)
@@ -84,13 +87,12 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
         sum_exp = 0; //sum of exponential variable s
         do
         {
-            (*(p_output + i))++;
             funUniformMany(p_uu, 1); //generate uniform variable
             randUni = *p_uu;
             randExpTemp = (-1 / lambda) * log(randUni); //generate exponential variable
-            sum_exp = sum_exp + randExpTemp;            //add exponential variable to sum
-            //generate exponential variable, add it to sum
-            //sum_exp = sum_exp - 1 / lambda * log(*p_uu);
+            sum_exp = sum_exp + randExpTemp;//add exponential variable to sum          
+            (*(p_output + i))++; // increase Poisson variable
+			
         } while (sum_exp < 1); //stop loop if sum exceeds one
     }
 }

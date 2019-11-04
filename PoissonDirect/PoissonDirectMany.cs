@@ -1,4 +1,5 @@
 // Author: H. Paul Keeler, 2019.
+// github.com/hpaulkeeler
 // hpaulkeeler.com/
 
 using System;
@@ -44,6 +45,7 @@ namespace Poisson
             double meanPoisson = sumPoisson / ((double) numbSim);
             double varPoisson = sumPoissonSquared / ((double) numbSim) - Math.Pow (meanPoisson, 2);
 
+			///print statistics
             Console.WriteLine ("The average of the Poisson variables is " + meanPoisson);
             Console.WriteLine ("The variance of the Poisson variables is " + varPoisson);
             Console.WriteLine ("For Poisson random variables, the mean and variance will more agree as the number of simuations increases.");
@@ -80,15 +82,16 @@ public class RandomGenerator {
             do {
                 randUni = funUniformMany (1); //generate uniform variable
                 randExpTemp = -(1 / lambda) * Math.Log (randUni[0]); //exponential random variable
-                sum_exp = sum_exp + randExpTemp; // increase random sum
+                sum_exp = sum_exp + randExpTemp; //add exponential variable to sum
                 randPoisson[i]++; // increase Poisson variable
+				
             } while (sum_exp < 1); //stop loop if sum exceeds one
         }
 
         return randPoisson;
     }
 
-    // Generate a random number between two numbers    
+    //Uniform function -- returns standard uniform random variables
     public double[] funUniformMany (int n_input) {
         double[] randUni = new double[n_input];
         for (int i = 0; i < n_input; i++) {

@@ -1,4 +1,5 @@
 // Author: H. Paul Keeler, 2019.
+// github.com/hpaulkeeler
 // hpaulkeeler.com/
 
 #include <stdio.h>
@@ -48,6 +49,8 @@ int main()
     //calculate statistics
     double meanPoisson = sumPoisson / ((double)numbSim);                             //need to cast before doing divisions
     double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
+	
+	///print statistics
     printf("The average of the Poisson variables is %f\n", meanPoisson);
     printf("The variance of the Poisson variables is %f\n", varPoisson);
     print("For Poisson random variables, the mean and variance will more agree as the number of simuations increases.");
@@ -80,7 +83,7 @@ int funPoissonSingle(double lambda)
     return randPoisson;
 }
 
-//Uniform function -- returns a single standard uniform random variables
+////Uniform function -- returns a standard uniform random variable
 double funUniformSingle()
 {
     double randUni;
