@@ -1,3 +1,6 @@
+// Author: H. Paul Keeler, 2019.
+// hpaulkeeler.com/
+
 using System;
 namespace Poisson
 
