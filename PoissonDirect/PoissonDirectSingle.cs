@@ -1,3 +1,7 @@
+// Author: H. Paul Keeler, 2019.
+// github.com/hpaulkeeler
+// hpaulkeeler.com/
+
 using System;
 namespace Poisson
 
@@ -37,7 +41,8 @@ namespace Poisson
             //calculate statistics 
             double meanPoisson = sumPoisson / ((double) numbSim);
             double varPoisson = sumPoissonSquared / ((double) numbSim) - Math.Pow (meanPoisson, 2);
-
+			
+			///print statistics
             Console.WriteLine ("The average of the Poisson variables is " + meanPoisson);
             Console.WriteLine ("The variance of the Poisson variables is " + varPoisson);
             Console.WriteLine ("For Poisson random variables, the mean and variance will more agree as the number of simuations increases.");
@@ -80,7 +85,7 @@ public class RandomGenerator {
         return randPoisson;
     }
 
-    // Generate a random number between two numbers    
+    //Uniform function -- returns a standard uniform random variable
     public double funUniformSingle () {
 
         return random.NextDouble ();

@@ -42,7 +42,7 @@ yDelta = yMax - yMin #height
 areaTotal = xDelta * yDelta; #area of similation window
 
 # Point process parameters
-lambda0 = 10;  # intensity (ie mean density) of the Poisson process
+lambda0 = 20;  # intensity (ie mean density) of the Poisson process
 
 # Simulate a Poisson point process
 numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
@@ -133,11 +133,10 @@ if (numbBounded>0):
     #create voronoi diagram on the point pattern
     voronoi_plot_2d(voronoiData, show_points=False,show_vertices=False); 
     #plot the underlying point pattern
-    plt.scatter(xx, yy, edgecolor='b', facecolor='none');
-    #put a red o uniformly in each bounded Voronoi cell
-    plt.scatter(uu, vv, edgecolor='r', facecolor='none');
-    #put a green star on the base station of each Voronoi bounded cell
-    plt.scatter(xx[indexBounded], yy[indexBounded], color='g', marker='*');
+    plt.scatter(xx, yy, edgecolor='b', facecolor='b');
+    #put a red point uniformly in each bounded Voronoi cell
+    plt.scatter(uu, vv, edgecolor='r', facecolor='r');
+    
     #number the points
     for ii in range(numbPoints):
         plt.text(xx[ii]+xDelta/50, yy[ii]+yDelta/50, ii);   
