@@ -3,7 +3,7 @@
 % github.com/hpaulkeeler
 
 mu=5; %Poisson parameter
-numbSim=10^2; %nuber of simulations
+numbSim=10^2; %number of simulations
 
 muVector=mu*ones(numbSim,1);
 

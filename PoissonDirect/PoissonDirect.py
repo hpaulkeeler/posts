@@ -4,7 +4,7 @@
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 
 mu=5; #Poisson parameter
-numbSim=10**2; #nuber of simulations
+numbSim=10**2; #number of simulations
 
 muVector=mu*np.ones(numbSim);
 
