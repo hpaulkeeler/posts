@@ -1,5 +1,6 @@
 % Author: H. Paul Keeler, 2019.
 % hpaulkeeler.com/
+% github.com/hpaulkeeler
 
 mu=5; %Poisson parameter
 numbSim=10^2; %nuber of simulations

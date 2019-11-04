@@ -1,6 +1,6 @@
 # Author: H. Paul Keeler, 2019.
 # hpaulkeeler.com/
-
+# github.com/hpaulkeeler
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 
 mu=5; #Poisson parameter
@@ -47,9 +47,10 @@ def funPoissonRecursive(mu):
     _,N=funStepExp(mu,T,n);
     
     return N;
+
 ### END - Function definitions ###
 
-##generate many Poisson variables
+#generate many Poisson variables
 randPoissonLoop=np.array(list(map(lambda x: funPoissonLoop(x), muVector)));
 randPoissonRecursive=np.array(list(map(lambda x: funPoissonRecursive(x), muVector)));
 
