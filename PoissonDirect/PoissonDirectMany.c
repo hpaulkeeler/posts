@@ -84,7 +84,7 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
         *(p_output + i) = -1; //decrease pointer
 
         //initialize variables
-        sum_exp = 0; //sum of exponential variable s
+        sum_exp = 0; //sum of exponential variables
         do
         {
             funUniformMany(p_uu, 1); //generate uniform variable

@@ -71,7 +71,7 @@ int funPoissonSingle(double lambda)
 
     //initialize variables
     int randPoisson = -1; //Poisson variable
-    sum_exp = 0;          //sum of exponential variable s
+    sum_exp = 0;          //sum of exponential variables
     do
     {
         randUni = funUniformSingle();                        //generate uniform variable

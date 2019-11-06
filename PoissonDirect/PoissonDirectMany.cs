@@ -77,7 +77,7 @@ public class RandomGenerator {
         
         for (int i = 0; i < n_input; i++) {
             //initialize variables
-            double sum_exp = 0; //sum of exponential variable
+            double sum_exp = 0; //sum of exponential variables
             randPoisson[i]  = -1;
             do {
                 randUni = funUniformMany (1); //generate uniform variable
