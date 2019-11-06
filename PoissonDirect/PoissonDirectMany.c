@@ -59,7 +59,7 @@ int main()
 	///print statistics
     printf("The average of the Poisson variables is %f\n", meanPoisson);
     printf("The variance of the Poisson variables is %f\n", varPoisson);
-	printf("For Poisson random variables, the mean and variance will more agree as the number of simuations increases.");
+	printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
 
     //END Collect statistists on Poisson variables
 
