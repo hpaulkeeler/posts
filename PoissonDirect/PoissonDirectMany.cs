@@ -77,15 +77,15 @@ public class RandomGenerator {
         
         for (int i = 0; i < n_input; i++) {
             //initialize variables
-            double sum_exp = 0; //sum of exponential variables
+            double sumExp = 0; //sum of exponential variables
             randPoisson[i]  = -1;
             do {
                 randUni = funUniformMany (1); //generate uniform variable
                 randExpTemp = -(1 / lambda) * Math.Log (randUni[0]); //exponential random variable
-                sum_exp = sum_exp + randExpTemp; //add exponential variable to sum
+                sumExp = sumExp + randExpTemp; //add exponential variable to sum
                 randPoisson[i]++; // increase Poisson variable
 				
-            } while (sum_exp < 1); //stop loop if sum exceeds one
+            } while (sumExp < 1); //stop loop if sum exceeds one
         }
 
         return randPoisson;

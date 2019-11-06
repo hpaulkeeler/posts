@@ -67,19 +67,19 @@ int funPoissonSingle(double lambda)
 {
     double randExpTemp; //exponential variable
     double randUni;
-    double sum_exp; //sum of exponential variable
+    double sumExp; //sum of exponential variable
 
     //initialize variables
     int randPoisson = -1; //Poisson variable
-    sum_exp = 0;          //sum of exponential variables
+    sumExp = 0;          //sum of exponential variables
     do
     {
         randUni = funUniformSingle();                        //generate uniform variable
         randExpTemp = (-1 / lambda) * log(randUni); //generate exponential variable
-        sum_exp = sum_exp + randExpTemp;            //add exponential variable to sum
+        sumExp = sumExp + randExpTemp;            //add exponential variable to sum
         randPoisson++;                              //increase Poisson variable
 
-    } while (sum_exp < 1); //stop loop if sum exceeds one
+    } while (sumExp < 1); //stop loop if sum exceeds one
     return randPoisson;
 }
 

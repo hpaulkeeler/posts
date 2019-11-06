@@ -75,7 +75,7 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
     double *p_uu = (double *)malloc(sizeof(double));
     double randExpTemp; //exponential variable
     double randUni;
-    double sum_exp; //sum of exponential variables
+    double sumExp; //sum of exponential variables
 
     //loop through for all  random variables to be generated
     for (int i = 0; i < n_output; i++)
@@ -84,16 +84,16 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
         *(p_output + i) = -1; //decrease pointer
 
         //initialize variables
-        sum_exp = 0; //sum of exponential variables
+        sumExp = 0; //sum of exponential variables
         do
         {
             funUniformMany(p_uu, 1); //generate uniform variable
             randUni = *p_uu;
             randExpTemp = (-1 / lambda) * log(randUni); //generate exponential variable
-            sum_exp = sum_exp + randExpTemp;//add exponential variable to sum          
+            sumExp = sumExp + randExpTemp;//add exponential variable to sum          
             (*(p_output + i))++; // increase Poisson variable
 			
-        } while (sum_exp < 1); //stop loop if sum exceeds one
+        } while (sumExp < 1); //stop loop if sum exceeds one
     }
 }
 
