@@ -16,3 +16,4 @@ yy = np.random.uniform(0, 1, numbPoints)  # y coordinates of binomial points
 plt.scatter(xx, yy, edgecolor='b', facecolor='none', alpha=0.5)
 plt.xlabel('x')
 plt.ylabel('y')
+plt.show() 
