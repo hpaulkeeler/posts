@@ -71,9 +71,10 @@ public class RandomGenerator {
         double exp_lambda = Math.Exp (-lambda); //constant for terminating loop
         double randUni; //uniform variable
         double prodUni; //product of uniform variables
+		int randPoisson = -1; //Poisson variable
 
         //initialize variables
-        int randPoisson = -1;
+        randPoisson = -1;
         prodUni = 1;
         do {
             randUni = funUniformSingle (); //generate uniform variable

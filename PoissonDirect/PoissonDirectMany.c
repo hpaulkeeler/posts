@@ -73,17 +73,16 @@ int main()
 //Poisson function -- returns pointer for Poisson variables
 void funPoissonMany(int *p_output, int n_output, double lambda)
 {
-    double *p_uu = (double *)malloc(sizeof(double));
+    double *p_uu = (double *)malloc(sizeof(double)); //pointer for Poisson variable (array)
     double exp_lambda = exp(-lambda); //constant for terminating loop
     double randUni;                   //uniform variable
     double prodUni;                   //product of uniform variables
 
     //loop through for all  random variables to be generated
     for (int i = 0; i < n_output; i++)
-    {
-
-        *(p_output + i) = -1; //decrease pointer
+    {		
         //initialize variables
+        *(p_output + i) = -1; //decrease pointer
         prodUni = 1; //product of uniform variables
         do
         {

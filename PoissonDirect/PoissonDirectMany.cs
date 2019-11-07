@@ -71,7 +71,7 @@ public class RandomGenerator {
     //Poisson function -- returns a single Poisson random variable        
     public int[] funPoissonMany (double lambda, int n_input) {
 
-        int[] randPoisson = new int[n_input];
+        int[] randPoisson = new int[n_input];   //Poisson variable (array)
         double exp_lambda = Math.Exp (-lambda); //constant for terminating loop
         double[] randUni; //uniform variable
         double prodUni; //sum of exponential variables
