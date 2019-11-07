@@ -81,7 +81,7 @@ public class RandomGenerator {
             prodUni = prodUni * randUni; //update product
             randPoisson++; // increase Poisson variable
 
-        } while (prodUni > exp_lambda); //stop loop if sum exceeds one
+        } while (prodUni > exp_lambda); 
 
         return randPoisson;
     }

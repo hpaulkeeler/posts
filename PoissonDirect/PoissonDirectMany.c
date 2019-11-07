@@ -91,7 +91,7 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
             prodUni = prodUni * randUni; //update product
             (*(p_output + i))++;         // increase Poisson variable
 
-        } while (prodUni > exp_lambda); //stop loop if sum exceeds one
+        } while (prodUni > exp_lambda); 
     }
 }
 
