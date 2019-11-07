@@ -68,19 +68,19 @@ public class RandomGenerator {
     //Poisson function -- returns a single Poisson random variable        
     public int funPoissonSingle (double lambda) {
 
+        double exp_lambda=Math.Exp(-lambda); //constant for terminating loop
         double randUni; //uniform variable
-        double randExpTemp; //exponential variable		
-        double sumExp = 0; //sum of exponential variable
+        double prodUni; //product of uniform variables
 
         //initialize variables
         int randPoisson = -1;
+        prodUni = 1;         
         do {
             randUni = funUniformSingle (); //generate uniform variable
-            randExpTemp = -(1 / lambda) * Math.Log (randUni); //exponential random variable
-            sumExp = sumExp + randExpTemp; // increase random sum
+            prodUni = prodUni * randUni;            //update product
             randPoisson++; // increase Poisson variable
 
-        } while (sumExp < 1); //stop loop if sum exceeds one
+        } while (prodUni > exp_lambda); //stop loop if sum exceeds one
 
         return randPoisson;
     }

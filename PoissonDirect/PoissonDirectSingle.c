@@ -65,21 +65,20 @@ int main()
 //Poisson function -- returns a single Poisson random variable
 int funPoissonSingle(double lambda)
 {
-    double randExpTemp; //exponential variable
-    double randUni;
-    double sumExp; //sum of exponential variable
-
+    double exp_lambda=exp(-lambda); //constant for terminating loop
+    double randUni; //uniform variable
+	double prodUni; //product of uniform variables
+	
     //initialize variables
     int randPoisson = -1; //Poisson variable
-    sumExp = 0;          //sum of exponential variables
+    prodUni = 1;          //product of uniform variables
     do
     {
-        randUni = funUniformSingle();                        //generate uniform variable
-        randExpTemp = (-1 / lambda) * log(randUni); //generate exponential variable
-        sumExp = sumExp + randExpTemp;            //add exponential variable to sum
-        randPoisson++;                              //increase Poisson variable
+        randUni = funUniformSingle();           //generate uniform variable
+        prodUni = prodUni * randUni;            //update product
+        randPoisson++;                          //increase Poisson variable
 
-    } while (sumExp < 1); //stop loop if sum exceeds one
+    } while (prodUni > exp_lambda); //stop loop if sum exceeds one
     return randPoisson;
 }
 

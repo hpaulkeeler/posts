@@ -26,6 +26,7 @@ int main()
 
     int numbSim = 100;
 
+
     //START Generate Poisson variables
     //point for Poisson variables
     int *p_numbPoisson = (int *)malloc(numbSim * sizeof(int)); //cast pointers for malloc in C++ and for gcc
@@ -73,27 +74,25 @@ int main()
 void funPoissonMany(int *p_output, int n_output, double lambda)
 {
     double *p_uu = (double *)malloc(sizeof(double));
-    double randExpTemp; //exponential variable
-    double randUni;
-    double sumExp; //sum of exponential variables
-
+    double exp_lambda=exp(-lambda); //constant for terminating loop
+    double randUni; //uniform variable
+	double prodUni; //product of uniform variables
+	
     //loop through for all  random variables to be generated
     for (int i = 0; i < n_output; i++)
     {
 
         *(p_output + i) = -1; //decrease pointer
-
         //initialize variables
-        sumExp = 0; //sum of exponential variables
+        prodUni = 1;          //product of uniform variables
         do
         {
             funUniformMany(p_uu, 1); //generate uniform variable
-            randUni = *p_uu;
-            randExpTemp = (-1 / lambda) * log(randUni); //generate exponential variable
-            sumExp = sumExp + randExpTemp;//add exponential variable to sum          
-            (*(p_output + i))++; // increase Poisson variable
+            randUni = *p_uu; 
+            prodUni = prodUni * randUni;     //update product
+            (*(p_output + i))++;        // increase Poisson variable
 			
-        } while (sumExp < 1); //stop loop if sum exceeds one
+        } while (prodUni > exp_lambda); //stop loop if sum exceeds one
     }
 }
 
