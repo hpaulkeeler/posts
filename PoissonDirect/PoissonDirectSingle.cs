@@ -41,8 +41,8 @@ namespace Poisson
             //calculate statistics 
             double meanPoisson = sumPoisson / ((double) numbSim);
             double varPoisson = sumPoissonSquared / ((double) numbSim) - Math.Pow (meanPoisson, 2);
-			
-			///print statistics
+
+            ///print statistics
             Console.WriteLine ("The average of the Poisson variables is " + meanPoisson);
             Console.WriteLine ("The variance of the Poisson variables is " + varPoisson);
             Console.WriteLine ("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
@@ -68,16 +68,16 @@ public class RandomGenerator {
     //Poisson function -- returns a single Poisson random variable        
     public int funPoissonSingle (double lambda) {
 
-        double exp_lambda=Math.Exp(-lambda); //constant for terminating loop
+        double exp_lambda = Math.Exp (-lambda); //constant for terminating loop
         double randUni; //uniform variable
         double prodUni; //product of uniform variables
 
         //initialize variables
         int randPoisson = -1;
-        prodUni = 1;         
+        prodUni = 1;
         do {
             randUni = funUniformSingle (); //generate uniform variable
-            prodUni = prodUni * randUni;            //update product
+            prodUni = prodUni * randUni; //update product
             randPoisson++; // increase Poisson variable
 
         } while (prodUni > exp_lambda); //stop loop if sum exceeds one

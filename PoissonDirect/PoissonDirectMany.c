@@ -8,7 +8,7 @@
 #include <math.h>
 
 //declare functions
-void funUniformMany(double *p_output, int n_output);        //generate uniform random variables on (0,1)
+void funUniformMany(double *p_output, int n_output);             //generate uniform random variables on (0,1)
 void funPoissonMany(int *p_output, int n_output, double lambda); //generate Poisson variables with parameter (ie mean) lambda
 // p_output is the pointer for the random variables/variates
 // n_output is the number of random variables/variates to generate
@@ -26,11 +26,10 @@ int main()
 
     int numbSim = 100;
 
-
     //START Generate Poisson variables
     //point for Poisson variables
     int *p_numbPoisson = (int *)malloc(numbSim * sizeof(int)); //cast pointers for malloc in C++ and for gcc
-    funPoissonMany(p_numbPoisson, numbSim, lambda);                 //generate poisson variables
+    funPoissonMany(p_numbPoisson, numbSim, lambda);            //generate poisson variables
     //END Generate Poisson variables
 
     //START Collect statistists on Poisson variables
@@ -38,7 +37,7 @@ int main()
     double sumPoisson = 0;
     double sumPoissonSquared = 0;
     double tempPoisson;
-    
+
     //loop through for each random variable
     for (int i = 0; i < numbSim; i++)
     {
@@ -48,7 +47,8 @@ int main()
         //total sum of squared variables
         sumPoissonSquared += pow(tempPoisson, 2);
 
-        if (i < 5)        {
+        if (i < 5)
+        {
             printf("One of the Poisson variables has the value %d\n", (int)tempPoisson);
         }
     }
@@ -56,11 +56,11 @@ int main()
     //calculate statistics
     double meanPoisson = sumPoisson / ((double)numbSim);                             //need to cast before doing divisions
     double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
-	
-	///print statistics
+
+    ///print statistics
     printf("The average of the Poisson variables is %f\n", meanPoisson);
     printf("The variance of the Poisson variables is %f\n", varPoisson);
-	printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
+    printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
 
     //END Collect statistists on Poisson variables
 
@@ -74,24 +74,24 @@ int main()
 void funPoissonMany(int *p_output, int n_output, double lambda)
 {
     double *p_uu = (double *)malloc(sizeof(double));
-    double exp_lambda=exp(-lambda); //constant for terminating loop
-    double randUni; //uniform variable
-	double prodUni; //product of uniform variables
-	
+    double exp_lambda = exp(-lambda); //constant for terminating loop
+    double randUni;                   //uniform variable
+    double prodUni;                   //product of uniform variables
+
     //loop through for all  random variables to be generated
     for (int i = 0; i < n_output; i++)
     {
 
         *(p_output + i) = -1; //decrease pointer
         //initialize variables
-        prodUni = 1;          //product of uniform variables
+        prodUni = 1; //product of uniform variables
         do
         {
             funUniformMany(p_uu, 1); //generate uniform variable
-            randUni = *p_uu; 
-            prodUni = prodUni * randUni;     //update product
-            (*(p_output + i))++;        // increase Poisson variable
-			
+            randUni = *p_uu;
+            prodUni = prodUni * randUni; //update product
+            (*(p_output + i))++;         // increase Poisson variable
+
         } while (prodUni > exp_lambda); //stop loop if sum exceeds one
     }
 }

@@ -8,7 +8,7 @@
 #include <math.h>
 
 //declare functions
-double funUniformSingle();             //generate uniform random variables on (0,1)
+double funUniformSingle();           //generate uniform random variables on (0,1)
 int funPoissonSingle(double lambda); //generate Poisson variables with parameter (ie mean) lambda
 
 //START Main
@@ -49,8 +49,8 @@ int main()
     //calculate statistics
     double meanPoisson = sumPoisson / ((double)numbSim);                             //need to cast before doing divisions
     double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
-	
-	///print statistics
+
+    ///print statistics
     printf("The average of the Poisson variables is %f\n", meanPoisson);
     printf("The variance of the Poisson variables is %f\n", varPoisson);
     printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
@@ -65,18 +65,18 @@ int main()
 //Poisson function -- returns a single Poisson random variable
 int funPoissonSingle(double lambda)
 {
-    double exp_lambda=exp(-lambda); //constant for terminating loop
-    double randUni; //uniform variable
-	double prodUni; //product of uniform variables
-	
+    double exp_lambda = exp(-lambda); //constant for terminating loop
+    double randUni;                   //uniform variable
+    double prodUni;                   //product of uniform variables
+
     //initialize variables
     int randPoisson = -1; //Poisson variable
     prodUni = 1;          //product of uniform variables
     do
     {
-        randUni = funUniformSingle();           //generate uniform variable
-        prodUni = prodUni * randUni;            //update product
-        randPoisson++;                          //increase Poisson variable
+        randUni = funUniformSingle(); //generate uniform variable
+        prodUni = prodUni * randUni;  //update product
+        randPoisson++;                //increase Poisson variable
 
     } while (prodUni > exp_lambda); //stop loop if sum exceeds one
     return randPoisson;
