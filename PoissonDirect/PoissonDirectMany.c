@@ -5,7 +5,7 @@
 /*WARNING: 
 This code uses rand(), the standard pseudo-random number generating function in C, 
 which is known for producing inadequately random numbers. 
-Replace the function rand() in the function funUniformSingle with another standard uniform number generator. 
+Replace the function rand() in the function funUniformMany with another standard uniform number generator. 
  */
 
 
