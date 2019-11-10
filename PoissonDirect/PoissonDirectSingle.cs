@@ -43,8 +43,8 @@ namespace Poisson
             double varPoisson = sumPoissonSquared / ((double) numbSim) - Math.Pow (meanPoisson, 2);
 
             ///print statistics
-            Console.WriteLine ("The average of the Poisson variables is " + meanPoisson);
-            Console.WriteLine ("The variance of the Poisson variables is " + varPoisson);
+            Console.WriteLine ("The average of the Poisson variables is " + meanPoisson + ".");
+            Console.WriteLine ("The variance of the Poisson variables is " + varPoisson + ".");
             Console.WriteLine ("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
 
             //END Collect statistists on Poisson variables

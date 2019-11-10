@@ -48,7 +48,7 @@ int main()
         if (i < 5)
         {
             //print the first 5 numbers
-            printf("One of the Poisson variables has the value %d\n", numbPoissonTemp);
+            printf("One of the Poisson variables has the value %d.\n", numbPoissonTemp);
         }
     }
 
@@ -57,8 +57,8 @@ int main()
     double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
 
     ///print statistics
-    printf("The average of the Poisson variables is %f\n", meanPoisson);
-    printf("The variance of the Poisson variables is %f\n", varPoisson);
+    printf("The average of the Poisson variables is %f.\n", meanPoisson);
+    printf("The variance of the Poisson variables is %f.\n", varPoisson);
     printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
 
     //END Collect statistists on Poisson variables
