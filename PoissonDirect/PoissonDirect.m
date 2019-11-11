@@ -42,20 +42,20 @@ n=-1; %initialize counting variable as negative one
 %run (recursive) exponential function step function
 [~,N]=funStepExp(mu,T,n);
 
-    function [T,N]=funStepExp(mu_i,T_i,n_i)
-        if T_i<1
+    function [T,N]=funStepExp(nu,S,m)
+        if S<1
             %run if sum of exponential variables is not high enough
             
             %generate exponential random variable
-            E=(-log(rand(1)))/mu_i;
-            T_i=T_i+E; %update sum of exponential variables
-            n_i=n_i+1; %update nunber of exponential variables
+            E=(-log(rand(1)))/nu;
+            S=S+E; %update sum of exponential variables
+            m=m+1; %update nunber of exponential variables
             
             %recursively call function again
-            [T,N]=funStepExp(mu_i,T_i,n_i);
+            [T,N]=funStepExp(nu,S,m);
         else
-            T=T_i;
-            N=n_i;
+            T=S;
+            N=m;
         end
     end
 end
