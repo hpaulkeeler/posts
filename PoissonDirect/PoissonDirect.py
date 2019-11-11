@@ -28,20 +28,20 @@ def funPoissonRecursive(mu):
     T=0; #initialize sum of exponential variables as zero
     n=-1; #initialize counting variable as negative one    
     
-    def funStepExp(mu_i,T_i,n_i):
-        if T_i<1:
+    def funStepExp(nu,S,m):
+        if S<1:
             #run if sum of exponential variables is not high enough
             
             #generate exponential random variable
-            E=(-np.log(np.random.rand(1)))/mu_i;
-            T_i=T_i+E; #update sum of exponential variables
-            n_i=n_i+1; #update nunber of exponential variables
+            E=(-np.log(np.random.rand(1)))/nu;
+            S=S+E; #update sum of exponential variables
+            m=m+1; #update nunber of exponential variables
             
             #recursively call function again
-            [T,N]=funStepExp(mu_i,T_i,n_i);
+            [T,N]=funStepExp(nu,S,m);
         else:
-            T=T_i;
-            N=n_i;
+            T=S;
+            N=m;
         return T,N;
     #run (recursive) exponential function step function
     _,N=funStepExp(mu,T,n);
