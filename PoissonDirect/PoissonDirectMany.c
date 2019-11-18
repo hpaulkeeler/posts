@@ -70,7 +70,8 @@ int main()
     printf("For Poisson random variables, the mean and variance will more agree as the number of simulations increases.");
 
     //END Collect statistists on Poisson variables
-
+	
+	free(p_numbPoisson); //free pointer for Poisson variables
     return (0);
 }
 //END Main
@@ -100,6 +101,7 @@ void funPoissonMany(int *p_output, int n_output, double lambda)
 
         } while (prodUni > exp_lambda); 
     }
+	free(p_uu); //free pointer for uniform variables
 }
 
 //Uniform function -- returns pointer for standard uniform random variables
