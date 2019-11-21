@@ -9,13 +9,13 @@ yA=0;yB=0;yC=1; %y values of three points
 lambda=100; %intensity (ie mean density) of the Poisson process
 
 %calculate sides of triangle
-a=sqrt((xA-xB)^2+(yA-yB)^2); 
-b=sqrt((xB-xC)^2+(yB-yC)^2); 
-c=sqrt((xC-xA)^2+(yC-yA)^2); 
+a=sqrt((xA-xB)^2+(yA-yB)^2);
+b=sqrt((xB-xC)^2+(yB-yC)^2);
+c=sqrt((xC-xA)^2+(yC-yA)^2);
 s=(a+b+c)/2; %calculate semi-perimeter
 
-%Use Herron's formula -- or use polyarea
-areaTotal=sqrt(s*(s-a)*(s-b)*(s-c)); %area of triangle
+%Use Herron's formula - or use polyarea - to calculate the area of triangle
+areaTotal=(1/4)*sqrt( (a+(b+c))*(c-(a-b))*(c+(a-b))*(a+(b-c))); 
 
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points

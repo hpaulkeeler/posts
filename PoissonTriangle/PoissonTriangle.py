@@ -23,8 +23,8 @@ b = np.sqrt((xB - xC) ** 2 + (yB - yC) ** 2);
 c = np.sqrt((xC - xA) ** 2 + (yC - yA) ** 2);
 s = (a + b + c) / 2;  # calculate semi-perimeter
 
-# Use Herron's formula to calculate area
-areaTotal = np.sqrt(s * (s - a) * (s - b) * (s - c));  # area of triangle
+# Use Herron's formula  to calculate the area of triangle
+areaTotal=(1/4)*np.sqrt( (a+(b+c))*(c-(a-b))*(c+(a-b))*(a+(b-c))); 
 
 # Simulate a Poisson point process
 numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
