@@ -6,6 +6,7 @@
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
+#Best to use vectors instead of 1-D matrices eg x=rand(n),  NOT x=rand(n,1).
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -50,8 +51,8 @@ end
 
 #Simulate a Poisson point process
 numbPoints=rand(Poisson(areaTotal*lambdaMax)); #Poisson number of points
-xx=xDelta*rand(numbPoints,1).+xMin;#x coordinates of Poisson points
-yy=yDelta*(rand(numbPoints,1)).+yMin;#y coordinates of Poisson points
+xx=xDelta*rand(numbPoints).+xMin;#x coordinates of Poisson points
+yy=yDelta*(rand(numbPoints)).+yMin;#y coordinates of Poisson points
 
 #calculate spatially-dependent thinning probabilities
 p=fun_p(xx,yy);

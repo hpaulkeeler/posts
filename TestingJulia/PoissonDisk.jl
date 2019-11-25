@@ -3,6 +3,7 @@
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
+#Best to use vectors instead of 1-D matrices eg x=rand(n),  NOT x=rand(n,1).
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -17,8 +18,8 @@ lambda=100; #intensity (ie mean density) of the Poisson process
 
 #Simulate Poisson point process
 numbPoints=rand(Poisson(areaTotal*lambda)); #Poisson number of points
-theta=2*pi*(rand(numbPoints,1));#angular coordinates  of Poisson points
-rho=r*sqrt.(rand(numbPoints,1));#radial coordinates of Poisson points
+theta=2*pi*(rand(numbPoints));#angular coordinates  of Poisson points
+rho=r*sqrt.(rand(numbPoints));#radial coordinates of Poisson points
 
 #Convert polar to Cartesian coordinates
 xx=rho.*cos.(theta);

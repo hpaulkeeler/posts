@@ -3,6 +3,7 @@
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
+#Best to use vectors instead of 1-D matrices eg x=rand(n),  NOT x=rand(n,1).
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -34,8 +35,8 @@ areaTotalExt=xDeltaExt*yDeltaExt; #area of extended rectangle
 numbPointsParent=rand(Poisson(areaTotalExt*lambdaParent)); #Poisson number of points
 
 #x and y coordinates of Poisson points for the parent
-xxParent=xMinExt.+xDeltaExt*rand(numbPointsParent,1);
-yyParent=yMinExt.+yDeltaExt*rand(numbPointsParent,1);
+xxParent=xMinExt.+xDeltaExt*rand(numbPointsParent);
+yyParent=yMinExt.+yDeltaExt*rand(numbPointsParent);
 
 #Simulate Poisson point process for the daughters (ie final poiint process)
 numbPointsDaughter=rand(Poisson(lambdaDaughter),numbPointsParent);

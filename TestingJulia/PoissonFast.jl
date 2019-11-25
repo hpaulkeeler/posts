@@ -48,8 +48,8 @@ massTotal=areaTotal*lambda;  #total measure/mass of the point process
     numbPointsTotal=numbPointsCumA[end];
 
     #uniform x/y coordinates of Poisson points
-    xxAll=xDelta.*(rand(numbPointsTotal,1)).+xMin;#x coordinates of Poisson points
-    yyAll=yDelta.*(rand(numbPointsTotal,1)).+yMin;#y coordinates of Poisson points
+    xxAll=xDelta.*(rand(numbPointsTotal)).+xMin;#x coordinates of Poisson points
+    yyAll=yDelta.*(rand(numbPointsTotal)).+yMin;#y coordinates of Poisson points
 
     #create some indexing for the array reshaping step
     indexFirst=copy(numbPointsCumA);
@@ -74,8 +74,8 @@ end;
     #loop through for all ensembles
     for ss=1:numbSim
         numbPointsTemp=rand(Poisson(massTotal));#Poisson number of points
-        xxCellB[ss]=xDelta.*(rand(numbPointsTemp,1)).+xMin;#x coordinates of Poisson points
-        yyCellB[ss]=yDelta.*(rand(numbPointsTemp,1)).+yMin;#y coordinates of Poisson points
+        xxCellB[ss]=xDelta.*(rand(numbPointsTemp)).+xMin;#x coordinates of Poisson points
+        yyCellB[ss]=yDelta.*(rand(numbPointsTemp)).+yMin;#y coordinates of Poisson points
         numbPointsB[ss]=numbPointsTemp;
     end
 end;

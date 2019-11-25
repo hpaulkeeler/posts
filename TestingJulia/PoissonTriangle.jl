@@ -4,6 +4,7 @@
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
 #Don't confuse 1.-V with 1 .-V for array V
+#Best to use vectors instead of 1-D matrices eg x=rand(n),  NOT x=rand(n,1).
 
 using Distributions #for random simulations
 using Plots #for plotting
@@ -26,8 +27,8 @@ areaTotal=sqrt(s*(s-a)*(s-b)*(s-c)); #area of triangle
 
 #Simulate a Poisson point process
 numbPoints=rand(Poisson(areaTotal*lambda)); #Poisson number of points
-U=rand(numbPoints,1);#uniform random variables
-V=rand(numbPoints,1);#uniform random variables
+U=rand(numbPoints);#uniform random variables
+V=rand(numbPoints);#uniform random variables
 
 xx=sqrt.(U).*xA .+sqrt.(U).*(1 .-V).*xB .+sqrt.(U).*V.*xC;#x coordinates of points
 yy=sqrt.(U).*yA .+sqrt.(U).*(1 .-V).*yB .+sqrt.(U).*V.*yC;#y coordinates of points
