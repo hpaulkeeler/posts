@@ -10,7 +10,7 @@ from matplotlib import cm  # for heatmap plotting
 from mpl_toolkits import mplot3d  # for 3-D plots
 from scipy import integrate  # for integrating
 
-plt.close('all');  # close all previous plots
+plt.close("all");  # close all previous plots
 
 # Simulation window parameters
 xMin = -1;
@@ -34,10 +34,8 @@ def fun_lambda(x, y):
 # normalization constant
 consNorm = integrate.dblquad(fun_lambda, xMin, xMax, lambda x: yMin, lambda y: yMax)[0];
 
-
 def fun_p(x, y):
     return (fun_lambda(x, y) / consNorm) * (x >= xMin) * (y >= yMin) * (x <= xMax) * (y <= yMax);
-
 
 xRand = np.random.uniform(xMin, xMax, numbSim);  # random initial values
 yRand = np.random.uniform(yMin, yMax, numbSim);  # random initial values
@@ -64,7 +62,7 @@ for jj in range(numbSteps):
 xRand = np.reshape(xRand, numbSim);
 yRand = np.reshape(yRand, numbSim);
 
-p_Estimate, xxEdges, yyEdges = np.histogram2d(xRand, yRand, bins=numbSteps, normed='pdf');
+p_Estimate, xxEdges, yyEdges = np.histogram2d(xRand, yRand, bins=numbSteps, normed="pdf");
 xValues = (xxEdges[1:] + xxEdges[0:xxEdges.size - 1]) / 2;  # mid-points of bins
 yValues = (yyEdges[1:] + yyEdges[0:yyEdges.size - 1]) / 2;  # mid-points of bins
 X, Y = np.meshgrid(xValues, yValues);  # create x/y matrices for plotting
@@ -75,20 +73,20 @@ p_Exact = fun_p(X, Y);
 # Plotting
 # Plot empirical estimate
 fig1 = plt.figure();
-ax = plt.axes(projection='3d');
-plt.rc('text', usetex=True);
-plt.rc('font', family='serif');
+ax = plt.axes(projection="3d");
+plt.rc("text", usetex=True);
+plt.rc("font", family="serif");
 surf = ax.plot_surface(X, Y, p_Estimate, cmap=plt.cm.plasma);
-plt.xlabel('x');
-plt.ylabel('y');
-plt.title('$p(x,y)$ Estimate');
+plt.xlabel("x");
+plt.ylabel("y");
+plt.title("$p(x,y)$ Estimate");
 
 # Plot exact expression
 fig2 = plt.figure();
-plt.rc('text', usetex=True);
-plt.rc('font', family='serif')
-ax = plt.axes(projection='3d');
+plt.rc("text", usetex=True);
+plt.rc("font", family="serif")
+ax = plt.axes(projection="3d");
 surf = ax.plot_surface(X, Y, p_Exact, cmap=plt.cm.plasma);
-plt.xlabel('x');
-plt.ylabel('y');
-plt.title('$p(x,y)$ Exact Expression');
+plt.xlabel("x");
+plt.ylabel("y");
+plt.title("$p(x,y)$ Exact Expression");
