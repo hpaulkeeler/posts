@@ -1,12 +1,9 @@
-#INCOMPLETE
-# Can do two-D plots with Plots eg http://docs.juliaplots.org/latest/
-
-
-#Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate two
-#jointly distributed random variuables with probability density
-#p(x,y)=100*exp(-(x^2+y^2)/s^2), where s>0.
+# Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate two 
+# jointly distributed random variuables with probability density
+# p(x,y)=exp(-(x^2+y^2)/s^2)/consNorm, where s>0 and consNorm is a
+# normalization constant.
 #
-#Author: H. Paul Keeler, 2019.
+# Author: H. Paul Keeler, 2019.
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays
@@ -38,7 +35,7 @@ sigma = 2;  # standard deviation for normal random steps
 s = .5;  # scale parameter for distribution to be simulated
 
 function fun_lambda(x,y)
-    return (100 .*exp.(-(x.^2+y.^2)./s^2));
+    return (exp.(-(x.^2+y.^2)./s^2));
 end
 
 #normalization constant -- UNDER CONSTRUCTION

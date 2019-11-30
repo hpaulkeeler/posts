@@ -1,6 +1,7 @@
 #Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate two 
 #jointly distributed random variuables with probability density
-#p(x,y)=100*exp(-(x^2+y^2)/s^2), where s>0.
+#p(x,y)=exp(-(x^2+y^2)/s^2)/consNorm, where s>0 and consNorm is a
+#normalization constant.
 #
 #Author: H. Paul Keeler, 2019.
 
@@ -26,7 +27,7 @@ sigma=2; #standard deviation for normal random steps
 #probability density parameters
 s=.5; #scale parameter for distribution to be simulated
 fun_lambda<-function(x,y){
-  return (100*exp(-(x^2+y^2)/s^2));
+  return (exp(-(x^2+y^2)/s^2));
   
   
 }
