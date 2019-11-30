@@ -7,7 +7,10 @@ I have written the code mostly in MATLAB, R and Python. Most of it concerns simu
 
 Examples include simulating a homogeneous Poisson point process on a disk and triangle. 
 
-See the individual posts for more details. The code directories and the corresponding posts.
+See the individual posts for more details. 
+
+## Directories
+The code directories and the corresponding posts.
 
 BertrandParadox
 https://hpaulkeeler.com/the-bertrand-paradox/
