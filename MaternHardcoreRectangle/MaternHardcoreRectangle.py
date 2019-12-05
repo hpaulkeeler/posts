@@ -1,5 +1,5 @@
-#Simulate Matern hard-core point processes on a rectangle.
-#Author: H. Paul Keeler, 2018.
+#Simulate Matern hard-core point processes (Type I/II) on a rectangle.
+#Author: H. Paul Keeler, 2019.
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # For plotting
@@ -15,11 +15,11 @@ yMin = -.5;
 yMax = .5;
 
 #Parameters for the parent and daughter point processes
-lambdaPoisson=10;#density of parent Poisson point process
-radiusCore=0.1;#radius of cluster disk (for daughter points)
+lambdaPoisson=10;#density of underlying Poisson point process
+radiusCore=0.1;#radius of hard core
 
 #Extended simulation windows parameters
-rExt=radiusCore; #extension parameter -- use cluster radius
+rExt=radiusCore; #extension parameter -- use core radius
 xMinExt=xMin-rExt;
 xMaxExt=xMax+rExt;
 yMinExt=yMin-rExt;
@@ -101,7 +101,13 @@ plt.legend(('Underlying Poisson','Matern I','Matern II'));
 
 #Compare statistics
 diskArea=np.pi*radiusCore**2; #area of disk
-areaWindow=(xMax-xMin)*(yMax-yMin);
+areaWindow=(xMax-xMin)*(yMax-yMin); #area of simulation window
+
+#underlying Poisson point process
+lambdaExact=lambdaPoisson
+print("lambdaExact = ",lambdaExact)
+lambdaEmp=np.mean(numbPointsAll/areaWindow)
+print("lambdaEmp = ",lambdaEmp)
 
 #Matern I
 lambdaExactI=lambdaPoisson*np.exp(-lambdaPoisson*diskArea) #exact
@@ -115,7 +121,4 @@ print("lambdaExactII = ",lambdaExactII)
 lambdaEmpII=np.mean(numbPointsAll_II/areaWindow)
 print("lambdaEmpII = ",lambdaEmpII)
 
-lambdaExact=lambdaPoisson
-print("lambdaExact = ",lambdaExact)
-lambdaEmp=np.mean(numbPointsAll/areaWindow)
-print("lambdaEmp = ",lambdaEmp)
+

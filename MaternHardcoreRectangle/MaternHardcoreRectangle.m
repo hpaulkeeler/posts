@@ -1,7 +1,7 @@
 clearvars; clc; close all;
 
-%Simulate Matern hard-core point processes on a rectangle.
-%Author: H. Paul Keeler, 2018.
+%Simulate Matern hard-core point processes (Type I/II) on a rectangle.
+%Author: H. Paul Keeler, 2019.
 
 numbSim=10^3; %number of simulations
 
@@ -97,7 +97,11 @@ legend('Underlying Poisson','Matern I','Matern II');
 
 %Compare statistics
 diskArea=pi*radiusCore^2; %area of disk
-areaWindow=(xMax-xMin)*(yMax-yMin);
+areaWindow=(xMax-xMin)*(yMax-yMin); %area of simulation window
+
+%underlying Poisson point process
+lambdaExact=lambdaPoisson
+lambdaEmp=mean(numbPointsAll/areaWindow)
 
 %Matern I
 lambdaExactI=lambdaPoisson*exp(-lambdaPoisson*diskArea) %exact
@@ -107,5 +111,4 @@ lambdaEmpI=mean(numbPointsAll_I/areaWindow) %empirical
 lambdaExactII=1/(diskArea)*(1-exp(-lambdaPoisson*diskArea))
 lambdaEmpII=mean(numbPointsAll_II/areaWindow)
 
-lambdaExact=lambdaPoisson
-lambdaEmp=mean(numbPointsAll/areaWindow)
+
