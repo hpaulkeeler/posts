@@ -13,10 +13,10 @@ yMax=.5;
 
 %Parameters for the parent and daughter point processes
 lambdaPoisson=10;%density of parent Poisson point process
-radiusCore=0.1;%radius of cluster disk (for daughter points)
+radiusCore=0.1;%radius of hard core 
 
 %Extended simulation windows parameters
-rExt=radiusCore; %extension parameter -- use cluster radius
+rExt=radiusCore; %extension parameter -- use core radius
 xMinExt=xMin-rExt;
 xMaxExt=xMax+rExt;
 yMinExt=yMin-rExt;
