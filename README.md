@@ -27,11 +27,20 @@ https://hpaulkeeler.com/simulating-an-inhomogeneous-poisson-point-process/
 MaternClusterRectangle
 https://hpaulkeeler.com/simulating-a-matern-cluster-point-process/
 
+MaternHardcoreRectangle
+https://hpaulkeeler.com/simulating-matern-hard-core-point-processes/
+
+PoissonDirect
+https://hpaulkeeler.com/simulating-poisson-random-variables-direct-method/
+
 PoissonDisk
 https://hpaulkeeler.com/simulating-a-poisson-point-process-on-a-disk/
 
 PoissonCheck
 https://hpaulkeeler.com/checking-poisson-point-process-simulations/
+
+PoissonFast
+https://hpaulkeeler.com/simulating-poisson-point-processes-faster/
 
 PoissonLine
 https://hpaulkeeler.com/simulating-a-poisson-line-process/
@@ -53,3 +62,6 @@ https://hpaulkeeler.com/testing-the-julia-language-with-point-process-simulation
 
 ThomasClusterRectangle
 https://hpaulkeeler.com/simulating-a-thomas-cluster-point-process/
+
+VoronoiUniform
+https://hpaulkeeler.com/placing-a-random-point-uniformly-placed-in-a-voronoi-cell/
