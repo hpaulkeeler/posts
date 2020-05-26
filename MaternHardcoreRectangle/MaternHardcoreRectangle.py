@@ -15,7 +15,7 @@ yMin = -.5;
 yMax = .5;
 
 #Parameters for the parent and daughter point processes
-lambdaPoisson=10;#density of underlying Poisson point process
+lambdaPoisson=50;#density of underlying Poisson point process
 radiusCore=0.1;#radius of hard core
 
 #Extended simulation windows parameters
