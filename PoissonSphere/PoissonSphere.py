@@ -60,3 +60,4 @@ yMesh=yMesh+yy0;
 zMesh=zMesh+zz0;
 #do a surface plot with a clear faces (ie alpha=0)
 ax.plot_surface(xMesh, yMesh, zMesh, edgecolor='k',alpha=0)
+
