@@ -1,7 +1,7 @@
-clearvars; clc; close all;
-
-%Simulate Matern hard-core point processes (Type I/II) on a rectangle.
-%Author: H. Paul Keeler, 2019.
+% Simulate Matern hard-core point processes (Type I/II) on a rectangle.
+% Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 numbSim=10^3; %number of simulations
 

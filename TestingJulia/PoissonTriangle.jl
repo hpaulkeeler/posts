@@ -1,5 +1,7 @@
-#Simulate a Poisson point process on a triangle
-#Author: H. Paul Keeler, 2019.
+# Simulate a Poisson point process on a triangle
+# Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays

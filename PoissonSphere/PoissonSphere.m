@@ -1,5 +1,9 @@
-%Simulate a Poisson point process on the surface of a sphere.
-%Author: H. Paul Keeler, 2020.
+% Simulate a Poisson point process on the surface of a sphere.
+% The Code can be modified to simulate the point  process *inside* the sphere; 
+% see line 27.
+% Author: H. Paul Keeler, 2020.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 %Simulation window parameters
 r=1; %radius of sphere
@@ -14,9 +18,13 @@ lambda=10; %intensity (ie mean density) of the Poisson process
  
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points
+%angular variables
 theta=pi*(rand(numbPoints,1)); %polar angles
 phi=2*pi*(rand(numbPoints,1)); %azimuth angles
+%radial variables
 rho=r*ones(numbPoints,1); %radial distances (fixed radius)
+%use this line instead to uniformly place points *inside* the sphere
+%rho=r*(rand(numbPoints,1)).^(1/3); 
 
 %Convert from spherical to Cartesian coordinates
 [xx,yy,zz]=sph2cart(theta,phi,rho); 

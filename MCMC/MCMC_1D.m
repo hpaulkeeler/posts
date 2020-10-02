@@ -3,6 +3,8 @@
 %p(x)=exp(-x/m^2), where m>0.
 %
 %Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 clearvars;clc;close all;
 

@@ -2,6 +2,8 @@
 # See, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting

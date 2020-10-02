@@ -2,6 +2,8 @@
 # See, for example, the Wikipedia article:
 # https://en.wikipedia.org/wiki/Bertrand_paradox_(probability)
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 r=1; #circle radius
 x0=0; y0=0; #centre of circle

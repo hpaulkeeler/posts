@@ -10,6 +10,8 @@
 # All points and Voronoi cells of the PPP are numbered arbitrarily.
 #
 # Author: H.Paul Keeler, 2019
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 #
 # [1] http://scipy.github.io/devdocs/generated/scipy.spatial.Voronoi.html
 # [2] http://www.qhull.org/

@@ -3,6 +3,8 @@
 # line process. On each line (or segment) an independent Poisson point 
 # process is then simulated.
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 
 ###START -- Parameters -- START###

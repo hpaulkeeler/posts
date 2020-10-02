@@ -3,6 +3,8 @@
 # thinned according to a (spatially *dependent*) p-thinning.
 # The intensity function is lambda(x,y)=exp(-(x^2+y^2)/s^2), where s>0.
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # For plotting

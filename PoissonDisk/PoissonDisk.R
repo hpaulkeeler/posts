@@ -1,5 +1,7 @@
-#Simulate a Poisson point process on a disk.
-#Author: H. Paul Keeler, 2018.
+# Simulate a Poisson point process on a disk.
+# Author: H. Paul Keeler, 2018.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 #Simulation window parameters
 r=1; #radius of disk

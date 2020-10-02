@@ -1,13 +1,12 @@
 // Author: H. Paul Keeler, 2019.
-// github.com/hpaulkeeler
-// hpaulkeeler.com/
+// Website: hpaulkeeler.com
+// Repository: github.com/hpaulkeeler/posts
 
 /*WARNING: 
 This code uses rand(), the standard pseudo-random number generating function in C, 
 which is known for producing inadequately random numbers. 
 Replace the function rand() in the function funUniformMany with another standard uniform number generator. 
  */
-
 
 #include <stdio.h>
 #include <stdlib.h>

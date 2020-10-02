@@ -1,5 +1,7 @@
 % Simulate a uniform Poisson line process on a disk.
 % Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 close all; clearvars; clc;
 

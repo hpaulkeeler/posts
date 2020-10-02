@@ -1,6 +1,7 @@
 # Author: H. Paul Keeler, 2019.
-# hpaulkeeler.com/
-# github.com/hpaulkeeler
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
+
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 
 mu=5; #Poisson parameter

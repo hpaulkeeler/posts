@@ -1,10 +1,14 @@
 # Simulate a Poisson point process on a sphere.
+# The Code can be modified to simulate the point  process *inside* the sphere; 
+# see line 34.
+
 # Author: H. Paul Keeler, 2020.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting
 from mpl_toolkits import mplot3d
-from mpl_toolkits.mplot3d import Axes3D
 
 plt.close('all');  # close all figures
 
@@ -21,9 +25,13 @@ lambda0 = 10;  # intensity (ie mean density) of the Poisson process
 
 # Simulate Poisson point process
 numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
+# angular variables
 theta = np.pi * np.random.uniform(0, 1, numbPoints);  # polar angles
 phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
+# radial variables
 rho = r * np.ones(numbPoints);  # radial distances (fixed radius)
+#use this line instead to uniformly place points *inside* the sphere
+#rho=r*(np.random.uniform(0, 1, numbPoints))**(1/3); 
 
 # Convert from polar to Cartesian coordinates
 xx = rho * np.sin(theta) * np.cos(phi);

@@ -4,6 +4,8 @@
 #normalization constant.
 #
 #Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 library(gplots); #for histogram, plotting etc
 library(pracma); #for integration etc

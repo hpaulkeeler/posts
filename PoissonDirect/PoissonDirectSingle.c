@@ -1,6 +1,6 @@
 // Author: H. Paul Keeler, 2019.
-// github.com/hpaulkeeler
-// hpaulkeeler.com/
+// Website: hpaulkeeler.com
+// Repository: github.com/hpaulkeeler/posts
 
 /*WARNING: 
 This code uses rand(), the standard pseudo-random number generating function in C, 

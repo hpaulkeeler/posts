@@ -1,5 +1,7 @@
-#Simulate a Poisson point process on a rectangle.
-#Author: H. Paul Keeler, 2018.
+# Simulate a Poisson point process on a rectangle.
+# Author: H. Paul Keeler, 2018.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 #Simulation window parameters
 xMin=0;xMax=1;

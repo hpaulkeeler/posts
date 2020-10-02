@@ -1,5 +1,7 @@
 # Simulate a Poisson point process on a triangle.
 # Author: H. Paul Keeler, 2018.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting

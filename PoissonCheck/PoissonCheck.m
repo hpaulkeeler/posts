@@ -1,11 +1,11 @@
-%Simulate and check an inhomogeneous Poisson point process on a rectangle
-%This is done by first simulating a homogeneous Poisson process, which is 
-%then thinned according to a (spatially *dependent*) p-thinning.
-%The intensity function is
-%lambda(x,y)=80*exp(-(x^2+y^2)/s^2)+100*exp(-(x^2+y^2)/s^2), where s>0.
-%The simulations are then checked by examining the statistics of the number 
-%of points and the locations of points (using histograms)
-%Author: H. Paul Keeler, 2019.
+% Simulate and check an inhomogeneous Poisson point process on a rectangle
+% This is done by first simulating a homogeneous Poisson process, which is 
+% then thinned according to a (spatially *dependent*) p-thinning.
+% The intensity function is
+% lambda(x,y)=80*exp(-(x^2+y^2)/s^2)+100*exp(-(x^2+y^2)/s^2), where s>0.
+% The simulations are then checked by examining the statistics of the number 
+% of points and the locations of points (using histograms)
+% Author: H. Paul Keeler, 2019.
 
 close all; %close all plots
 

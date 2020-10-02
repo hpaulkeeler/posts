@@ -1,9 +1,10 @@
-#Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate an
-#exponential distribution, which has the probability density
-#p(x)=exp(-x/m), where m>0.
+# Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate an
+# exponential distribution, which has the probability density
+# p(x)=exp(-x/m), where m>0.
 #
-#Author: H. Paul Keeler, 2019.
-
+# Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 numbSim=10^4; #number of random variables simulated
 numbSteps=25; #number of steps for the Markov process

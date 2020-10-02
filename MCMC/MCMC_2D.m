@@ -4,6 +4,8 @@
 % normalization constant.
 %
 % Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 clearvars;clc;close all;
 

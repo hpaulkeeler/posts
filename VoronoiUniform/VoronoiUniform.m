@@ -19,6 +19,8 @@
 % If there are no bounded Voronoi cells, no diagram is created.
 %
 % Author: H.Paul Keeler, 2019
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 %
 % [1] http://www.mathworks.com.au/help/matlab/ref/voronoin.html
 % [2] http://www.qhull.org/

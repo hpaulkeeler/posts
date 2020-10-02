@@ -1,8 +1,10 @@
-%Simulate an inhomogeneous Poisson point process on a rectangle.
-%This is done by simulating a homogeneous Poisson process, which is then
-%thinned according to a (spatially *dependent*) p-thinning
-%The intensity function is lambda(x,y)=exp(-(x^2+y^2)/s^2), where s>0.
-%Author: H. Paul Keeler, 2019.
+% Simulate an inhomogeneous Poisson point process on a rectangle.
+% This is done by simulating a homogeneous Poisson process, which is then
+% thinned according to a (spatially *dependent*) p-thinning
+% The intensity function is lambda(x,y)=exp(-(x^2+y^2)/s^2), where s>0.
+% Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 close all;
 

@@ -1,5 +1,7 @@
-#Simulate a binomial point process on a unit square.
-#Author: H. Paul Keeler, 2018.
+# Simulate a binomial point process on a unit square.
+# Author: H. Paul Keeler, 2018.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 numbPoints=10; #number of points
 

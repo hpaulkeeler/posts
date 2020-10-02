@@ -10,6 +10,8 @@
 # The results are not plotted if the number of lines is equal to or 
 # greater than a thousand (ie numbLines<1000 for plotting).
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting

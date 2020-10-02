@@ -10,6 +10,8 @@
 % The results are not plotted if the number of lines is equal to or 
 % greater than a thousand (ie numbLines<1000 for plotting).
 % Author: H. Paul Keeler, 2019.
+% Website: hpaulkeeler.com
+% Repository: github.com/hpaulkeeler/posts
 
 close all; clearvars; clc;
 

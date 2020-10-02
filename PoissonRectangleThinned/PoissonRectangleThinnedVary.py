@@ -2,6 +2,8 @@
 # Then thin the Poisson point process according to a (spatially *dependent*)
 # p-thinning
 # Author: H. Paul Keeler, 2019.
+# Website: hpaulkeeler.com
+# Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # For plotting
