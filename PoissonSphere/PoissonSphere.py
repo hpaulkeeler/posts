@@ -1,6 +1,6 @@
 # Simulate a Poisson point process on a sphere.
 # The Code can be modified to simulate the point  process *inside* the sphere; 
-# see line 34.
+# see lines 27 and 34.
 
 # Author: H. Paul Keeler, 2020.
 # Website: hpaulkeeler.com
@@ -18,13 +18,17 @@ r = 1;  # radius of sphere
 xx0 = 0;
 yy0 = 0;  
 zz0 =0; 
-areaTotal = 4*np.pi * r ** 2;  # area of sphere
 
 # Point process parameters
 lambda0 = 10;  # intensity (ie mean density) of the Poisson process
 
+measureTotal = 4*np.pi * r ** 2;  # area of sphere
+#use this line instead to uniformly place points *inside* the sphere
+#measureTotal = 4/3*np.pi * r ** 3;  # area of sphere
+
+
 # Simulate Poisson point process
-numbPoints = np.random.poisson(lambda0 * areaTotal);  # Poisson number of points
+numbPoints = np.random.poisson(lambda0 * measureTotal);  # Poisson number of points
 # angular variables
 theta = np.pi * np.random.uniform(0, 1, numbPoints);  # polar angles
 phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
