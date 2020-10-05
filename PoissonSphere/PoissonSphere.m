@@ -1,6 +1,7 @@
 % Simulate a Poisson point process on the surface of a sphere.
 % The Code can be modified to simulate the point  process *inside* the 
-% sphere; see lines 20 and 30.
+% sphere; see the post
+% hpaulkeeler.com/simulating-a-poisson-point-process-on-a-sphere/
 % Author: H. Paul Keeler, 2020.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
@@ -21,16 +22,27 @@ measureTotal=4*pi*r^2; %area of sphere
 
 %Simulate Poisson point process
 numbPoints=poissrnd(measureTotal*lambda);%Poisson number of points
-%angular variables
-theta=pi*(rand(numbPoints,1)); %polar angles
-phi=2*pi*(rand(numbPoints,1)); %azimuth angles
-%radial variables
-rho=r*ones(numbPoints,1); %radial distances (fixed radius)
-%use this line instead to uniformly place points *inside* the sphere
-%rho=r*(rand(numbPoints,1)).^(1/3); 
 
-%Convert from spherical to Cartesian coordinates
-[xx,yy,zz]=sph2cart(theta,phi,rho); 
+% %METHOD 1 for positioning points: Use spherical coodinates
+% %angular variables
+% theta=pi*(rand(numbPoints,1)); %polar angles
+% phi=2*pi*(rand(numbPoints,1)); %azimuth angles
+% %radial variables
+% rho=r*ones(numbPoints,1); %radial distances (fixed radius)
+% %use this line instead to uniformly place points *inside* the sphere
+% %rho=r*(rand(numbPoints,1)).^(1/3); 
+% %Convert from spherical to Cartesian coordinates
+% [xx,yy,zz]=sph2cart(theta,phi,rho); 
+
+%METHOD 2 for positioning points: Use normal random variables
+xxRand=normrnd(0,1,numbPoints,3); %generate three sets of normal variables
+normRand=vecnorm(xxRand,2,2); %Euclidean norms (across each row)
+xxRandBall=xxRand./normRand; %rescale by Euclidean norms
+xxRandBall=r*xxRandBall; %rescale for non-unit sphere
+%retrieve x and y coordinates
+xx=xxRandBall(:,1);
+yy=xxRandBall(:,2);
+zz=xxRandBall(:,3);
 
 %Shift centre of sphere to (xx0,yy0,zz0)
 xx=xx+xx0;

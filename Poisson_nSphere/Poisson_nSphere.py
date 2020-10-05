@@ -50,8 +50,9 @@ if numbDim==3:
     fig = plt.figure()
     ax = plt.axes(projection='3d')
     ax.scatter3D(xx, yy,zz,color='b');
-    plt.xlabel('x');
-    plt.ylabel('y');
+    ax.set_xlabel('x')
+    ax.set_ylabel('y')
+    ax.set_zlabel('z')
     
     #control ticks on x,y,z axes
     plt.locator_params(axis='x', nbins=5);

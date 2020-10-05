@@ -1,13 +1,14 @@
 # Simulate a Poisson point process on a sphere.
 # The Code can be modified to simulate the point  process *inside* the sphere; 
-# see lines 27 and 34.
-
+# see the post
+# hpaulkeeler.com/simulating-a-poisson-point-process-on-a-sphere/
 # Author: H. Paul Keeler, 2020.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting
+from numpy import linalg as la #linear algebra pack for norms
 from mpl_toolkits import mplot3d
 
 plt.close('all');  # close all figures
@@ -29,18 +30,30 @@ measureTotal = 4*np.pi * r ** 2;  # area of sphere
 
 # Simulate Poisson point process
 numbPoints = np.random.poisson(lambda0 * measureTotal);  # Poisson number of points
-# angular variables
-theta = np.pi * np.random.uniform(0, 1, numbPoints);  # polar angles
-phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
-# radial variables
-rho = r * np.ones(numbPoints);  # radial distances (fixed radius)
-#use this line instead to uniformly place points *inside* the sphere
-#rho=r*(np.random.uniform(0, 1, numbPoints))**(1/3); 
 
-# Convert from polar to Cartesian coordinates
-xx = rho * np.sin(theta) * np.cos(phi);
-yy = rho * np.sin(theta) * np.sin(phi);
-zz = rho * np.cos(theta)
+##METHOD 1 for positioning points: Use spherical coodinates
+## angular variables
+#theta = np.pi * np.random.uniform(0, 1, numbPoints);  # polar angles
+#phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
+## radial variables
+#rho = r * np.ones(numbPoints);  # radial distances (fixed radius)
+##use this line instead to uniformly place points *inside* the sphere
+##rho=r*(np.random.uniform(0, 1, numbPoints))**(1/3); 
+#
+## Convert from polar to Cartesian coordinates
+#xx = rho * np.sin(theta) * np.cos(phi);
+#yy = rho * np.sin(theta) * np.sin(phi);
+#zz = rho * np.cos(theta)
+
+#METHOD 2 for positioning points: Use normal random variables
+xxRand=np.random.normal(0,1,size=(numbPoints,3)); #generate two sets of normal variables
+normRand=la.norm(xxRand,2,1); #Euclidean norms
+xxRandBall=xxRand/normRand[:,None]; #rescale by Euclidean norms
+xxRandBall=r*xxRandBall; #rescale for non-unit sphere
+#retrieve x and y coordinates
+xx= xxRandBall[:,0];
+yy= xxRandBall[:,1];
+zz= xxRandBall[:,2];
 
 # Shift centre of sphere to (xx0,yy0)
 xx = xx + xx0;
@@ -51,8 +64,9 @@ zz = zz + zz0;
 fig = plt.figure()
 ax = plt.axes(projection='3d')
 ax.scatter3D(xx, yy,zz,color='b');
-plt.xlabel('x');
-plt.ylabel('y');
+ax.set_xlabel('x')
+ax.set_ylabel('y')
+ax.set_zlabel('z')
 
 #control ticks on x,y,z axes
 plt.locator_params(axis='x', nbins=5);
@@ -72,4 +86,3 @@ yMesh=yMesh+yy0;
 zMesh=zMesh+zz0;
 #do a surface plot with a clear faces (ie alpha=0)
 ax.plot_surface(xMesh, yMesh, zMesh, edgecolor='k',alpha=0)
-
