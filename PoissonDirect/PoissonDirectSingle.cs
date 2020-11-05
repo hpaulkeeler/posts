@@ -71,7 +71,7 @@ public class RandomGenerator {
         double exp_lambda = Math.Exp (-lambda); //constant for terminating loop
         double randUni; //uniform variable
         double prodUni; //product of uniform variables
-		int randPoisson = -1; //Poisson variable
+	int randPoisson; //Poisson variable
 
         //initialize variables
         randPoisson = -1;
