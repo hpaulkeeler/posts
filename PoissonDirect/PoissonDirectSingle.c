@@ -74,10 +74,10 @@ int funPoissonSingle(double lambda)
     double exp_lambda = exp(-lambda); //constant for terminating loop
     double randUni;                   //uniform variable
     double prodUni;                   //product of uniform variables
-	int randPoisson = -1; //Poisson variable
+    int randPoisson; //Poisson variable
 
     //initialize variables
-     randPoisson = -1; 
+    randPoisson = -1; 
     prodUni = 1;          
     do
     {
