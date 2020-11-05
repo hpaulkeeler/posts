@@ -26,7 +26,7 @@ int main()
 
     double lambda = 8.7; //lambda is the Poisson parameter (that is, it's mean)
 
-    int numbSim = 100;
+    int numbSim = 100; // number of simulations
 
     //START Collect statistists on Poisson variables
     //initialize statistics
