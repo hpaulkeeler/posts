@@ -4,7 +4,7 @@
 
 program test_poisson
   !lambda is the Poisson parameter (that is, its mean)
-  real,parameter :: lambda = 8.7 
+  real,parameter :: lambda = 4.7 
   !number of variables
   integer :: numbSim = 1000 
 
@@ -17,35 +17,35 @@ program test_poisson
   
   !START Collect statistists on Poisson variables
   !initialize statistics
-  integer :: numbPoissonTemp;
-  real :: sumPoisson = 0;
-  real :: sumPoissonSquared = 0;
+  integer :: numbPoissonTemp
+  real :: sumPoisson = 0
+  real :: sumPoissonSquared = 0
   
   !loop through for each random variable
   integer :: i = 0 !count (loop) variable
-  do while (i < numbSim)
+  do i = 1, numbSim
      !generate a single poisson variable
-      numbPoissonTemp = funPoissonSingle(lambda);
+      numbPoissonTemp = funPoissonSingle(lambda)
 
       !total sum of variables
-      sumPoisson = sumPoisson+numbPoissonTemp;
+      sumPoisson = sumPoisson+numbPoissonTemp
       !total sum of squared variables
-      sumPoissonSquared =sumPoissonSquared+ numbPoissonTemp**2;
+      sumPoissonSquared =sumPoissonSquared+ numbPoissonTemp**2
 
-      if (i < 5) then
+      if (i <= 5) then
          !print the first 5 numbers
-         print*, "One of the Poisson variables has the value ", numbPoissonTemp;
+         print*, "One of the Poisson variables has the value ", numbPoissonTemp
       end if
-      i = i+1  !update count variable
+      
     end do
     
     !calculate statistics
     meanPoisson = sumPoisson / numbSim 
-    varPoisson = sumPoissonSquared / numbSim - meanPoisson**2; 
+    varPoisson = sumPoissonSquared / numbSim - meanPoisson**2 
 
     !print statistics
     print*, "The average of the Poisson variables is ", meanPoisson
-    print*, "The variance of the Poisson variables is", varPoisson;
+    print*, "The variance of the Poisson variables is", varPoisson
     print*, "For Poisson random variables, the mean and variance will agree more and more as the number of simulations increases."
 
     !END Collect statistists on Poisson variables
@@ -54,7 +54,7 @@ end program test_poisson
 !START Function definitions
 !Uniform function -- returns a standard uniform random variable
 function funUniformSingle() result(randUni)
-    real randUni;
+    real randUni
     call random_seed
     call random_number(randUni) 
 end function
@@ -70,11 +70,11 @@ real, intent(in) :: lambda !input
   exp_lambda= exp(-lambda) 
   
   !initialize variables
-  randPoisson = -1;
-  prodUni = 1;
+  randPoisson = -1
+  prodUni = 1
   do while (prodUni > exp_lambda)       
      randUni = funUniformSingle() !generate uniform variable
-     prodUni = prodUni * randUni; !update product
+     prodUni = prodUni * randUni !update product
      randPoisson = randPoisson + 1 !increase Poisson variable
   end do  
 end function
