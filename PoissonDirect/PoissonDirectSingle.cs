@@ -8,7 +8,7 @@ namespace Poisson
 {
     class Poisson {
         static void Main () {
-            double lambda = 8.7; // lambda is the Poisson parameter (that is, it's mean)
+            double lambda = 8.7; // lambda is the Poisson parameter (that is, its mean)
 
             int numbSim = 100; //number of random variables
 

@@ -24,9 +24,9 @@ int main()
     //intializes random number generator
     srand((unsigned)time(&s));
 
-    double lambda = 8.7; //lambda is the Poisson parameter (that is, it's mean)
+    double lambda = 8.7; //lambda is the Poisson parameter (that is, its mean)
 
-    int numbSim = 100; // number of simulations
+    int numbSim = 100; // number of variables
 
     //START Collect statistists on Poisson variables
     //initialize statistics

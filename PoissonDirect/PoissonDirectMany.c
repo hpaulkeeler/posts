@@ -18,7 +18,7 @@ void funUniformMany(double *p_output, int n_output);             //generate unif
 void funPoissonMany(int *p_output, int n_output, double lambda); //generate Poisson variables with parameter (ie mean) lambda
 // p_output is the pointer for the random variables/variates
 // n_output is the number of random variables/variates to generate
-// lambda is the Poisson parameter (that is, it's mean)
+// lambda is the Poisson parameter (that is, its mean)
 
 //START Main
 int main()
