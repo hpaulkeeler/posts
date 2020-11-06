@@ -3,6 +3,8 @@
 !Repository: github.com/hpaulkeeler/posts
 
 program test_poisson
+   implicit none
+
   !lambda is the Poisson parameter (that is, its mean)
   real,parameter :: lambda = 4.7 
   !number of variables
@@ -22,7 +24,7 @@ program test_poisson
   real :: sumPoissonSquared = 0
   
   !loop through for each random variable
-  integer :: i = 0 !count (loop) variable
+  integer :: i !count (loop) variable
   do i = 1, numbSim
      !generate a single poisson variable
       numbPoissonTemp = funPoissonSingle(lambda)
@@ -34,7 +36,7 @@ program test_poisson
 
       if (i <= 5) then
          !print the first 5 numbers
-         print*, "One of the Poisson variables has the value ", numbPoissonTemp
+         print *, "One of the Poisson variables has the value ", numbPoissonTemp
       end if
       
     end do
@@ -44,9 +46,9 @@ program test_poisson
     varPoisson = sumPoissonSquared / numbSim - meanPoisson**2 
 
     !print statistics
-    print*, "The average of the Poisson variables is ", meanPoisson
-    print*, "The variance of the Poisson variables is", varPoisson
-    print*, "For Poisson random variables, the mean and variance will agree more and more as the number of simulations increases."
+    print *, "The average of the Poisson variables is ", meanPoisson
+    print *, "The variance of the Poisson variables is", varPoisson
+    print *, "For Poisson random variables, the mean and variance will agree more and more as the number of simulations increases."
 
     !END Collect statistists on Poisson variables
 end program test_poisson

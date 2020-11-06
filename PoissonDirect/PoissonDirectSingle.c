@@ -2,6 +2,16 @@
 // Website: hpaulkeeler.com
 // Repository: github.com/hpaulkeeler/posts
 
+/* This program simulates Poisson random variables based 
+on the direct method of using exponential inter-arrival times. 
+https://hpaulkeeler.com/simulating-poisson-random-variables-direct-method/
+*/
+
+/*WARNING: 
+This program is only suitable for small Poisson parameter (lambda) 
+values, for example, lambda<20.
+*/ 
+
 /*WARNING: 
 This code uses rand(), the standard pseudo-random number generating function in C, 
 which is known for producing inadequately random numbers. 

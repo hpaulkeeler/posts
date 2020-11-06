@@ -1,6 +1,14 @@
 # Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+#
+# This program simulates Poisson random variables based 
+# on the direct method of using exponential inter-arrival times. 
+#
+# WARNING: This program is only suitable for small Poisson parameter (mu) 
+# values, for example, mu<20. 
+# This program is intended as an illustration. Python (NumPy) has its own in-built 
+# function numpy.random.poisson, which is much faster. Use it -- not this function.
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 
@@ -25,6 +33,7 @@ def funPoissonLoop(mu):
     return N;
 
 #Use recursion to generate Poisson variates
+#WARNING: Might be slow or use up too much memory
 def funPoissonRecursive(mu):
     T=0; #initialize sum of exponential variables as zero
     n=-1; #initialize counting variable as negative one    

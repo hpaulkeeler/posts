@@ -1,6 +1,14 @@
 % Author: H. Paul Keeler, 2019.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+%
+% This program simulates Poisson random variables based 
+% on the direct method of using exponential inter-arrival times. 
+%
+% WARNING: This program is only suitable for small Poisson parameter (mu) 
+% values, for example, mu<20. 
+% This program is intended as an illustration. MATLAB has its own in-built 
+% function poissrnd, which is much faster. Use it -- not this function.
 
 mu=5; %Poisson parameter
 numbSim=10^2; %number of simulations
@@ -34,7 +42,8 @@ end
 N=n;
 end
 
-%Use recursion to generate Poisson variates
+%Use recursion to generate Poisson variates 
+%WARNING: Might be slow or use up too much memory
 function N=funPoissonRecursive(mu)
 T=0; %initialize sum of exponential variables as zero
 n=-1; %initialize counting variable as negative one
