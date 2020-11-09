@@ -2,6 +2,8 @@
 % Author: H. Paul Keeler, 2018.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% hpaulkeeler.com/simulating-a-poisson-point-process-on-a-disk/
 
 %Simulation window parameters
 r=1; %radius of disk

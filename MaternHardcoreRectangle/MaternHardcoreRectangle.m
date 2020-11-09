@@ -2,6 +2,8 @@
 % Author: H. Paul Keeler, 2019.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% hpaulkeeler.com/simulating-matern-hard-core-point-processes/
 
 numbSim=10^3; %number of simulations
 

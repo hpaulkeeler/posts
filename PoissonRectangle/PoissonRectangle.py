@@ -2,6 +2,8 @@
 # Author: H. Paul Keeler, 2018.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/poisson-point-process-simulation/
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting

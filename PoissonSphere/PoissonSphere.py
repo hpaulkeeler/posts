@@ -5,6 +5,8 @@
 # Author: H. Paul Keeler, 2020.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/simulating-a-poisson-point-process-on-a-sphere/
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting

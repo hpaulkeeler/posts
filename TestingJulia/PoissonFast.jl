@@ -16,6 +16,8 @@
 # Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/testing-the-julia-language-with-point-process-simulations/
 
 clearconsole();
 

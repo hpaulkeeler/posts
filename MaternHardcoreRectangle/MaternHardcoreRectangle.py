@@ -2,6 +2,8 @@
 # Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/simulating-matern-hard-core-point-processes/
 
 import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # For plotting

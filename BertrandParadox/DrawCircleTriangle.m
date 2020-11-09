@@ -4,6 +4,8 @@
 % Author: H. Paul Keeler, 2019.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% hpaulkeeler.com/the-bertrand-paradox/
 
 close all; clearvars; clc;
 

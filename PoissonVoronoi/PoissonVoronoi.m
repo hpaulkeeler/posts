@@ -12,6 +12,8 @@
 % Author: H.Paul Keeler, 2019
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% https://hpaulkeeler.com/voronoi-dirichlet-tessellations/
 %
 % [1] http://www.mathworks.com.au/help/matlab/ref/voronoin.html
 % [2] http://www.qhull.org/

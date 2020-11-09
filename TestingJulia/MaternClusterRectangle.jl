@@ -2,6 +2,8 @@
 # Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/testing-the-julia-language-with-point-process-simulations/
 
 #Note: Need the .+ for adding a scalar to an array
 #Also need . for sqrt, exp, cos, sin etc and assinging scalars to arrays

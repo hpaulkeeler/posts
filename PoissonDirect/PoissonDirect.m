@@ -4,6 +4,8 @@
 %
 % This program simulates Poisson random variables based 
 % on the direct method of using exponential inter-arrival times. 
+% For more details, see the post:
+% hpaulkeeler.com/simulating-poisson-random-variables-direct-method/
 %
 % WARNING: This program is only suitable for small Poisson parameter (mu) 
 % values, for example, mu<20. 

@@ -4,6 +4,8 @@
 # Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
+# For more details, see the post:
+# hpaulkeeler.com/the-bertrand-paradox/
 
 r=1; #circle radius
 x0=0; y0=0; #centre of circle

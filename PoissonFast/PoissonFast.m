@@ -16,6 +16,8 @@
 % Author: H. Paul Keeler, 2019.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% hpaulkeeler.com/simulating-poisson-point-processes-faster/
 
 %%%START Parameters START%%%
 numbSim=10^6; %number of simulations
