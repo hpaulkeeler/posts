@@ -5,6 +5,8 @@
 % Author: H. Paul Keeler, 2019.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
+% For more details, see the post:
+% hpaulkeeler.com/simulating-an-inhomogeneous-poisson-point-process/
 
 close all;
 
