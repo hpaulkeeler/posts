@@ -26,15 +26,18 @@ measureTotal=4*pi*r^2; %area of sphere
 numbPoints=poissrnd(measureTotal*lambda);%Poisson number of points
 
 % %METHOD 1 for positioning points: Use spherical coodinates
-% %angular variables
-% theta=pi*(rand(numbPoints,1)); %polar angles
 % phi=2*pi*(rand(numbPoints,1)); %azimuth angles
+% V=2*rand(numbPoints,1)-1; %uniform asin(phi) 
+% 
 % %radial variables
-% rho=r*ones(numbPoints,1); %radial distances (fixed radius)
+% rho=ones(numbPoints,1);
 % %use this line instead to uniformly place points *inside* the sphere
 % %rho=r*(rand(numbPoints,1)).^(1/3); 
-% %Convert from spherical to Cartesian coordinates
-% [xx,yy,zz]=sph2cart(theta,phi,rho); 
+% 
+% %calculate Cartesian coordinates
+% xx=rho.*sqrt(1-V.^2).*cos(phi);
+% yy=rho.*sqrt(1-V.^2).*sin(phi);
+% zz=rho.*V;
 
 %METHOD 2 for positioning points: Use normal random variables
 xxRand=normrnd(0,1,numbPoints,3); %generate three sets of normal variables

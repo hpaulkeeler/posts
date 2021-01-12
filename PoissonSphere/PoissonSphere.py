@@ -35,17 +35,18 @@ numbPoints = np.random.poisson(lambda0 * measureTotal);  # Poisson number of poi
 
 ##METHOD 1 for positioning points: Use spherical coodinates
 ## angular variables
-#theta = np.pi * np.random.uniform(0, 1, numbPoints);  # polar angles
 #phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
+#V=2 * np.random.uniform(0, 1, numbPoints)-1; #uniform asin(phi) 
+#
 ## radial variables
 #rho = r * np.ones(numbPoints);  # radial distances (fixed radius)
 ##use this line instead to uniformly place points *inside* the sphere
 ##rho=r*(np.random.uniform(0, 1, numbPoints))**(1/3); 
 #
-## Convert from polar to Cartesian coordinates
-#xx = rho * np.sin(theta) * np.cos(phi);
-#yy = rho * np.sin(theta) * np.sin(phi);
-#zz = rho * np.cos(theta)
+## calculate Cartesian coordinates
+#xx = rho * np.sqrt(1-V**2) * np.cos(phi);
+#yy = rho * np.sqrt(1-V**2) * np.sin(phi);
+#zz = rho * V;
 
 #METHOD 2 for positioning points: Use normal random variables
 xxRand=np.random.normal(0,1,size=(numbPoints,3)); #generate two sets of normal variables
