@@ -63,9 +63,11 @@ xx = xx + xx0;
 yy = yy + yy0;
 zz = zz + zz0;
 
-## Plotting
-fig = plt.figure()
-ax = plt.axes(projection='3d')
+# Plotting
+fig = plt.figure(figsize=plt.figaspect(1)*2);
+ax = plt.gca(projection='3d', proj_type = 'ortho');
+#fig = plt.figure()
+#ax = plt.axes(projection='3d')
 ax.scatter3D(xx, yy,zz,color='b');
 ax.set_xlabel('x')
 ax.set_ylabel('y')
