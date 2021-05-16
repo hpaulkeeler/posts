@@ -20,7 +20,7 @@ p=0.25;
 #Simulate a Poisson point process
 numbPoints=rpois(1,areaTotal*lambda);#Poisson number of points
 xx=xDelta*runif(numbPoints)+xMin;#x coordinates of Poisson points
-yy=xDelta*runif(numbPoints)+yMin;#y coordinates of Poisson points
+yy=yDelta*runif(numbPoints)+yMin;#y coordinates of Poisson points
 
 #Generate Bernoulli variables (ie coin flips) for thinning
 booleThinned=runif(numbPoints)<p; #points to be thinned

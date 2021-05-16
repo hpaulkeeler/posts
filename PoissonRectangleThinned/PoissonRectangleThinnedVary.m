@@ -24,7 +24,7 @@ fun_p=@(s,x,y)(exp(-(x.^2+y.^2)/s^2));
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points
 xx=xDelta*(rand(numbPoints,1))+xMin;%x coordinates of Poisson points
-yy=xDelta*(rand(numbPoints,1))+yMin;%y coordinates of Poisson points
+yy=yDelta*(rand(numbPoints,1))+yMin;%y coordinates of Poisson points
 
 %calculate spatially-dependent thinning probabilities
 p=fun_p(sigma,xx,yy); 

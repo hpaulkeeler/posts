@@ -24,7 +24,7 @@ fun_p <- function(s,x,y) {
 #Simulate a Poisson point process
 numbPoints=rpois(1,areaTotal*lambda);#Poisson number of points
 xx=xDelta*runif(numbPoints)+xMin;#x coordinates of Poisson points
-yy=xDelta*runif(numbPoints)+yMin;#y coordinates of Poisson points
+yy=yDelta*runif(numbPoints)+yMin;#y coordinates of Poisson points
 
 #calculate spatially-dependent thinning probabilities
 p=fun_p(sigma,xx,yy); 
