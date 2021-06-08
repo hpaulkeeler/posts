@@ -15,9 +15,10 @@ xMin = 0;
 xMax = 1;
 yMin = 0;
 yMax = 1;
+# rectangle dimensions
 xDelta = xMax - xMin;
-yDelta = yMax - yMin;  # rectangle dimensions
-areaTotal = xDelta * yDelta;
+yDelta = yMax - yMin;  
+areaTotal = xDelta * yDelta; #area of rectangle
 
 # Point process parameters
 lambda0 = 100;  # intensity (ie mean density) of the Poisson process

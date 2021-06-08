@@ -1,13 +1,22 @@
-% Simulate a binomial point process on a unit square.
+% Simulate a binomial point process on a rectangle.
 % Author: H. Paul Keeler, 2018.
 % Website: hpaulkeeler.com
 % Repository: github.com/hpaulkeeler/posts
 
-numbPoints=10; %number of points
+numbPoints=30; %number of points
+
+%Simulation window parameters
+xMin=0;
+xMax=1;
+yMin=0;
+yMax=1;
+%rectangle dimensions
+xDelta=xMax-xMin;
+yDelta=yMax-yMin; 
 
 %Simulate binomial point process
-xx=rand(numbPoints,1);%x coordinates of Poisson points
-yy=rand(numbPoints,1);%y coordinates of Poisson points
+xx=xDelta*rand(numbPoints,1)+xMin;%x coordinates of uniform points
+yy=yDelta*rand(numbPoints,1)+yMin;%y coordinates of uniformpoints
 
 %Plotting
 scatter(xx,yy);

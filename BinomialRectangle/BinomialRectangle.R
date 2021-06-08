@@ -1,13 +1,22 @@
-# Simulate a binomial point process on a unit square.
+# Simulate a binomial point process on a rectangle.
 # Author: H. Paul Keeler, 2018.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
 
-numbPoints=10; #number of points
+numbPoints=30; #number of points
+
+#Simulation window parameters
+xMin=0;
+xMax=1;
+yMin=0;
+yMax=1;
+#rectangle dimensions
+xDelta=xMax-xMin;
+yDelta=yMax-yMin; 
 
 #Simulate Binomial point process
-xx=runif(numbPoints);#x coordinates of Binomial points
-yy=runif(numbPoints);#y coordinates of Binomial points
+xx=xDelta*runif(numbPoints)+xMin;#x coordinates of Binomial points
+yy=yDelta*runif(numbPoints)+yMin;#y coordinates of Binomial points
 
 #Plotting
 plot(xx,yy,'p',xlab='x',ylab='y',col='blue');

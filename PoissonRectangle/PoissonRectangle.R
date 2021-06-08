@@ -6,10 +6,14 @@
 # hpaulkeeler.com/poisson-point-process-simulation/
 
 #Simulation window parameters
-xMin=0;xMax=1;
-yMin=0;yMax=1;
-xDelta=xMax-xMin;yDelta=yMax-yMin; #rectangle dimensions
-areaTotal=xDelta*yDelta;
+xMin = 0;
+xMax = 1;
+yMin = 0;
+yMax = 1;
+#rectangle dimensions
+xDelta = xMax - xMin;
+yDelta = yMax - yMin;  
+areaTotal=xDelta*yDelta; #area of rectangle
 
 #Point process parameters
 lambda=100; #intensity (ie mean density) of the Poisson process
