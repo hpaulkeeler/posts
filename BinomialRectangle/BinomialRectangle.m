@@ -16,7 +16,7 @@ yDelta=yMax-yMin;
 
 %Simulate binomial point process
 xx=xDelta*rand(numbPoints,1)+xMin;%x coordinates of uniform points
-yy=yDelta*rand(numbPoints,1)+yMin;%y coordinates of uniformpoints
+yy=yDelta*rand(numbPoints,1)+yMin;%y coordinates of uniform points
 
 %Plotting
 scatter(xx,yy);

@@ -20,8 +20,8 @@ xDelta = xMax - xMin;
 yDelta = yMax - yMin;  
 
 # Simulate binomial point process
-xx = xDelta*np.random.uniform(0, 1, numbPoints) + xMin  # x coordinates of binomial points
-yy = yDelta*np.random.uniform(0, 1, numbPoints) + yMin # y coordinates of binomial points
+xx = xDelta*np.random.uniform(0, 1, numbPoints) + xMin  # x coordinates of uniform points
+yy = yDelta*np.random.uniform(0, 1, numbPoints) + yMin # y coordinates of uniform points
 
 # Plotting
 plt.scatter(xx, yy, edgecolor='b', facecolor='none', alpha=0.5)

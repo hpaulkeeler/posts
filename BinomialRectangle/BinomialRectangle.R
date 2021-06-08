@@ -15,8 +15,8 @@ xDelta=xMax-xMin;
 yDelta=yMax-yMin; 
 
 #Simulate Binomial point process
-xx=xDelta*runif(numbPoints)+xMin;#x coordinates of Binomial points
-yy=yDelta*runif(numbPoints)+yMin;#y coordinates of Binomial points
+xx=xDelta*runif(numbPoints)+xMin;#x coordinates of uniform points
+yy=yDelta*runif(numbPoints)+yMin;#y coordinates of uniform points
 
 #Plotting
 plot(xx,yy,'p',xlab='x',ylab='y',col='blue');
