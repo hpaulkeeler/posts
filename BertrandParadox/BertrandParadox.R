@@ -77,7 +77,7 @@ if (numbLines<1000) {
   t=seq(0,2*pi,len=200);
   xp=r*cos(t); yp=r*sin(t);
   
-  ### START Plotting START###
+  ### START Plotting START ###
   #Solution A
   #plot.new();
   par(mfrow=c(1,2));

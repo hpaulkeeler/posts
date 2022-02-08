@@ -92,7 +92,7 @@ if numbLines<1000
     t=linspace(0,2*pi,200);
     xp=r*cos(t); yp=r*sin(t);
     
-    %%% START Plotting %%%START
+    %%% START Plotting START %%%
     %Solution A
     figure;
     subplot(1,2,1);
