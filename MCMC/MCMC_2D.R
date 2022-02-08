@@ -1,9 +1,9 @@
-#Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate two 
-#jointly distributed random variuables with probability density
-#p(x,y)=exp(-(x^2+y^2)/s^2)/consNorm, where s>0 and consNorm is a
-#normalization constant.
+# Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two 
+# jointly distributed random variables with probability density
+# p(x,y)=exp(-(x^2+y^2)/s^2)/consNorm, where s>0 and consNorm is a
+# normalization constant.
 #
-#Author: H. Paul Keeler, 2019.
+# Author: H. Paul Keeler, 2019.
 # Website: hpaulkeeler.com
 # Repository: github.com/hpaulkeeler/posts
 
