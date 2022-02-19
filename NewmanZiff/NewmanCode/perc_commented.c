@@ -1,13 +1,24 @@
-/*This code simulates a percolation model on a (bounded) square
+/*
+This code simulates a site percolation model on a (bounded) square
 lattice using an algorithm proposed in a paper by Newman and Ziff[1].
+The algorithm can also be used for bond percolation, but this code 
+is for site percolation. 
+
+There are essentially three steps to the algorithm:
+1) For every site in the model, find/define the nearest neighbours.
+2) Draw  a single sample uniformly from all site permutations.
+3) Perform union-find (using root finding) method to find the big component
 
 This C code remains mostly as the original, which was found
-both in aforementioend paper[1] and the co-author's (Mark Newman) website:
+both in the aforementioend paper[1] and the co-author's (Mark Newman) website:
 
 http://www-personal.umich.edu/~mejn/percolation/index.html
 
 H. Paul Keeler made slight modifications to the code, but these were mainly
-comments.
+comments. See:
+
+hpaulkeeler.com/posts/
+
 
 Information on this algorithm can also be found in the book by
 Newman [Section 16.5, 2].
@@ -15,16 +26,17 @@ Newman [Section 16.5, 2].
 Resources on the internet include:
 https://pypercolate.readthedocs.io/en/stable/newman-ziff.html
 
-Note: This code uses rnglong to generate (uniform random variables).
+Note: This code uses rnglong to generate uniform pseudo-random variables.
 To compile the code, you need to link the file rnglong.c. 
-For example, on a Linux machine with ggc run:  
+For example, on a Linux machine with ggc run the command:  
 
 gcc  perc_commented.c rnglong.c -o perc_commented && ./perc_commented
 
 References:
-[1] 2001, Newman and Ziff, "Fast monte carlo algorithm for site or bond percolation"
-[2] 2010, Newman, "Networks -- An Introduction"
-[3] 1997, Knuth, "The Art of Computer Programming -- Volume 1 -- Fundamental Algorithms"
+[1] 2001, Newman and Ziff, "Fast Monte Carlo algorithm for site or bond percolation"
+[2] 2010, Newman, "Networks - An Introduction"
+[3] 1997, Knuth, "The Art of Computer Programming - Volume 1  - Fundamental Algorithms"
+[4] 2009, Cormen, Leiserson, Rivest, and Stein, "Introduction to algorithms"
 */
 
 #include <stdlib.h>
@@ -34,28 +46,29 @@ References:
 
 #define L 128 /* Linear dimension */
 #define N (L * L) /*Number of sites */
-#define EMPTY (-N - 1) /*A negative number representing unconnected sites */
+#define EMPTY (-N - 1) /*A negative number to indicate unconnected sites */
 
 int ptr[N];   /* Array of pointers (not C pointers, but graph-theoretic pointers) */
 int nn[N][4]; /* Nearest neighbors */
 int order[N]; /* Occupation order */
 
 // function definitions
-void boundaries();          // create lattice
+void boundaries();          // create neighbour matrix for square lattice of sites
 void permutation();         // perform random permumation of integers 0 to N-1
 void percolate();           // find the big component using union-find method
 int findroot(int i);        // recursive uniuon-find method
-int findrootHalving(int i); // non-recursive uniuon-find method
+int findroot_half(int i); // non-recursive uniuon-find method
 
 // helper function -- not in the original paper[1]
 void printIntArray(int input_array[], int numbArray); // print out int array
 
+/// START Define functions START ///
 void boundaries()
 {
   int i;
   /* This function defines neighbour sites for each site in the square
-  lattice. For other non-lattice percolation models, this function
-  needs to be changed accordingly.
+  lattice. For other percolation models, this function needs to be 
+  changed accordingly.
   */
 
   for (i = 0; i < N; i++)
@@ -77,7 +90,7 @@ void boundaries()
 
 void permutation()
 {
-  /*This function generates a random shuffle. It performs the
+  /*This function generates a random permutation. It performs the
   Durstenfield version of Fisher-Yates shuffle.  See Algorithm P
   in "Art of Scientific Programming -- Volume 1" by Knuth.
   Alternatively:
@@ -121,12 +134,12 @@ int findroot(int i)
   {
     return i;
   }
-  // the next two lines used to be one line in the original code
-  ptr[i] = findroot(ptr[i]);
+  // the next two lines used to be one line in the original code  
+  ptr[i] = findroot(ptr[i]); //call function again (ie recursively)
   return ptr[i];
 }
 
-int findrootHalving(int i)
+int findroot_half(int i)
 {
   /* This function performs a (graph) root-finding method
   that doesn't use recursion. This method is called path halving.
@@ -148,24 +161,29 @@ int findrootHalving(int i)
 
 void percolate()
 {
-  /* This is the man function that performs the union-find methods 
-  to find the big component for each set of occupied sites
+  /* 
+  This is the main function of the percolation simulation. It performs the 
+  (weighted) union-find method to find the big component for each set of 
+  occupied sites. 
 
   WARNING: This function access the global variable (array) ptr
   */
   int i, j;
   int s1, s2;
   int r1, r2;
-  int big = 0;
+  int big = 0; //number of sites in the big component
 
+  //initialize  array of (graph-theortic) pointers
   for (i = 0; i < N; i++)
-    ptr[i] = EMPTY;
+    ptr[i] = EMPTY; //negative number to indicate unconnected sites
 
+  //loop through sites of the sampled site permutation
   for (i = 0; i < N; i++)
   {
     r1 = s1 = order[i];
-
     ptr[s1] = -1;
+    
+    //loop through the 4 neigbour sites of s1
     for (j = 0; j < 4; j++)
     {
       s2 = nn[s1][j];
@@ -186,8 +204,11 @@ void percolate()
             ptr[r1] += ptr[r2];
             ptr[r2] = r1;
           }
-          if (-ptr[r1] > big)
-            big = -ptr[r1];
+          if (-ptr[r1] > big){
+            //update size of the biggest component
+            big = -ptr[r1]; 
+          }          
+           
         }
       }
     }
@@ -211,12 +232,17 @@ void printIntArray(int input_array[], int numbArray)
   //print closing bracket
   printf("%i]\n", input_array[numbArray - 1]);
 }
+/// END  Define functions END ///
 
 int main()
 {
-  // rngseed(0);
+  //Step 1
   boundaries();
-  permutation(); // only source of randomness
+
+  //Step 2 (only source of randomness)
+  permutation(); 
+
+  //Step 3
   percolate();
 
   printf("The percolation magic is finished.\n");
