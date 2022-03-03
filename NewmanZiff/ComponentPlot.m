@@ -2,7 +2,7 @@
 % a torus. Unoccupied sites are grey disks, whereas occupied sites are 
 % coloured disks. Two or more sites of the same colour indicates them 
 % belonging to the same component, where their shared colour is that of the 
-% root site. For the coluring, the plotting function sets the seed of 
+% root site. For the colouring, the plotting function sets the seed of 
 % MATLAB's pseudo-random number generator. 
 %
 % The main input variable is the array arrPointer, which encodes
@@ -126,31 +126,3 @@ else
 end
 
 end
-%%%%%%%%%%%%%CODE GRAVEYARD %%%%%%%%%%%%%%%%%%%
-
-
-
-% ss=1;
-% numbSim=1
-%     if numbSite<100
-% videoObject = VideoWriter('LatticeSitePerc.avi');
-% videoObject.FrameRate = 1/3; %frame rate
-% open(videoObject);
-% frameStruc(1:numbSim) = struct('cdata',[], 'colormap',[]);
-%     else
-%         booleVideo=0;
-%     end
-
-
-
-%  %%% START Making video  START %%%%
-% drawnow; %draw now so figures are the same size
-% pause(1); %need a pause so figures are the same size
-%
-% frameStruc(ss) = getframe(gcf);
-% writeVideo(videoObject,frameStruc);
-
-
-
-% close(videoObject)
-%  %%% END Making video  END %%%%

@@ -2,7 +2,7 @@
 # a torus. Unoccupied sites are grey disks, whereas occupied sites are 
 # coloured disks. Two or more sites of the same colour indicates them 
 # belonging to the same component, where their shared colour is that of the 
-# root site. For the coluring, the plotting function sets the seed of 
+# root site. For the colouring, the plotting function sets the seed of 
 # NumPy's pseudo-random number generator. 
 #
 # The main input variable is the array arrPointer, which encodes
