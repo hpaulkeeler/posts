@@ -101,7 +101,7 @@ if numbLines < 1000:
     xp = r * np.cos(t);
     yp = r * np.sin(t);
 
-    ### START Plotting START###
+    ### START Plotting START ###
     # Solution A
     # draw circle
     fig, ax = plt.subplots(1, 2);
@@ -170,4 +170,4 @@ if numbLines < 1000:
     # plot midpoints of Solution C
     ax[1].plot(xxC0, yyC0, 'g.', markersize=10);
     plt.show()    
-    ###END Plotting END###
+    ### END Plotting END ###
