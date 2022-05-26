@@ -36,7 +36,7 @@ lambda=10; %intensity (ie mean density) of the Poisson process
 %Simulate Poisson point process
 numbPoints=poissrnd(areaTotal*lambda);%Poisson number of points
 xx=xDelta*(rand(numbPoints,1))+xMin;%x coordinates of Poisson points
-yy=xDelta*(rand(numbPoints,1))+yMin;%y coordinates of Poisson points
+yy=yDelta*(rand(numbPoints,1))+yMin;%y coordinates of Poisson points
 
 xxyy=[xx(:) yy(:)]; %combine x and y coordinates
 %Perform Voronoi tesseslation using built-in function
