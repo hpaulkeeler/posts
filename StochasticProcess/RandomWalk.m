@@ -10,7 +10,7 @@
 %Random walk (or Bernoulli process) parameter
 p=0.5; %probability of a +1 step
 
-%discrete time parameters
+%discrete time parameters (non-negative integers)
 tFirst=0; %first time value
 tLast=15; %last time value
 numb_t=tLast-tFirst+1; %number of time points
@@ -20,10 +20,10 @@ numb_t=tLast-tFirst+1; %number of time points
 tValues=(tFirst:tLast)'; %time vector
 
 %%%START Create random walk START%%%
-xBernoulli=rand(numb_t,1)<p; %Boolean trials ie flip coins
+xBernoulli=rand(numb_t,1)<p; %Boolean trials (ie coin flips)
 xSteps=2*xBernoulli-1; %convert to -1/+1 steps
 xSteps(1)=0; %start at zero
-xWalk=cumsum(xSteps);
+xWalk=cumsum(xSteps); %add up the steps, thus generating the walk
 %%%END Create random walk END%%%
 
 %%%START Plotting START%%%

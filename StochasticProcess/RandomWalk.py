@@ -10,14 +10,12 @@ import numpy as np;  # NumPy package for arrays, random number generation, etc
 import matplotlib.pyplot as plt  # for plotting
 from numpy import linalg as la #linear algebra pack for norms
 
-plt.close('all');  # close all figures
-
 ###START Parameters START###
 #Random walk (or Bernoulli process) parameter
 p=0.5; #probability of a +1 step
 
-#discrete time parameters
-tFirst=0; #first time value
+#discrete time parameters (non-negative integers)
+tFirst=0; #first time value 
 tLast=15; #last time value
 numb_t=tLast-tFirst+1; #number of time points
 ###END Paramters END###
@@ -26,12 +24,11 @@ numb_t=tLast-tFirst+1; #number of time points
 tValues=np.arange(tFirst,tLast+1,1); #time vector
 
 ###START Create Random walk START###
-xBernoulli=(np.random.rand(numb_t)<p); #Boolean trials ie flip coins
+xBernoulli=(np.random.rand(numb_t)<p); #Boolean trials (ie coin flips)
 xBernoulli=xBernoulli.astype(int); #convert to integers (ie 0 and 1)
 xSteps=2*xBernoulli-1; #convert to -1/+1 steps
 xSteps[0]=0; #start at zero
-xWalk=np.cumsum(xSteps);
-
+xWalk=np.cumsum(xSteps); #add up the steps, thus generating the walk
 ###END Create Random walk END###
 
 ###START Plotting START###
