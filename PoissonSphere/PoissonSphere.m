@@ -27,7 +27,7 @@ numbPoints=poissrnd(measureTotal*lambda);%Poisson number of points
 
 % %METHOD 1 for positioning points: Use spherical coodinates
 % phi=2*pi*(rand(numbPoints,1)); %azimuth angles
-% V=2*rand(numbPoints,1)-1; %uniform asin(phi) 
+% V=2*rand(numbPoints,1)-1; %uniform asin(theta), where theta is the polar angle
 % 
 % %radial variables
 % rho=ones(numbPoints,1);

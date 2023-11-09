@@ -36,7 +36,7 @@ numbPoints = np.random.poisson(lambda0 * measureTotal);  # Poisson number of poi
 ##METHOD 1 for positioning points: Use spherical coodinates
 ## angular variables
 #phi = 2 * np.pi * np.random.uniform(0, 1, numbPoints);  # azimuth angles
-#V=2 * np.random.uniform(0, 1, numbPoints)-1; #uniform asin(phi) 
+#V=2 * np.random.uniform(0, 1, numbPoints)-1; #uniform asin(theta), where theta is the polar angle
 #
 ## radial variables
 #rho = r * np.ones(numbPoints);  # radial distances (fixed radius)
