@@ -42,9 +42,9 @@ end
 
 #normalization constant -- UNDER CONSTRUCTION
 consNorm,errorCub=hcubature(x -> fun_lambda(x[1],x[2]), [xMin, yMin], [xMax, yMax]);
-
+#un-normalized joint density of variables to be simulated
 function fun_p(x,y)
-    return((fun_lambda(x,y)./consNorm).*(x.>=xMin).*(y.>=yMin).*(x.<=xMax).*(y.<=yMax));
+    return((fun_lambda(x,y)).*(x.>=xMin).*(y.>=yMin).*(x.<=xMax).*(y.<=yMax));
 end
 xRand=(xMax-xMin).*rand(numbSim).+xMin; #random initial values
 yRand=(yMax-yMin).*rand(numbSim).+yMin; #random initial values
@@ -79,8 +79,8 @@ p_Estimate=(histXY.weights)
 X=[xValues[ii] for ii=1:length(xValues), jj=1:length(yValues)];
 Y=[yValues[jj] for ii=1:length(xValues), jj=1:length(yValues)];
 
-#analytic solution of probability density
-p_Exact = fun_p(X, Y);
+#analytic solution of (normalized) joint probability density
+p_Exact = fun_p(X, Y)./consNorm;
 
 # Plotting
 # Plot empirical estimate

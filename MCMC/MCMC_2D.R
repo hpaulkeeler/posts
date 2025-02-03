@@ -37,9 +37,9 @@ fun_lambda<-function(x,y){
 #normalization constant
 resultsInt=integral2(fun_lambda,xMin,xMax,yMin,yMax);
 consNorm=resultsInt$Q;
-
+#un-normalized joint density of variables to be simulated
 fun_p<-function(x,y){
-  return((fun_lambda(x,y)/consNorm)*(x>=xMin)*(y>=yMin)*(x<=xMax)*(y<=yMax));
+  return((fun_lambda(x,y))*(x>=xMin)*(y>=yMin)*(x<=xMax)*(y<=yMax));
 }
 
 xRand=runif(numbSim,xMin,xMax); #random initial values
@@ -72,8 +72,8 @@ p_Estimate=(histXY$counts)/numbSim/areaBin; #retrieve frequency count and normal
 meshXY= meshgrid(xValues,yValues); #create x/y matrices for plotting
 X=(meshXY$X);Y=(meshXY$Y); 
 
-#analytic solution of probability density
-p_Exact=(fun_p(X,Y));
+#analytic solution of (normalized) joint probability density
+p_Exact=fun_p(X,Y)/consNorm;
 
 #Plotting
 #Plot empirical estimate

@@ -34,9 +34,9 @@ def fun_lambda(x, y):
 
 # normalization constant
 consNorm = integrate.dblquad(fun_lambda, xMin, xMax, lambda x: yMin, lambda y: yMax)[0];
-
+#un-normalized joint density of variables to be simulated
 def fun_p(x, y):
-    return (fun_lambda(x, y) / consNorm) * (x >= xMin) * (y >= yMin) * (x <= xMax) * (y <= yMax);
+    return (fun_lambda(x, y) ) * (x >= xMin) * (y >= yMin) * (x <= xMax) * (y <= yMax);
 
 xRand = np.random.uniform(xMin, xMax, numbSim);  # random initial values
 yRand = np.random.uniform(yMin, yMax, numbSim);  # random initial values
@@ -68,8 +68,8 @@ xValues = (xxEdges[1:] + xxEdges[0:xxEdges.size - 1]) / 2;  # mid-points of bins
 yValues = (yyEdges[1:] + yyEdges[0:yyEdges.size - 1]) / 2;  # mid-points of bins
 X, Y = np.meshgrid(xValues, yValues);  # create x/y matrices for plotting
 
-# analytic solution of probability density
-p_Exact = fun_p(X, Y);
+# analytic solution of (normalized) joint probability density
+p_Exact = fun_p(X, Y) / consNorm;
 
 # Plotting
 # Plot empirical estimate
