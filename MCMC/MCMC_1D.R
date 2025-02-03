@@ -19,19 +19,19 @@ fun_p<-function(x){
 }
 
 xRand=runif(numbSim); #random initial values
-probCurrent=fun_p(xRand); #current transition probabilities
+pdfCurrent=fun_p(xRand); #current transition (probability) densities
 
 for (jj in 1:numbSteps){
   zRand<-xRand +sigma*rnorm(numbSim,0,1);#take a (normally distributed) random step        
   #zRand= xRand +2*sigma*runif(numbSim);#take a (uniformly distributed) random step    
-  probProposal=fun_p(zRand); #proposed probability
+  pdfProposal=fun_p(zRand); #proposed probability
   
   #acceptance rejection step
-  booleAccept=runif(numbSim) < probProposal/probCurrent;
+  booleAccept=runif(numbSim) < pdfProposal/pdfCurrent;
   #update state of random walk/Markov chain
   xRand[booleAccept]=zRand[booleAccept];
-  #update transition probabilities
-  probCurrent[booleAccept]=probProposal[booleAccept];
+  #update transition (probability) densities
+  pdfCurrent[booleAccept]=pdfProposal[booleAccept];
 }
 #histogram section: empirical probability density
 histX<-hist(xRand,breaks=numbBins,plot=FALSE);    
