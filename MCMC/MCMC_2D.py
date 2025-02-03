@@ -1,6 +1,6 @@
 # Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two 
 # jointly distributed random variables with probability density
-# p(x,y)=exp(-(x^2+y^2)/s^2)/consNorm, where s>0 and consNorm is a
+# p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
 # normalization constant.
 #
 # Author: H. Paul Keeler, 2019.
@@ -30,7 +30,7 @@ sigma = 2;  # standard deviation for normal random steps
 s = .5;  # scale parameter for distribution to be simulated
 
 def fun_lambda(x, y):
-    return np.exp(-(x ** 2 + y ** 2) / s ** 2);
+    return np.exp(-(x ** 4 + x*y + y ** 2) / s ** 2);
 
 # normalization constant
 consNorm = integrate.dblquad(fun_lambda, xMin, xMax, lambda x: yMin, lambda y: yMax)[0];

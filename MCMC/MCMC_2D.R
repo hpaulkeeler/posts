@@ -29,9 +29,7 @@ sigma=2; #standard deviation for normal random steps
 #probability density parameters
 s=.5; #scale parameter for distribution to be simulated
 fun_lambda<-function(x,y){
-  return (exp(-(x^2+y^2)/s^2));
-  
-  
+  return (exp(-(x^4+x*y+y^2)/s^2));    
 }
 
 #normalization constant
