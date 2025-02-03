@@ -45,7 +45,7 @@ fun_p<-function(x,y){
 xRand=runif(numbSim,xMin,xMax); #random initial values
 yRand=runif(numbSim,yMin,yMax); #random initial values
 
-probCurrent=fun_p(xRand,yRand); #current transition probabilities
+pdfCurrent=fun_p(xRand,yRand); #current transition (probability) densities
 
 for (jj in 1:numbSteps){
   zxRand= xRand +sigma*rnorm(numbSim,0,1);#take a (normally distributed) random step        
@@ -53,15 +53,15 @@ for (jj in 1:numbSteps){
   #Conditional random step needs to be symmetric in x and y
   #For example: Z|x ~ N(x,1) (or Y=x+N(0,1)) with probability density
   #p(z|x)=e(-(z-x)^2/2)/sqrt(2*pi)    
-  probProposal=fun_p(zxRand,zyRand); #proposed probability
+  pdfProposal=fun_p(zxRand,zyRand); #proposed probability
   
   #acceptance rejection step
-  booleAccept=runif(numbSim) < probProposal/probCurrent;
+  booleAccept=runif(numbSim) < pdfProposal/pdfCurrent;
   #update state of random walk/Marjov chain
   xRand[booleAccept]=zxRand[booleAccept];
   yRand[booleAccept]=zyRand[booleAccept];
-  #update transition probabilities
-  probCurrent[booleAccept]=probProposal[booleAccept];
+  #update transition (probability) densities
+  pdfCurrent[booleAccept]=pdfProposal[booleAccept];
 }
 
 histXY <- hist2d(data.frame(xRand,yRand),nbins=numbSteps,show=FALSE);

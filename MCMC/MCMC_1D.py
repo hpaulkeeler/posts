@@ -24,19 +24,19 @@ def fun_p(x):
 
 
 xRand = np.random.uniform(0, 1, numbSim);  # random initial values
-probCurrent = fun_p(xRand);  # current transition probabilities
+pdfCurrent = fun_p(xRand);  # current transition (probability) densities
 
 for jj in range(numbSteps):
     zRand = xRand + sigma * np.random.normal(0, 1, numbSim);  # take a (normally distributed) random step
     # zRand= xRand +2*sigma*np.random.uniform(0,1,simNumb);#take a (uniformly distributed) random step
-    probProposal = fun_p(zRand);  # proposed probability
+    pdfProposal = fun_p(zRand);  # proposed probability
 
     # acceptance rejection step
-    booleAccept = np.random.uniform(0, 1, numbSim) < probProposal / probCurrent;
+    booleAccept = np.random.uniform(0, 1, numbSim) < pdfProposal / pdfCurrent;
     # update state of random walk/Markov chain
     xRand[booleAccept] = zRand[booleAccept];
-    # update transition probabilities
-    probCurrent[booleAccept] = probProposal[booleAccept];
+    # update transition (probability) densities
+    pdfCurrent[booleAccept] = pdfProposal[booleAccept];
 
 # histogram section: empirical probability density
 pdfEmp, binEdges = np.histogram(xRand, bins=numbBins, density=bool);

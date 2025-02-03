@@ -17,19 +17,19 @@ m=2; %parameter (ie mean) for distribution to be simulated
 fun_p=@(x)((exp(-x/m)/m).*(x>=0));
 
 xRand=rand(numbSim,1); %random initial values
-probCurrent=fun_p(xRand); %current transition probabilities
+pdfCurrent=fun_p(xRand); %current transition (probability) densities
 
 for jj=1:numbSteps
     zRand= xRand +sigma*randn(size(xRand));%take a (normally distributed) random step
     %zRand= xRand +2*sigma*(rand(size(xRand))-0.5);%take a (uniformly distributed) random step    
-    probProposal=fun_p(zRand); %proposed probability
+    pdfProposal=fun_p(zRand); %proposed probability
     
     %acceptance rejection step
-    booleAccept=rand(numbSim,1) < probProposal./probCurrent;
+    booleAccept=rand(numbSim,1) < pdfProposal./pdfCurrent;
     %update state of random walk/Markov chain
     xRand(booleAccept)=zRand(booleAccept);
-    %update transition probabilities
-    probCurrent(booleAccept)=probProposal(booleAccept);
+    %update transition (probability) densities
+    pdfCurrent(booleAccept)=pdfProposal(booleAccept);
     
 end
 

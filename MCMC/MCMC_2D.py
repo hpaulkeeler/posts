@@ -21,7 +21,7 @@ xMax = 1;
 yMin = -1;
 yMax = 1;
 
-numbSim = 10 ** 5;  # number of random variables simulated
+numbSim = 10 ** 6;  # number of random variables simulated
 numbSteps = 25;  # number of steps for the Markov process
 numbBins = 50;  # number of bins for histogram
 sigma = 2;  # standard deviation for normal random steps
@@ -41,7 +41,7 @@ def fun_p(x, y):
 xRand = np.random.uniform(xMin, xMax, numbSim);  # random initial values
 yRand = np.random.uniform(yMin, yMax, numbSim);  # random initial values
 
-probCurrent = fun_p(xRand, yRand);  # current transition probabilities
+pdfCurrent = fun_p(xRand, yRand);  # current transition (probability) densities
 
 for jj in range(numbSteps):
     zxRand = xRand + sigma * np.random.normal(0, 1, numbSim);  # take a (normally distributed) random step
@@ -49,21 +49,21 @@ for jj in range(numbSteps):
     # Conditional random step needs to be symmetric in x and y
     # For example: Z|x ~ N(x,1) (or Y=x+N(0,1)) with probability density
     # p(z|x)=e(-(z-x)^2/2)/sqrt(2*pi)
-    probProposal = fun_p(zxRand, zyRand);  # proposed probability
+    pdfProposal = fun_p(zxRand, zyRand);  # proposed probability
 
     # acceptance rejection step
-    booleAccept = np.random.uniform(0, 1, numbSim) < probProposal / probCurrent;
+    booleAccept = np.random.uniform(0, 1, numbSim) < pdfProposal / pdfCurrent;
     # update state of random walk/Marjov chain
     xRand[booleAccept] = zxRand[booleAccept];
     yRand[booleAccept] = zyRand[booleAccept];
-    # update transition probabilities
-    probCurrent[booleAccept] = probProposal[booleAccept];
+    # update transition (probability) densities
+    pdfCurrent[booleAccept] = pdfProposal[booleAccept];
 
 # for histogram, need to reshape as vectors
 xRand = np.reshape(xRand, numbSim);
 yRand = np.reshape(yRand, numbSim);
 
-p_Estimate, xxEdges, yyEdges = np.histogram2d(xRand, yRand, bins=numbSteps, normed="pdf");
+p_Estimate, xxEdges, yyEdges = np.histogram2d(xRand, yRand, bins=numbSteps, density=True);
 xValues = (xxEdges[1:] + xxEdges[0:xxEdges.size - 1]) / 2;  # mid-points of bins
 yValues = (yyEdges[1:] + yyEdges[0:yyEdges.size - 1]) / 2;  # mid-points of bins
 X, Y = np.meshgrid(xValues, yValues);  # create x/y matrices for plotting
@@ -75,19 +75,19 @@ p_Exact = fun_p(X, Y);
 # Plot empirical estimate
 fig1 = plt.figure();
 ax = plt.axes(projection="3d");
-plt.rc("text", usetex=True);
-plt.rc("font", family="serif");
+#plt.rc("text", usetex=True);
+#plt.rc("font", family="serif");
 surf = ax.plot_surface(X, Y, p_Estimate, cmap=plt.cm.plasma);
 plt.xlabel("x");
 plt.ylabel("y");
-plt.title("$p(x,y)$ Estimate");
+plt.title("p(x,y) Estimate");
 
 # Plot exact expression
 fig2 = plt.figure();
-plt.rc("text", usetex=True);
-plt.rc("font", family="serif")
+#plt.rc("text", usetex=True);
+#plt.rc("font", family="serif")
 ax = plt.axes(projection="3d");
 surf = ax.plot_surface(X, Y, p_Exact, cmap=plt.cm.plasma);
 plt.xlabel("x");
 plt.ylabel("y");
-plt.title("$p(x,y)$ Exact Expression");
+plt.title("p(x,y) Exact Expression");
