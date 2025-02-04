@@ -61,7 +61,7 @@ for jj=1:numbSteps
 
     # acceptance rejection step
     booleAccept=rand(numbSim) .< pdfProposal./pdfCurrent;
-    # update state of random walk/Marjov chain
+    # update state of random walk/Markov chain
     xRand[booleAccept] = zxRand[booleAccept];
     yRand[booleAccept] = zyRand[booleAccept];
     # update transition (probability) densities
@@ -100,5 +100,3 @@ surf(X, Y, p_Exact, cmap=PyPlot.cm.plasma);
 PyPlot.xlabel("x");
 PyPlot.ylabel("y");
 PyPlot.title("p(x,y) Exact Expression");
-
-#println("The program has completed.")

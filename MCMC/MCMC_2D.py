@@ -21,8 +21,8 @@ xMax = 1;
 yMin = -1;
 yMax = 1;
 
-numbSim = 10 ** 6;  # number of random variables simulated
-numbSteps = 25;  # number of steps for the Markov process
+numbSim = 10 ** 4;  # number of random variables simulated
+numbSteps = 200;  # number of steps for the Markov process
 numbBins = 50;  # number of bins for histogram
 sigma = 2;  # standard deviation for normal random steps
 
@@ -53,7 +53,7 @@ for jj in range(numbSteps):
 
     # acceptance rejection step
     booleAccept = np.random.uniform(0, 1, numbSim) < pdfProposal / pdfCurrent;
-    # update state of random walk/Marjov chain
+    # update state of random walk/Markov chain
     xRand[booleAccept] = zxRand[booleAccept];
     yRand[booleAccept] = zyRand[booleAccept];
     # update transition (probability) densities

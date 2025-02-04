@@ -55,7 +55,7 @@ for (jj in 1:numbSteps){
   
   #acceptance rejection step
   booleAccept=runif(numbSim) < pdfProposal/pdfCurrent;
-  #update state of random walk/Marjov chain
+  #update state of random walk/Markov chain
   xRand[booleAccept]=zxRand[booleAccept];
   yRand[booleAccept]=zyRand[booleAccept];
   #update transition (probability) densities
