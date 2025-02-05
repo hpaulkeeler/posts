@@ -30,6 +30,9 @@ https://hpaulkeeler.com/simulating-a-matern-cluster-point-process/
 MaternHardcoreRectangle
 https://hpaulkeeler.com/simulating-matern-hard-core-point-processes/
 
+MCMC
+https://hpaulkeeler.com/the-metropolis-hastings-algorithm-in-python-julia-r-and-matlab/
+
 PoissonDirect
 https://hpaulkeeler.com/simulating-poisson-random-variables-direct-method/
 
