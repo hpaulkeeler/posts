@@ -1,4 +1,4 @@
-/*****************************************************************************************
+/***********************************************************
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate an
  * exponential distribution, which has the probability density
  * p(x)=exp(-x/m)*(1/m), where m>0 and (1/m) normalization constant, which is also the mean of the random variable.
@@ -9,13 +9,14 @@
  * NOTE: This code will *create* a local file (see variable strFilename) to store results.
  * This code will *overwrite* that file if it already exists.
  *
- * WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
- *
+ * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness. 
+ * Strongly recommended to use another generator for purposes beyond simple illustration.
+ * 
  * Author: H. Paul Keeler, 2023.
  * Website: hpaulkeeler.com
  * Repository: github.com/hpaulkeeler/posts
  *
- *****************************************************************************************/
+ ************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,8 +27,8 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(int numbRand, double *returnValues); // generate  uniform random variables on (0,1)
-void normrand(double *p_output, int n_output, double mu, double sigma);
+double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
+void normrand(double *p_output, unsigned n_output, double mu, double sigma);
 double exppdf_single(double x_input, double m);
 int main()
 {
@@ -40,8 +41,8 @@ int main()
     bool booleGnuPlot = false;
 
     // parameters
-    int numbSim = 1e4;   // number of random variables simulated
-    int numbSteps = 200; // number of steps for the Markov process
+    unsigned numbSim = 1e4;   // number of random variables simulated
+    unsigned numbSteps = 200; // number of steps for the Markov process
     double sigma = 1;    // standard deviation for normal random steps
     double m = 0.75;     // parameter (ie mean) for distribution to be simulated
 
@@ -58,7 +59,7 @@ int main()
 
     (void)unirand(numbSim, p_xRand); // random initial values
 
-    int i, j; // loop varibales
+    unsigned i, j; // loop varibales
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
@@ -88,7 +89,7 @@ int main()
     double meanExp = 0;
     double meanExpSquared = 0;
     double tempExp;
-    int countSim = 0;
+    unsigned countSim = 0;
     for (i = 0; i < numbSim; i++)
     {
         tempExp = *(p_xRand + i);
@@ -100,7 +101,7 @@ int main()
     double varExp = meanExpSquared - pow(meanExp, 2); // need to cast before doing divisions
     double stdExp = sqrt(varExp);
     printf("The average of the random  variables is %lf.\n", meanExp);
-    printf("The standard deviance of the random  variables is %lf.\n", stdExp);
+    printf("The standard deviation of the random  variables is %lf.\n", stdExp);
 
     if (booleWriteData)
     {
@@ -108,7 +109,7 @@ int main()
         FILE *outputFile;
         outputFile = fopen(strFilename, "w+");
         // fprintf(outputFile, "valueSim\n");
-        for (int i = 0; i < numbSim; i++)
+        for (i = 0; i < numbSim; i++)
         {
             fprintf(outputFile, "%lf\n", *(p_xRand + i)); // output to file
         }
@@ -126,7 +127,7 @@ int main()
             // create a string for running the plotting program gnuplot
             char strCommandPlotL[] = "gnuplot -e \"plot '";
             char strCommandPlotR[] = "' using 1 bins=20;\" -persist";
-            int numbCommandPlot = strlen(strCommandPlotL) + strlen(strCommandPlotR) + strlen(strFilename);
+            unsigned numbCommandPlot = strlen(strCommandPlotL) + strlen(strCommandPlotR) + strlen(strFilename);
             char *strCommandPlot = malloc(numbCommandPlot + 1);
 
             strcat(strCommandPlot, strCommandPlotL);
@@ -156,13 +157,13 @@ double exppdf_single(double x_input, double m)
     return pdf_output;
 }
 
-void normrand(double *p_output, int n_output, double mu, double sigma)
+void normrand(double *p_output, unsigned n_output, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 
     double U1, U2, temp_theta, temp_Rayleigh, Z1, Z2;
-    int i = 0;
+    unsigned i = 0;
     while (i < n_output)
     {
         // simulate variables in polar coordinates
@@ -193,7 +194,7 @@ void normrand(double *p_output, int n_output, double mu, double sigma)
     }
 }
 
-double *unirand(int numbRand, double *returnValues)
+double *unirand(unsigned numbRand, double *returnValues)
 { // simulate numbRand uniform random variables on the unit interval
   // storing them in returnValues which must be allocated by the caller
   // with enough space for numbRand doubles

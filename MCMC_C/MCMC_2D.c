@@ -1,4 +1,4 @@
-/*****************************************************************************************
+/***********************************************************
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
  * jointly distributed random variables with probability density
  * p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
@@ -8,13 +8,14 @@
  *
  * NOTE: This code will *create* a local file (see variable strFilename) to store results. It will *overwrite* that file if it already exists.
  *
- * WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
+ * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness. 
+ * Strongly recommended to use another generator for purposes beyond simple illustration.
  *
  * Author: H. Paul Keeler, 2024.
  * Website: hpaulkeeler.com
  * Repository: github.com/hpaulkeeler/posts
- * 
- *****************************************************************************************/
+ *
+ ***********************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,8 +26,8 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(int numbRand, double *returnValues); // generate  uniform random variables on (0,1)
-void normrand(double *p_output, int n_output, double mu, double sigma);
+double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
+void normrand(double *p_output, unsigned n_output, double mu, double sigma);
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
@@ -41,8 +42,8 @@ int main()
     bool booleWriteData = true; //write data to file
 
     // parameters
-    int numbSim = 1e4;   // number of random variables simulated
-    int numbSteps = 200; // number of steps for the Markov process
+    unsigned numbSim = 1e4; // number of random variables simulated
+    unsigned numbSteps = 200; // number of steps for the Markov process
     // probability density parameters
     double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
@@ -63,7 +64,7 @@ int main()
     (void)unirand(numbSim, p_xRand); // random initial values
     (void)unirand(numbSim, p_yRand); // random initial values
 
-    int i, j; // loop varibales
+    unsigned i, j; // loop varibales
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
@@ -102,7 +103,7 @@ int main()
     double meanYSquared = 0;
     double tempX;
     double tempY;
-    int countSim = 0;
+    unsigned countSim = 0;
     for (i = 0; i < numbSim; i++)
     {
         tempX = *(p_xRand + i);
@@ -120,12 +121,12 @@ int main()
     double varX = meanXSquared - pow(meanX, 2);
     double stdX = sqrt(varX);
     printf("The average of the X random variables is %lf.\n", meanX);
-    printf("The standard deviance of the X random  variables is %lf.\n", stdX);
+    printf("The standard deviation of the X random  variables is %lf.\n", stdX);
 
     double varY = meanYSquared - pow(meanY, 2);
     double stdY = sqrt(varY);
     printf("The average of the Y random variables is %lf.\n", meanY);
-    printf("The standard deviance of the Y random  variables is %lf.\n", stdY);
+    printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
 
     if (booleWriteData)
     {
@@ -133,7 +134,7 @@ int main()
         FILE *outputFile;
         outputFile = fopen(strFilename, "w+");
         // fprintf(outputFile, "valueSim\n");
-        for (int i = 0; i < numbSim; i++)
+        for (i = 0; i < numbSim; i++)
         {
             fprintf(outputFile, "%lf,%lf\n", *(p_xRand + i), *(p_yRand + i)); // output to file
         }
@@ -166,7 +167,7 @@ double pdf_single(double x_input, double y_input, double s)
     return pdf_output;
 }
 
-void normrand(double *p_output, int n_output, double mu, double sigma)
+void normrand(double *p_output, unsigned n_output, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
@@ -203,7 +204,7 @@ void normrand(double *p_output, int n_output, double mu, double sigma)
     }
 }
 
-double *unirand(int numbRand, double *returnValues)
+double *unirand(unsigned numbRand, double *returnValues)
 { // simulate numbRand uniform random variables on the unit interval
   // storing them in returnValues which must be allocated by the caller
   // with enough space for numbRand doubles
