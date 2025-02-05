@@ -8,7 +8,7 @@ NOTE: This code will create a local file (see variable strFilename) to store res
 
 WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
 
-Author: H. Paul Keeler, 2022.
+Author: H. Paul Keeler, 2024.
 Website: hpaulkeeler.com
 Repository: github.com/hpaulkeeler/posts
 */
@@ -25,18 +25,19 @@ Repository: github.com/hpaulkeeler/posts
 
 double *unirand(int numbRand); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, int n_output, double mu, double sigma);
-// void exppdf(double x_input, double *p_output, int n_output, double m);
 double exppdf_single(double x_input, double m);
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
 {
+    char strFilename[] = "MCMCData_2D.csv"; // filename for storing simulated random variates
+
     // intializes (pseudo)-random number generator
     time_t timeCPU; // use CPU time for seed
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleWriteData = true;
+    bool booleWriteData = true; //write data to file
 
     // parameters
     int numbSim = 1e4;   // number of random variables simulated
@@ -44,7 +45,6 @@ int main()
     // probability density parameters
     double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
-    char strFilename[] = "MCMCData_2D.csv"; // filename for storing simulated random variates
 
     // Metropolis-hastings variables
     double zxRand;      // random step
