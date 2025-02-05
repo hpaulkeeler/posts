@@ -7,7 +7,7 @@ NOTE: This code will create a local file (see variable strFilename) to store res
 
 WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
 
-Author: H. Paul Keeler, 2022.
+Author: H. Paul Keeler, 2024.
 Website: hpaulkeeler.com
 Repository: github.com/hpaulkeeler/posts
 */
@@ -20,21 +20,24 @@ Repository: github.com/hpaulkeeler/posts
 #include <string.h>
 
 #define numb(x) (sizeof(x) / sizeof(*x)) // size of array
-#define PI 3.14159265358979323846        // constant pi for generating polar oordiantes
+#define PI 3.14159265358979323846        // constant pi for generating polar coordinates
 
 double *unirand(int numbRand); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, int n_output, double mu, double sigma);
 // void exppdf(double x_input, double *p_output, int n_output, double m);
 double exppdf_single(double x_input, double m);
+
 int main()
 {
+    char strFilename[] = "MCMCData_1D.csv"; // filename for storing simulated random variates
+
     // intializes (pseudo)-random number generator
     time_t timeCPU; // use CPU time for seed
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleGnuPlot = true;
-    bool booleWriteData = true;
+    bool booleGnuPlot = true; //plot results using gnuplot (if it's installed)
+    bool booleWriteData = true; //write data to file
 
     // parameters
     int numbSim = 1e4;   // number of random variables simulated
@@ -42,7 +45,6 @@ int main()
     double sigma = 1;    // standard deviation for normal random steps
     double m = 0.75;     // parameter (ie mean) for distribution to be simulated
 
-    char strFilename[] = "MCMCData_1D.csv"; // filename for storing simulated random variates
 
     // Metropolis-hastings variables
     double zRand;       // random step
