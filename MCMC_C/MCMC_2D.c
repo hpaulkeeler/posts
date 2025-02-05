@@ -1,17 +1,20 @@
-/*
-Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
-jointly distributed random variables with probability density
-p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
-normalization constant.
-
-NOTE: This code will create a local file (see variable strFilename) to store results. If will overwrite that file if it already exists.
-
-WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
-
-Author: H. Paul Keeler, 2024.
-Website: hpaulkeeler.com
-Repository: github.com/hpaulkeeler/posts
-*/
+/*****************************************************************************************
+ * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
+ * jointly distributed random variables with probability density
+ * p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
+ * normalization constant.
+ *
+ * NOTE: In practice, the value of the normalization constant is not needed, as it cancels out in the algorithm.
+ *
+ * NOTE: This code will *create* a local file (see variable strFilename) to store results. It will *overwrite* that file if it already exists.
+ *
+ * WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
+ *
+ * Author: H. Paul Keeler, 2024.
+ * Website: hpaulkeeler.com
+ * Repository: github.com/hpaulkeeler/posts
+ * 
+ *****************************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -22,11 +25,8 @@ Repository: github.com/hpaulkeeler/posts
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-
 double *unirand(int numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, int n_output, double mu, double sigma);
-// void exppdf(double x_input, double *p_output, int n_output, double m);
-double exppdf_single(double x_input, double m);
 double pdf_single(double x_input, double y_input, double s);
 
 int main()

@@ -1,16 +1,21 @@
-/*
-Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate an
-exponential distribution, which has the probability density
-p(x)=exp(-x/m), where m>0.
-
-NOTE: This code will create a local file (see variable strFilename) to store results.
-
-WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
-
-Author: H. Paul Keeler, 2023.
-Website: hpaulkeeler.com
-Repository: github.com/hpaulkeeler/posts
-*/
+/*****************************************************************************************
+ * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate an
+ * exponential distribution, which has the probability density
+ * p(x)=exp(-x/m)*(1/m), where m>0 and (1/m) normalization constant, which is also the mean of the random variable.
+ *
+ * NOTE: In practice, the value of the normalization constant (ie 1/m) is not needed, as it cancels out in the algorithm.
+ *
+ *
+ * NOTE: This code will *create* a local file (see variable strFilename) to store results.
+ * This code will *overwrite* that file if it already exists.
+ *
+ * WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
+ *
+ * Author: H. Paul Keeler, 2023.
+ * Website: hpaulkeeler.com
+ * Repository: github.com/hpaulkeeler/posts
+ *
+ *****************************************************************************************/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,7 +28,6 @@ const long double pi = 3.14159265358979323846; // constant pi for generating pol
 
 double *unirand(int numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, int n_output, double mu, double sigma);
-// void exppdf(double x_input, double *p_output, int n_output, double m);
 double exppdf_single(double x_input, double m);
 int main()
 {
@@ -32,8 +36,8 @@ int main()
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleGnuPlot = true;
     bool booleWriteData = true;
+    bool booleGnuPlot = false;
 
     // parameters
     int numbSim = 1e4;   // number of random variables simulated
