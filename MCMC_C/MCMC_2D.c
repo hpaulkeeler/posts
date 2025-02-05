@@ -4,11 +4,11 @@ jointly distributed random variables with probability density
 p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
 normalization constant.
 
-NOTE: This code will create a local file (see variable strFilename) to store results.
+NOTE: This code will create a local file (see variable strFilename) to store results. If will overwrite that file if it already exists.
 
 WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
 
-Author: H. Paul Keeler, 2022.
+Author: H. Paul Keeler, 2024.
 Website: hpaulkeeler.com
 Repository: github.com/hpaulkeeler/posts
 */
@@ -20,10 +20,10 @@ Repository: github.com/hpaulkeeler/posts
 #include <stdbool.h>
 #include <string.h>
 
-#define numb(x) (sizeof(x) / sizeof(*x)) // size of array
-#define PI 3.14159265358979323846        // constant pi for generating polar oordiantes
+const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(int numbRand); // generate  uniform random variables on (0,1)
+
+double *unirand(int numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, int n_output, double mu, double sigma);
 // void exppdf(double x_input, double *p_output, int n_output, double m);
 double exppdf_single(double x_input, double m);
@@ -31,12 +31,14 @@ double pdf_single(double x_input, double y_input, double s);
 
 int main()
 {
+    char strFilename[] = "MCMCData_2D.csv"; // filename for storing simulated random variates
+
     // intializes (pseudo)-random number generator
     time_t timeCPU; // use CPU time for seed
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleWriteData = true;
+    bool booleWriteData = true; //write data to file
 
     // parameters
     int numbSim = 1e4;   // number of random variables simulated
@@ -44,7 +46,6 @@ int main()
     // probability density parameters
     double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
-    char strFilename[] = "MCMCData_2D.csv"; // filename for storing simulated random variates
 
     // Metropolis-hastings variables
     double zxRand;      // random step
@@ -52,15 +53,15 @@ int main()
     double pdfProposal; // density for proposed position
     double pdfCurrent;  // density of current position
     double ratioAccept;
-    double *p_uRand; // points to uniform variable for Bernoulli trial (ie a coin flip)
+    double uRand; // uniform variable for Bernoulli trial (ie a coin flip)
     double *p_numbNormX = (double *)malloc(1 * sizeof(double));
     double *p_numbNormY = (double *)malloc(1 * sizeof(double));
 
     double *p_xRand = (double *)malloc(numbSim * sizeof(double));
     double *p_yRand = (double *)malloc(numbSim * sizeof(double));
 
-    p_xRand = unirand(numbSim); // random initial values
-    p_yRand = unirand(numbSim); // random initial values
+    (void)unirand(numbSim, p_xRand); // random initial values
+    (void)unirand(numbSim, p_yRand); // random initial values
 
     int i, j; // loop varibales
     for (i = 0; i < numbSim; i++)
@@ -80,9 +81,9 @@ int main()
             pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability
 
             // acceptance rejection step
-            p_uRand = unirand(1);
+            (void)unirand(1, &uRand);
             ratioAccept = pdfProposal / pdfCurrent;
-            if (*p_uRand < ratioAccept)
+            if (uRand < ratioAccept)
             {
                 // update state of random walk / Markov chain
                 *(p_xRand + i) = zxRand;
@@ -139,6 +140,7 @@ int main()
         printf("Data printed to file.\n");
     }
     free(p_xRand);
+    free(p_yRand);
 
     return (0);
 }
@@ -170,19 +172,16 @@ void normrand(double *p_output, int n_output, double mu, double sigma)
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 
     double U1, U2, temp_theta, temp_Rayleigh, Z1, Z2;
-    double *p_U1, *p_U2;
     int i = 0;
     while (i < n_output)
     {
         // simulate variables in polar coordinates
         // U1 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        p_U1 = unirand(1);
-        U1 = *p_U1;
+        (void)unirand(1, &U1);
 
-        temp_theta = 2 * PI * U1; // create uniform theta values
+        temp_theta = 2 * pi * U1; // create uniform theta values
         // U2 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        p_U2 = unirand(1);
-        U2 = *p_U2;
+        (void)unirand(1, &U2);
         temp_Rayleigh = sqrt(-2 * log(U2)); // create Rayleigh rho values
 
         Z1 = temp_Rayleigh * cos(temp_theta);
@@ -204,16 +203,15 @@ void normrand(double *p_output, int n_output, double mu, double sigma)
     }
 }
 
-double *unirand(int numbRand)
-{ // simulate a single uniform random variable on the unit interval
+double *unirand(int numbRand, double *returnValues)
+{ // simulate numbRand uniform random variables on the unit interval
+  // storing them in returnValues which must be allocated by the caller
+  // with enough space for numbRand doubles
 
-    // double static returnValues[10];
-    double *returnValues = malloc(numbRand * sizeof(double));
-    // C does not advocate to return the address of a local variable to outside of the function, so you would have to define the local variable as static variable.
 
     for (int i = 0; i < numbRand; i++)
     {
-        returnValues[i] = (double)rand() / (double)((unsigned)RAND_MAX + 1);
+        returnValues[i] = (double)rand() / RAND_MAX;
     }
     return returnValues;
 }
