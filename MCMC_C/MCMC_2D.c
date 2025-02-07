@@ -26,8 +26,13 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
+<<<<<<< HEAD
 double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, unsigned n_output, double mu, double sigma);
+=======
+double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
+void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma);
+>>>>>>> origin/master
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
@@ -45,7 +50,7 @@ int main()
     unsigned numbSim = 1e4; // number of random variables simulated
     unsigned numbSteps = 200; // number of steps for the Markov process
     // probability density parameters
-    double s = .5; // scale parameter for distribution to be simulated
+    double scaleParam = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
 
     // Metropolis-hastings variables
@@ -61,14 +66,14 @@ int main()
     double *p_xRand = (double *)malloc(numbSim * sizeof(double));
     double *p_yRand = (double *)malloc(numbSim * sizeof(double));
 
-    (void)unirand(numbSim, p_xRand); // random initial values
-    (void)unirand(numbSim, p_yRand); // random initial values
+    (void)unirand(p_xRand, numbSim); // random initial values
+    (void)unirand(p_yRand, numbSim); // random initial values
 
     unsigned i, j; // loop varibales
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
-        pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), s); // current transition probabilities
+        pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), scaleParam); // current transition probabilities
 
         for (j = 0; j < numbSteps; j++)
         {
@@ -79,10 +84,10 @@ int main()
             zxRand = (*(p_xRand + i)) + (*p_numbNormX);
             zyRand = (*(p_yRand + i)) + (*p_numbNormY);
 
-            pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability
+            pdfProposal = pdf_single(zxRand, zyRand, scaleParam); // proposed probability
 
             // acceptance rejection step
-            (void)unirand(1, &uRand);
+            (void)unirand(&uRand,1);
             ratioAccept = pdfProposal / pdfCurrent;
             if (uRand < ratioAccept)
             {
@@ -146,11 +151,12 @@ int main()
     return (0);
 }
 
-double pdf_single(double x_input, double y_input, double s)
-{ // simulate a single exponential random variable with mean m
+double pdf_single(double x_input, double y_input, double scaleParam)
+{ 
+    // returns the probability density of a single point (x,y) inside a simulation window defined below
     double pdf_output;
 
-    // Simulation window parameters
+    // non-zero density window parameters
     double xMin = -1;
     double xMax = 1;
     double yMin = -1;
@@ -158,7 +164,7 @@ double pdf_single(double x_input, double y_input, double s)
 
     if ((x_input >= xMin) && (x_input <= xMax) && (y_input >= yMin) && (y_input <= yMax))
     {
-        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (s * s)));
+        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (scaleParam * scaleParam)));
     }
     else
     {
@@ -167,52 +173,49 @@ double pdf_single(double x_input, double y_input, double s)
     return pdf_output;
 }
 
-void normrand(double *p_output, unsigned n_output, double mu, double sigma)
+void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 
-    double U1, U2, temp_theta, temp_Rayleigh, Z1, Z2;
+    double U1, U2, d_thetaTemp, d_RayleighTemp, d_Z1, d_Z2;
     int i = 0;
-    while (i < n_output)
+    while (i < numbRand)
     {
-        // simulate variables in polar coordinates
-        // U1 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        (void)unirand(1, &U1);
+        // simulate variables in polar coordinates (theta, rho)
+        (void)unirand(&U1,1);
+        d_thetaTemp = 2 * pi * U1; // create uniform theta values
+        (void)unirand(&U2,1);
+        d_RayleighTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
 
-        temp_theta = 2 * pi * U1; // create uniform theta values
-        // U2 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        (void)unirand(1, &U2);
-        temp_Rayleigh = sqrt(-2 * log(U2)); // create Rayleigh rho values
-
-        Z1 = temp_Rayleigh * cos(temp_theta);
-        Z1 = sigma * Z1 + mu;
-        *(p_output + i) = Z1; // assign first of random variable pair
+        //change to Cartesian coordinates
+        d_Z1 = d_RayleighTemp * cos(d_thetaTemp);
+        d_Z1 = sigma * d_Z1 + mu;
+        *(p_randValues + i) = d_Z1; // assign first of random variable pair
         i++;
-        if (i < n_output)
+        if (i < numbRand)
         {
             // if more variables are needed, generate second value of random pair
-            Z2 = temp_Rayleigh * sin(temp_theta);
-            Z2 = sigma * Z2 + mu;
-            *(p_output + i) = Z2; // assign second of random variable pair
+            d_Z2 = d_RayleighTemp * sin(d_thetaTemp);
+            d_Z2 = sigma * d_Z2 + mu;
+            *(p_randValues + i) = d_Z2; // assign second of random variable pair
             i++;
         }
         else
         {
-            break; // break if i hits n_max
+            break; 
         }
     }
 }
 
-double *unirand(unsigned numbRand, double *returnValues)
+double *unirand(double *randValues, unsigned numbRand)
 { // simulate numbRand uniform random variables on the unit interval
-  // storing them in returnValues which must be allocated by the caller
+  // storing them in randValues which must be allocated by the caller
   // with enough space for numbRand doubles
-
 
     for (int i = 0; i < numbRand; i++)
     {
-        returnValues[i] = (double)rand() / RAND_MAX;
+        randValues[i] = (double)rand() / RAND_MAX;
     }
-    return returnValues;
+    return randValues;
 }
