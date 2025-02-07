@@ -26,13 +26,8 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-<<<<<<< HEAD
-double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
-void normrand(double *p_output, unsigned n_output, double mu, double sigma);
-=======
 double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
 void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma);
->>>>>>> origin/master
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
