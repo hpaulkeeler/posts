@@ -27,7 +27,7 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
+double *unirand(unsigned numbRand, double *randValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, unsigned n_output, double mu, double sigma);
 double exppdf_single(double x_input, double m);
 
@@ -196,14 +196,14 @@ void normrand(double *p_output, unsigned n_output, double mu, double sigma)
     }
 }
 
-double *unirand(unsigned numbRand, double *returnValues)
+double *unirand(unsigned numbRand, double *randValues)
 { // simulate numbRand uniform random variables on the unit interval
-  // storing them in returnValues which must be allocated by the caller
+  // storing them in randValues which must be allocated by the caller
   // with enough space for numbRand doubles
 
     for (int i = 0; i < numbRand; i++)
     {
-        returnValues[i] = (double)rand() / RAND_MAX;
+        randValues[i] = (double)rand() / RAND_MAX;
     }
-    return returnValues;
+    return randValues;
 }

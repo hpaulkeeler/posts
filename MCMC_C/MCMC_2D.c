@@ -1,14 +1,15 @@
-/***********************************************************
+/***********************************************************************
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
  * jointly distributed random variables with probability density
  * p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
- * normalization constant.
+ * normalization constant. The probability density function is defined in
+ * the function pdf_single.
  *
  * NOTE: In practice, the value of the normalization constant is not needed, as it cancels out in the algorithm.
  *
  * NOTE: This code will *create* a local file (see variable strFilename) to store results. It will *overwrite* that file if it already exists.
  *
- * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness. 
+ * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness.
  * Strongly recommended to use another generator for purposes beyond simple illustration.
  *
  * Author: H. Paul Keeler, 2024.
@@ -27,7 +28,7 @@
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
 double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma);
+double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigma);
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
@@ -73,8 +74,8 @@ int main()
         for (j = 0; j < numbSteps; j++)
         {
             // loop through each step of the random walk
-            normrand(p_numbNormX, 1, 0, sigma);
-            normrand(p_numbNormY, 1, 0, sigma);
+            (void)normrand(p_numbNormX, 1, 0, sigma);
+            (void)normrand(p_numbNormY, 1, 0, sigma);
             // take a(normally distributed) random step
             zxRand = (*(p_xRand + i)) + (*p_numbNormX);
             zyRand = (*(p_yRand + i)) + (*p_numbNormY);
@@ -168,32 +169,32 @@ double pdf_single(double x_input, double y_input, double scaleParam)
     return pdf_output;
 }
 
-void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma)
+double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 
-    double U1, U2, d_thetaTemp, d_RayleighTemp, d_Z1, d_Z2;
+    double U1, U2, thetaTemp, rhoTemp, Z1, Z2;
     int i = 0;
     while (i < numbRand)
     {
         // simulate variables in polar coordinates (theta, rho)
         (void)unirand(&U1,1);
-        d_thetaTemp = 2 * pi * U1; // create uniform theta values
+        thetaTemp = 2 * pi * U1; // create uniform theta values
         (void)unirand(&U2,1);
-        d_RayleighTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
+        rhoTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
 
         //change to Cartesian coordinates
-        d_Z1 = d_RayleighTemp * cos(d_thetaTemp);
-        d_Z1 = sigma * d_Z1 + mu;
-        *(p_randValues + i) = d_Z1; // assign first of random variable pair
+        Z1 = rhoTemp * cos(thetaTemp);
+        Z1 = sigma * Z1 + mu;
+        *(p_randValues + i) = Z1; // assign first of random variable pair
         i++;
         if (i < numbRand)
         {
             // if more variables are needed, generate second value of random pair
-            d_Z2 = d_RayleighTemp * sin(d_thetaTemp);
-            d_Z2 = sigma * d_Z2 + mu;
-            *(p_randValues + i) = d_Z2; // assign second of random variable pair
+            Z2 = rhoTemp * sin(thetaTemp);
+            Z2 = sigma * Z2 + mu;
+            *(p_randValues + i) = Z2; // assign second of random variable pair
             i++;
         }
         else
@@ -201,6 +202,7 @@ void normrand(double *p_randValues, unsigned numbRand, double mu, double sigma)
             break; 
         }
     }
+    return p_randValues;
 }
 
 double *unirand(double *randValues, unsigned numbRand)
