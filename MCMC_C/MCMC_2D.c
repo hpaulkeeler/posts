@@ -1,19 +1,3 @@
-<<<<<<< HEAD
-/*
-Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
-jointly distributed random variables with probability density
-p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
-normalization constant.
-
-NOTE: This code will create a local file (see variable strFilename) to store results.
-
-WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
-
-Author: H. Paul Keeler, 2024.
-Website: hpaulkeeler.com
-Repository: github.com/hpaulkeeler/posts
-*/
-=======
 /***********************************************************
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
  * jointly distributed random variables with probability density
@@ -32,7 +16,6 @@ Repository: github.com/hpaulkeeler/posts
  * Repository: github.com/hpaulkeeler/posts
  *
  ***********************************************************/
->>>>>>> origin/master
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -43,14 +26,8 @@ Repository: github.com/hpaulkeeler/posts
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-<<<<<<< HEAD
-double *unirand(int numbRand); // generate  uniform random variables on (0,1)
-void normrand(double *p_output, int n_output, double mu, double sigma);
-double exppdf_single(double x_input, double m);
-=======
 double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, unsigned n_output, double mu, double sigma);
->>>>>>> origin/master
 double pdf_single(double x_input, double y_input, double s);
 
 int main()

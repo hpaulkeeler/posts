@@ -1,18 +1,3 @@
-<<<<<<< HEAD
-/*
-Runs a simple Metropolis-Hastings (ie MCMC) algoritm to simulate an
-exponential distribution, which has the probability density
-p(x)=exp(-x/m), where m>0.
-
-NOTE: This code will create a local file (see variable strFilename) to store results.
-
-WARNING: This code usese the default C random number generator, which is known for failing various tests of randomness.
-
-Author: H. Paul Keeler, 2024.
-Website: hpaulkeeler.com
-Repository: github.com/hpaulkeeler/posts
-*/
-=======
 /***********************************************************
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate an
  * exponential distribution, which has the probability density
@@ -32,7 +17,6 @@ Repository: github.com/hpaulkeeler/posts
  * Repository: github.com/hpaulkeeler/posts
  *
  ************************************************************/
->>>>>>> origin/master
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -41,12 +25,7 @@ Repository: github.com/hpaulkeeler/posts
 #include <stdbool.h>
 #include <string.h>
 
-<<<<<<< HEAD
-#define numb(x) (sizeof(x) / sizeof(*x)) // size of array
-#define PI 3.14159265358979323846        // constant pi for generating polar coordinates
-=======
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
->>>>>>> origin/master
 
 double *unirand(unsigned numbRand, double *returnValues); // generate  uniform random variables on (0,1)
 void normrand(double *p_output, unsigned n_output, double mu, double sigma);
@@ -61,13 +40,8 @@ int main()
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-<<<<<<< HEAD
-    bool booleGnuPlot = true; //plot results using gnuplot (if it's installed)
-    bool booleWriteData = true; //write data to file
-=======
     bool booleWriteData = true;
     bool booleGnuPlot = false;
->>>>>>> origin/master
 
     // parameters
     unsigned numbSim = 1e4;   // number of random variables simulated
