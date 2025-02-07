@@ -28,7 +28,7 @@
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
 double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigma);
+double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
 double pdf_single(double x_input, double y_input, double s);
 
 int main()
@@ -43,10 +43,10 @@ int main()
     bool booleWriteData = true; //write data to file
 
     // parameters
-    unsigned numbSim = 1e4; // number of random variables simulated
-    unsigned numbSteps = 200; // number of steps for the Markov process
+    unsigned numbSim = 1e1; // number of random variables simulated
+    unsigned numbSteps = 10; // number of steps for the Markov process
     // probability density parameters
-    double scaleParam = .5; // scale parameter for distribution to be simulated
+    double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
 
     // Metropolis-hastings variables
@@ -54,7 +54,7 @@ int main()
     double zyRand;      // random step
     double pdfProposal; // density for proposed position
     double pdfCurrent;  // density of current position
-    double ratioAccept;
+    double ratioAccept; // ratio of densities (ie acceptance probability)
     double uRand; // uniform variable for Bernoulli trial (ie a coin flip)
     double *p_numbNormX = (double *)malloc(1 * sizeof(double));
     double *p_numbNormY = (double *)malloc(1 * sizeof(double));
@@ -69,18 +69,19 @@ int main()
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
-        pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), scaleParam); // current transition probabilities
+        
+        pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), s); // current probability density
 
         for (j = 0; j < numbSteps; j++)
         {
             // loop through each step of the random walk
             (void)normrand(p_numbNormX, 1, 0, sigma);
             (void)normrand(p_numbNormY, 1, 0, sigma);
-            // take a(normally distributed) random step
+            // take a(normally distributed) random step in x and y
             zxRand = (*(p_xRand + i)) + (*p_numbNormX);
             zyRand = (*(p_yRand + i)) + (*p_numbNormY);
 
-            pdfProposal = pdf_single(zxRand, zyRand, scaleParam); // proposed probability
+            pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability density
 
             // acceptance rejection step
             (void)unirand(&uRand,1);
@@ -112,8 +113,8 @@ int main()
 
         meanX += tempX / ((double)numbSim);
         meanY += tempY / ((double)numbSim);
-        meanXSquared += pow(tempX, 2) / ((double)numbSim);
-        meanYSquared += pow(tempY, 2) / ((double)numbSim);
+        meanXSquared += tempX * tempX / ((double)numbSim);
+        meanYSquared += tempY * tempY / ((double)numbSim);
 
         countSim++;
     }
@@ -147,7 +148,7 @@ int main()
     return (0);
 }
 
-double pdf_single(double x_input, double y_input, double scaleParam)
+double pdf_single(double x_input, double y_input, double s)
 { 
     // returns the probability density of a single point (x,y) inside a simulation window defined below
     double pdf_output;
@@ -160,7 +161,7 @@ double pdf_single(double x_input, double y_input, double scaleParam)
 
     if ((x_input >= xMin) && (x_input <= xMax) && (y_input >= yMin) && (y_input <= yMax))
     {
-        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (scaleParam * scaleParam)));
+        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (s * s)));
     }
     else
     {
@@ -169,7 +170,7 @@ double pdf_single(double x_input, double y_input, double scaleParam)
     return pdf_output;
 }
 
-double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigma)
+double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
@@ -187,14 +188,14 @@ double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigm
         //change to Cartesian coordinates
         Z1 = rhoTemp * cos(thetaTemp);
         Z1 = sigma * Z1 + mu;
-        *(p_randValues + i) = Z1; // assign first of random variable pair
+        randValues[i] = Z1; // assign first of random variable pair
         i++;
         if (i < numbRand)
         {
             // if more variables are needed, generate second value of random pair
             Z2 = rhoTemp * sin(thetaTemp);
             Z2 = sigma * Z2 + mu;
-            *(p_randValues + i) = Z2; // assign second of random variable pair
+            randValues[i] = Z2; // assign second of random variable pair
             i++;
         }
         else
@@ -202,7 +203,7 @@ double *normrand(double *p_randValues, unsigned numbRand, double mu, double sigm
             break; 
         }
     }
-    return p_randValues;
+    return randValues;
 }
 
 double *unirand(double *randValues, unsigned numbRand)
