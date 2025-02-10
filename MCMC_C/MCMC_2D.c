@@ -99,34 +99,17 @@ int main()
     free(p_numbNormY);
 
     // initialize statistics variables (for testing results)
-    double meanX = 0;
-    double meanY = 0;
-    double meanXSquared = 0;
-    double meanYSquared = 0;
-    double tempX;
-    double tempY;
-    unsigned countSim = 0;
-    for (i = 0; i < numbSim; i++)
-    {
-        tempX = *(p_xRand + i);
-        tempY = *(p_yRand + i);
+    double meanX;
+    double meanY;
+    double varX;
+    double varY;
+    meanX=mean_var(p_xRand, numbSim, &varX);
+    meanY = mean_var(p_yRand, numbSim, &varY);
+    double stdX = sqrt(varX);    
+    double stdY = sqrt(varY);
 
-        meanX += tempX / ((double)numbSim);
-        meanY += tempY / ((double)numbSim);
-        meanXSquared += tempX * tempX / ((double)numbSim);
-        meanYSquared += tempY * tempY / ((double)numbSim);
-
-        countSim++;
-    }
-    printf("The number of simulations was %d.\n", countSim);
-
-    double varX = meanXSquared - pow(meanX, 2);
-    double stdX = sqrt(varX);
     printf("The average of the X random variables is %lf.\n", meanX);
     printf("The standard deviation of the X random  variables is %lf.\n", stdX);
-
-    double varY = meanYSquared - pow(meanY, 2);
-    double stdY = sqrt(varY);
     printf("The average of the Y random variables is %lf.\n", meanY);
     printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
 
