@@ -27,9 +27,28 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
-double pdf_single(double x_input, double y_input, double s);
+static double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
+static double pdf_single(double x_input, double y_input, double s);
+
+static double mean_var(double *set_sample, unsigned numbSim, double *varX)
+{
+    int i;
+    // initialize statistics variables (for testing results)
+    double meanX = 0;
+    double meanXSquared = 0;
+    double tempX;
+    unsigned countSim = 0;
+    for (i = 0; i < numbSim; i++)
+    {
+        tempX = *(set_sample + i);
+        meanX += tempX / ((double)numbSim);
+        meanXSquared += tempX * tempX / ((double)numbSim);
+    }
+
+    *varX = meanXSquared - pow(meanX, 2);
+    return meanX;
+}
 
 int main()
 {
@@ -40,11 +59,11 @@ int main()
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleWriteData = true; //write data to file
+    bool booleWriteData = true; // write data to file
 
     // parameters
-    unsigned numbSim = 1e1; // number of random variables simulated
-    unsigned numbSteps = 10; // number of steps for the Markov process
+    unsigned numbSim = 1e3;   // number of random variables simulated
+    unsigned numbSteps = 200; // number of steps for the Markov process
     // probability density parameters
     double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
@@ -55,7 +74,7 @@ int main()
     double pdfProposal; // density for proposed position
     double pdfCurrent;  // density of current position
     double ratioAccept; // ratio of densities (ie acceptance probability)
-    double uRand; // uniform variable for Bernoulli trial (ie a coin flip)
+    double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
     double *p_numbNormX = (double *)malloc(1 * sizeof(double));
     double *p_numbNormY = (double *)malloc(1 * sizeof(double));
 
@@ -69,7 +88,7 @@ int main()
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
-        
+
         pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), s); // current probability density
 
         for (j = 0; j < numbSteps; j++)
@@ -84,7 +103,7 @@ int main()
             pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability density
 
             // acceptance rejection step
-            (void)unirand(&uRand,1);
+            (void)unirand(&uRand, 1);
             ratioAccept = pdfProposal / pdfCurrent;
             if (uRand < ratioAccept)
             {
@@ -103,11 +122,11 @@ int main()
     double meanY;
     double varX;
     double varY;
-    meanX=mean_var(p_xRand, numbSim, &varX);
+    meanX = mean_var(p_xRand, numbSim, &varX);
     meanY = mean_var(p_yRand, numbSim, &varY);
-    double stdX = sqrt(varX);    
+    double stdX = sqrt(varX);
     double stdY = sqrt(varY);
-
+    // print the basic stats
     printf("The average of the X random variables is %lf.\n", meanX);
     printf("The standard deviation of the X random  variables is %lf.\n", stdX);
     printf("The average of the Y random variables is %lf.\n", meanY);
@@ -131,8 +150,8 @@ int main()
     return (0);
 }
 
-double pdf_single(double x_input, double y_input, double s)
-{ 
+static double pdf_single(double x_input, double y_input, double s)
+{
     // returns the probability density of a single point (x,y) inside a simulation window defined below
     double pdf_output;
 
@@ -153,7 +172,7 @@ double pdf_single(double x_input, double y_input, double s)
     return pdf_output;
 }
 
-double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
@@ -163,12 +182,12 @@ double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
     while (i < numbRand)
     {
         // simulate variables in polar coordinates (theta, rho)
-        (void)unirand(&U1,1);
+        (void)unirand(&U1, 1);
         thetaTemp = 2 * pi * U1; // create uniform theta values
-        (void)unirand(&U2,1);
+        (void)unirand(&U2, 1);
         rhoTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
 
-        //change to Cartesian coordinates
+        // change to Cartesian coordinates
         Z1 = rhoTemp * cos(thetaTemp);
         Z1 = sigma * Z1 + mu;
         randValues[i] = Z1; // assign first of random variable pair
@@ -183,13 +202,13 @@ double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
         }
         else
         {
-            break; 
+            break;
         }
     }
     return randValues;
 }
 
-double *unirand(double *randValues, unsigned numbRand)
+static double *unirand(double *randValues, unsigned numbRand)
 { // simulate numbRand uniform random variables on the unit interval
   // storing them in randValues which must be allocated by the caller
   // with enough space for numbRand doubles
