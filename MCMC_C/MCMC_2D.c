@@ -27,6 +27,28 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
+static double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
+static double pdf_single(double x_input, double y_input, double s);
+
+static double mean_var(double *set_sample, unsigned numbSim, double *varX)
+{
+    int i;
+    // initialize statistics variables (for testing results)
+    double meanX = 0;
+    double meanXSquared = 0;
+    double tempX;
+    unsigned countSim = 0;
+    for (i = 0; i < numbSim; i++)
+    {
+        tempX = *(set_sample + i);
+        meanX += tempX / ((double)numbSim);
+        meanXSquared += tempX * tempX / ((double)numbSim);
+    }
+
+    *varX = meanXSquared - pow(meanX, 2);
+    return meanX;
+}
 
 
 {
