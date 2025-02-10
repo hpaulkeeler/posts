@@ -1,0 +1,19 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     MCMC_2D
+relocations:
+  - { offset: 0x26, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000294C, symSize: 0xA04 }
+  - { offset: 0x3F, size: 0x8, addend: 0x0, symName: _pi, symObjAddr: 0x1060, symBinAddr: 0x100003AC0, symSize: 0x0 }
+  - { offset: 0x5C, size: 0x8, addend: 0x0, symName: _.str, symObjAddr: 0x10C0, symBinAddr: 0x100003B20, symSize: 0x0 }
+  - { offset: 0x87, size: 0x8, addend: 0x0, symName: _.str.1, symObjAddr: 0x1120, symBinAddr: 0x100003B80, symSize: 0x0 }
+  - { offset: 0xA4, size: 0x8, addend: 0x0, symName: _.str.2, symObjAddr: 0x1180, symBinAddr: 0x100003BE0, symSize: 0x0 }
+  - { offset: 0xC1, size: 0x8, addend: 0x0, symName: _.str.3, symObjAddr: 0x11E0, symBinAddr: 0x100003C40, symSize: 0x0 }
+  - { offset: 0xD2, size: 0x8, addend: 0x0, symName: _.str.4, symObjAddr: 0x1240, symBinAddr: 0x100003CA0, symSize: 0x0 }
+  - { offset: 0xE3, size: 0x8, addend: 0x0, symName: _.str.5, symObjAddr: 0x12A0, symBinAddr: 0x100003D00, symSize: 0x0 }
+  - { offset: 0x100, size: 0x8, addend: 0x0, symName: _.str.6, symObjAddr: 0x12C0, symBinAddr: 0x100003D20, symSize: 0x0 }
+  - { offset: 0x11D, size: 0x8, addend: 0x0, symName: _.str.7, symObjAddr: 0x12E0, symBinAddr: 0x100003D40, symSize: 0x0 }
+  - { offset: 0x145, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x0, symBinAddr: 0x10000294C, symSize: 0xA04 }
+  - { offset: 0x347, size: 0x8, addend: 0x0, symName: _unirand, symObjAddr: 0xA04, symBinAddr: 0x100003350, symSize: 0xCC }
+  - { offset: 0x399, size: 0x8, addend: 0x0, symName: _pdf_single, symObjAddr: 0xAD0, symBinAddr: 0x10000341C, symSize: 0x104 }
+  - { offset: 0x423, size: 0x8, addend: 0x0, symName: _normrand, symObjAddr: 0xBD4, symBinAddr: 0x100003520, symSize: 0x424 }
+...
