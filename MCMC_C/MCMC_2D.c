@@ -27,12 +27,89 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
-double pdf_single(double x_input, double y_input, double s);
+// auxiliary functions
 
-int main()
+double pdf_single(double x_input, double y_input, double s)
 {
+    // returns the probability density of a single point (x,y) inside a simulation window defined below
+    double pdf_output;
+
+    // non-zero density window parameters
+    double xMin = -1;
+    double xMax = 1;
+    double yMin = -1;
+    double yMax = 1;
+
+    if ((x_input >= xMin) && (x_input <= xMax) && (y_input >= yMin) && (y_input <= yMax))
+    {
+        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (s * s)));
+    }
+    else
+    {
+        pdf_output = 0;
+    }
+    return pdf_output;
+}
+
+double *unirand(double *randValues, unsigned numbRand)
+{ // simulate numbRand uniform random variables on the unit interval
+  // storing them in randValues which must be allocated by the caller
+  // with enough space for numbRand doubles
+
+    for (int i = 0; i < numbRand; i++)
+    {
+        randValues[i] = (double)rand() / RAND_MAX;
+    }
+    return randValues;
+}
+
+double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
+{
+    // simulate pairs of iid normal variables using Box-Muller transform
+    // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
+
+    double U1, U2, thetaTemp, rhoTemp, Z1, Z2;
+    int i = 0;
+    while (i < numbRand)
+    {
+        // simulate variables in polar coordinates (theta, rho)
+        (void)unirand(&U1, 1);
+        thetaTemp = 2 * pi * U1; // create uniform theta values
+        (void)unirand(&U2, 1);
+        rhoTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
+
+        // change to Cartesian coordinates
+        Z1 = rhoTemp * cos(thetaTemp);
+        Z1 = sigma * Z1 + mu;
+        randValues[i] = Z1; // assign first of random variable pair
+        i++;
+        if (i < numbRand)
+        {
+            // if more variables are needed, generate second value of random pair
+            Z2 = rhoTemp * sin(thetaTemp);
+            Z2 = sigma * Z2 + mu;
+            randValues[i] = Z2; // assign second of random variable pair
+            i++;
+        }
+        else
+        {
+            break;
+        }
+    }
+    return randValues;
+}
+
+// main code
+int main(int argc, char *argv[])
+
+{
+    if (argc > 1)
+    {
+
+        fprintf(stderr, "This program takes no arguments...\n");
+        exit(1);
+    }
+
     char strFilename[] = "MCMCData_2D.csv"; // filename for storing simulated random variates
 
     // intializes (pseudo)-random number generator
@@ -40,25 +117,25 @@ int main()
     srand((unsigned)time(&timeCPU));
     // srand(42); //to reproduce results
 
-    bool booleWriteData = true; //write data to file
+    bool booleWriteData = true; // write data to file
+    bool booleStats = true;     // collect simple stats
 
     // parameters
-    unsigned numbSim = 1e1; // number of random variables simulated
+    unsigned numbSim = 1e1;  // number of random variables simulated
     unsigned numbSteps = 10; // number of steps for the Markov process
     // probability density parameters
     double s = .5; // scale parameter for distribution to be simulated
     double sigma = 2;
 
-    // Metropolis-hastings variables
+    // Metropolis-Hastings variables
     double zxRand;      // random step
     double zyRand;      // random step
     double pdfProposal; // density for proposed position
     double pdfCurrent;  // density of current position
     double ratioAccept; // ratio of densities (ie acceptance probability)
-    double uRand; // uniform variable for Bernoulli trial (ie a coin flip)
-    double *p_numbNormX = (double *)malloc(1 * sizeof(double));
-    double *p_numbNormY = (double *)malloc(1 * sizeof(double));
-
+    double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
+    double *p_numbNormX = (double *)malloc(sizeof(double));
+    double *p_numbNormY = (double *)malloc(sizeof(double));
     double *p_xRand = (double *)malloc(numbSim * sizeof(double));
     double *p_yRand = (double *)malloc(numbSim * sizeof(double));
 
@@ -69,7 +146,7 @@ int main()
     for (i = 0; i < numbSim; i++)
     {
         // loop through each random walk instance (or random variable to be simulated)
-        
+
         pdfCurrent = pdf_single(*(p_xRand + i), *(p_yRand + i), s); // current probability density
 
         for (j = 0; j < numbSteps; j++)
@@ -84,7 +161,7 @@ int main()
             pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability density
 
             // acceptance rejection step
-            (void)unirand(&uRand,1);
+            (void)unirand(&uRand, 1);
             ratioAccept = pdfProposal / pdfCurrent;
             if (uRand < ratioAccept)
             {
@@ -98,37 +175,40 @@ int main()
     free(p_numbNormX);
     free(p_numbNormY);
 
-    // initialize statistics variables (for testing results)
-    double meanX = 0;
-    double meanY = 0;
-    double meanXSquared = 0;
-    double meanYSquared = 0;
-    double tempX;
-    double tempY;
-    unsigned countSim = 0;
-    for (i = 0; i < numbSim; i++)
+    if (booleStats)
     {
-        tempX = *(p_xRand + i);
-        tempY = *(p_yRand + i);
+        // initialize statistics variables (for testing results)
+        double meanX = 0;
+        double meanY = 0;
+        double meanXSquared = 0;
+        double meanYSquared = 0;
+        double tempX;
+        double tempY;
+        unsigned countSim = 0;
+        for (i = 0; i < numbSim; i++)
+        {
+            tempX = *(p_xRand + i);
+            tempY = *(p_yRand + i);
 
-        meanX += tempX / ((double)numbSim);
-        meanY += tempY / ((double)numbSim);
-        meanXSquared += tempX * tempX / ((double)numbSim);
-        meanYSquared += tempY * tempY / ((double)numbSim);
+            meanX += tempX / ((double)numbSim);
+            meanY += tempY / ((double)numbSim);
+            meanXSquared += tempX * tempX / ((double)numbSim);
+            meanYSquared += tempY * tempY / ((double)numbSim);
 
-        countSim++;
+            countSim++;
+        }
+        printf("The number of simulations was %d.\n", countSim);
+
+        double varX = meanXSquared - meanX * meanX;
+        double stdX = sqrt(varX);
+        printf("The average of the X random variables is %lf.\n", meanX);
+        printf("The standard deviation of the X random  variables is %lf.\n", stdX);
+
+        double varY = meanYSquared - meanY * meanY;
+        double stdY = sqrt(varY);
+        printf("The average of the Y random variables is %lf.\n", meanY);
+        printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
     }
-    printf("The number of simulations was %d.\n", countSim);
-
-    double varX = meanXSquared - pow(meanX, 2);
-    double stdX = sqrt(varX);
-    printf("The average of the X random variables is %lf.\n", meanX);
-    printf("The standard deviation of the X random  variables is %lf.\n", stdX);
-
-    double varY = meanYSquared - pow(meanY, 2);
-    double stdY = sqrt(varY);
-    printf("The average of the Y random variables is %lf.\n", meanY);
-    printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
 
     if (booleWriteData)
     {
@@ -147,5 +227,3 @@ int main()
 
     return (0);
 }
-
-
