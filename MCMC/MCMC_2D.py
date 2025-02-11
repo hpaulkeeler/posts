@@ -1,4 +1,4 @@
-# Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two 
+# Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate two
 # jointly distributed random variables with probability density
 # p(x,y)=exp(-(x^4+x*y+y^2)/s^2)/consNorm, where s>0 and consNorm is a
 # normalization constant.
@@ -91,3 +91,15 @@ surf = ax.plot_surface(X, Y, p_Exact, cmap=plt.cm.plasma);
 plt.xlabel("x");
 plt.ylabel("y");
 plt.title("p(x,y) Exact Expression");
+
+meanX = np.mean(xRand);
+meanY = np.mean(yRand);
+stdX = np.std(xRand);
+stdY = np.std(yRand);
+
+
+print("The average of the X random variables is " + str(meanX)+".\n");
+print("The average of the Y random variables is " + str(meanY)+".\n");
+print("The standard deviation of the X random variables is " + str(stdX)+".\n");
+print("The standard deviation of the Y random variables is " + str(stdY)+".\n");
+
