@@ -31,7 +31,7 @@ static double *unirand(double *randValues, unsigned numbRand); // generate  unif
 static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
 static double pdf_single(double x_input, double y_input, double s);
 
-static double mean_var(double *set_sample, unsigned numbSim, double *varX)
+int main()
 {
     int i;
     // initialize statistics variables (for testing results)
@@ -105,7 +105,7 @@ static double mean_var(double *set_sample, unsigned numbSim, double *varX)
             pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability density
 
             // acceptance rejection step
-            (void)unirand(&uRand, 1);
+            (void)unirand(&uRand,1);
             ratioAccept = pdfProposal / pdfCurrent;
             if (uRand < ratioAccept)
             {
