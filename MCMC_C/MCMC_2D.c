@@ -137,12 +137,13 @@ int main(int argc, char *argv[])
         {
             // print to file
             FILE *outputFile;
-            outputFile = fopen(strFilename, "w+");
+            outputFile = fopen(strFilename, "w");
             // fprintf(outputFile, "valueSim\n");
             for (i = 0; i < numbSim; i++)
             {
                 fprintf(outputFile, "%lf,%lf\n", *(p_xRand + i), *(p_yRand + i)); // output to file
             }
+            fclose(outputFile);
             printf("Data printed to file.\n");
         }
         free(p_xRand);

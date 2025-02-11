@@ -9,15 +9,14 @@
  * NOTE: This code will *create* a local file (see variable strFilename) to store results.
  * This code will *overwrite* that file if it already exists.
  *
- * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness. 
+ * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness.
  * Strongly recommended to use another generator for purposes beyond simple illustration.
- * 
+ *
  * Author: H. Paul Keeler, 2024.
  * Website: hpaulkeeler.com
  * Repository: github.com/hpaulkeeler/posts
  *
  ************************************************************/
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -27,125 +26,158 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-static double *unirand(unsigned numbRand, double *randValues); // generate  uniform random variables on (0,1)
-static void normrand(double *p_output, unsigned n_output, double mu, double sigma);
-static double exppdf_single(double x_input, double m);
+// helper function declarations; see below for definitions
+static double *unirand(double *randValues, unsigned numbRand);                           // generate  uniform random variables on (0,1)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); // generate normal random variables
+static double pdf_single(double x_input, double m);                                      // define probability density to be simulated
+static double mean_var(double *set_sample, unsigned numbSim, double *varX);              // calculate meana and variance
 
-int main()
+int main(int argc, char *argv[])
 {
-    char strFilename[] = "MCMCData_1D.csv"; // filename for storing simulated random variates
 
-    // intializes (pseudo)-random number generator
-    time_t timeCPU; // use CPU time for seed
-    srand((unsigned)time(&timeCPU));
-    // srand(42); //to reproduce results
-
-    bool booleWriteData = true;
-    bool booleGnuPlot = false;
-
-    // parameters
-    unsigned numbSim = 1e4;   // number of random variables simulated
-    unsigned numbSteps = 200; // number of steps for the Markov process
-    double sigma = 1;    // standard deviation for normal random steps
-    double m = 0.75;     // parameter (ie mean) for distribution to be simulated
-
-
-    // Metropolis-hastings variables
-    double zRand;       // random step
-    double pdfProposal; // density for proposed position
-    double pdfCurrent;  // density of current position
-    double ratioAccept;
-    double uRand;                                              // uniform variable for Bernoulli trial (ie a coin flip)
-    double *p_numbNorm = (double *)malloc(1 * sizeof(double)); // cast points for malloc in C++ and for gcc
-    double *p_xRand = (double *)malloc(numbSim * sizeof(double));
-
-    (void)unirand(numbSim, p_xRand); // random initial values
-
-    unsigned i, j; // loop varibales
-    for (i = 0; i < numbSim; i++)
+    if (argc > 1)
     {
-        // loop through each random walk instance (or random variable to be simulated)
-        pdfCurrent = exppdf_single(*(p_xRand + i), m); // current transition probabilities
-
-        for (j = 0; j < numbSteps; j++)
-        {
-            // loop through each step of the random walk
-            normrand(p_numbNorm, 1, 0, sigma);
-            zRand = (*(p_xRand + i)) + (*p_numbNorm); // take a(normally distributed) random step
-            pdfProposal = exppdf_single(zRand, m);    // proposed probability
-
-            // acceptance rejection step
-            (void)unirand(1, &uRand);
-            ratioAccept = pdfProposal / pdfCurrent;
-            if (uRand < ratioAccept)
-            {
-                // update state of random walk / Markov chain
-                *(p_xRand + i) = zRand;
-                pdfCurrent = pdfProposal;
-            }
-        }
+        fprintf(stderr, "This program takes no arguments...\n");
+        exit(1);
     }
-    free(p_numbNorm);
-
-    // initialize statistics variables (for testing results)
-    double meanExp = 0;
-    double meanExpSquared = 0;
-    double tempExp;
-    unsigned countSim = 0;
-    for (i = 0; i < numbSim; i++)
+    else
     {
-        tempExp = *(p_xRand + i);
-        meanExp += tempExp / ((double)numbSim);
-        meanExpSquared += pow(tempExp, 2) / ((double)numbSim);
-        countSim++;
-    }
-    printf("The number of simulations was %d.\n", countSim);
-    double varExp = meanExpSquared - pow(meanExp, 2); // need to cast before doing divisions
-    double stdExp = sqrt(varExp);
-    printf("The average of the random  variables is %lf.\n", meanExp);
-    printf("The standard deviation of the random  variables is %lf.\n", stdExp);
 
-    if (booleWriteData)
-    {
-        // print to file
-        FILE *outputFile;
-        outputFile = fopen(strFilename, "w+");
-        // fprintf(outputFile, "valueSim\n");
+        char strFilename[] = "MCMCData_1D.csv"; // filename for storing simulated random variates
+
+        int numbFilename = *(&strFilename + 1) - strFilename - 1;
+
+        // intializes (pseudo)-random number generator
+        time_t timeCPU; // use CPU time for seed
+        srand((unsigned)time(&timeCPU));
+        // srand(42); //to reproduce results
+
+        bool booleWriteData = true; // write data to file
+        bool booleStats = true;     // perform simple mean/std stats
+        bool booleGnuPlot = false;   // run gnuplot (if it's installed on the machine)
+
+        // parameters
+        unsigned numbSim = 1e4;   // number of random variables simulated
+        unsigned numbSteps = 200; // number of steps for the Markov process
+        double sigma = 2;         // standard deviation for normal random steps
+
+        // probability density parameters
+        double m = 0.75; // parameter (ie mean) for distribution to be simulated
+
+        // Metropolis-Hastings variables
+        double zxRand; // random step
+        // double zyRand;      // random step
+        double pdfProposal; // density for proposed position
+        double pdfCurrent;  // density of current position
+        double ratioAccept; // ratio of densities (ie acceptance probability)
+        double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
+        double *p_numbNormX = (double *)malloc(1 * sizeof(double));
+        // double *p_numbNormY = (double *)malloc(1 * sizeof(double));
+
+        double *p_xRand = (double *)malloc(numbSim * sizeof(double));
+        // double *p_yRand = (double *)malloc(numbSim * sizeof(double));
+
+        (void)unirand(p_xRand, numbSim); // random initial values
+        // (void)unirand(p_yRand, numbSim); // random initial values
+
+        unsigned i, j; // loop varibales
         for (i = 0; i < numbSim; i++)
         {
-            fprintf(outputFile, "%lf\n", *(p_xRand + i)); // output to file
+            // loop through each random walk instance (or random variable to be simulated)
+
+            pdfCurrent = pdf_single(*(p_xRand + i), m); // current probability density
+
+            for (j = 0; j < numbSteps; j++)
+            {
+                // loop through each step of the random walk
+                (void)normrand(p_numbNormX, 1, 0, sigma);
+                // (void)normrand(p_numbNormY, 1, 0, sigma);
+                // take a(normally distributed) random step in x and y
+                zxRand = (*(p_xRand + i)) + (*p_numbNormX);
+                // zyRand = (*(p_yRand + i)) + (*p_numbNormY);
+
+                pdfProposal = pdf_single(zxRand, m); // proposed probability density
+
+                // acceptance rejection step
+                (void)unirand(&uRand, 1);
+                ratioAccept = pdfProposal / pdfCurrent;
+                if (uRand < ratioAccept)
+                {
+                    // update state of random walk / Markov chain
+                    *(p_xRand + i) = zxRand;
+                    //*(p_yRand + i) = zyRand;
+                    pdfCurrent = pdfProposal;
+                }
+            }
         }
-        printf("Data printed to file.\n");
-    }
-    free(p_xRand);
 
-    // plotting with gnuplot (if it installed)
+        free(p_numbNormX);
+        // free(p_numbNormY);
 
-    if (booleGnuPlot)
-    {
-        int intGnuPlot = system("gnuplot -e \"quit\"");
-        if (intGnuPlot == 0)
+        if (booleStats)
         {
-            // create a string for running the plotting program gnuplot
-            char strCommandPlotL[] = "gnuplot -e \"plot '";
-            char strCommandPlotR[] = "' using 1 bins=20;\" -persist";
-            unsigned numbCommandPlot = strlen(strCommandPlotL) + strlen(strCommandPlotR) + strlen(strFilename);
-            char *strCommandPlot = malloc(numbCommandPlot + 1);
 
-            strcat(strCommandPlot, strCommandPlotL);
-            strcat(strCommandPlot, strFilename);
-            strcat(strCommandPlot, strCommandPlotR);
+            // initialize statistics variables (for testing results)
+            double meanX = 0;
+            // double meanY = 0;
+            double varX = 0;
+            // double varY = 0;
 
-            printf("\nRunning the external command:\n%s\n", strCommandPlot);
-            system(strCommandPlot); // plot data using external program gnuplot
-            free(strCommandPlot);
-            printf("\nTo stop plotting, change the boolean variable booleGnuPlot to false.");
+            meanX = mean_var(p_xRand, numbSim, &varX);
+            // meanY = mean_var(p_yRand, numbSim, &varY);
+            double stdX = sqrt(varX);
+            // double stdY = sqrt(varY);
+
+            printf("The average of the X random variables is %lf.\n", meanX);
+            printf("The standard deviation of the X random  variables is %lf.\n", stdX);
+            // printf("The average of the Y random variables is %lf.\n", meanY);
+            // printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
         }
+
+        if (booleWriteData)
+        {
+            // print to file
+            FILE *outputFile;
+            outputFile = fopen(strFilename, "w");
+            // fprintf(outputFile, "valueSim\n");
+            for (i = 0; i < numbSim; i++)
+            {
+                fprintf(outputFile, "%lf\n", *(p_xRand + i)); // output to file
+            }
+            fclose(outputFile);
+            printf("Data printed to file.\n");
+        }
+        
+        free(p_xRand);
+        // free(p_yRand);
+
+        if (booleGnuPlot)
+        {
+            int intGnuPlot = system("gnuplot -e \"quit\"");
+            if (intGnuPlot == 0)
+            {
+                // create a string for running the plotting program gnuplot
+                char strCommandPlotL[] = "gnuplot -e \"plot '\0";
+                char strCommandPlotR[] = "' using 1 bins=20;\" -persist\0";
+                unsigned numbCommandPlot = strlen(strCommandPlotL) + strlen(strCommandPlotR) + numbFilename;
+                char *strCommandPlot = (char*) malloc((numbCommandPlot + 1) * sizeof(char));
+
+                strcat(strCommandPlot, strCommandPlotL);
+                strcat(strCommandPlot, strFilename);
+                strcat(strCommandPlot, strCommandPlotR);
+
+                printf("\nRunning the external command:\n%s\n", strCommandPlot);
+                system(strCommandPlot); // plot data using external program gnuplot
+                free(strCommandPlot);
+                printf("\nTo stop plotting, change the boolean variable booleGnuPlot to false.");
+            }
+        }
+
+        return (0);
     }
-    return (0);
 }
 
-static double exppdf_single(double x_input, double m)
+static double pdf_single(double x_input, double m)
 { // simulate a single exponential random variable with mean m
     double pdf_output;
     if ((x_input) > 0)
@@ -159,44 +191,43 @@ static double exppdf_single(double x_input, double m)
     return pdf_output;
 }
 
-static void normrand(double *p_output, unsigned n_output, double mu, double sigma)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
 
-    double U1, U2, temp_theta, temp_Rayleigh, Z1, Z2;
-    unsigned i = 0;
-    while (i < n_output)
+    double U1, U2, thetaTemp, rhoTemp, Z1, Z2;
+    int i = 0;
+    while (i < numbRand)
     {
-        // simulate variables in polar coordinates
-        // U1 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        (void)unirand(1, &U1);
+        // simulate variables in polar coordinates (theta, rho)
+        (void)unirand(&U1, 1);
+        thetaTemp = 2 * pi * U1; // create uniform theta values
+        (void)unirand(&U2, 1);
+        rhoTemp = sqrt(-2 * log(U2)); // create Rayleigh rho values
 
-        temp_theta = 2 * pi * U1; // create uniform theta values
-        // U2 = (double)rand() / (double)((unsigned)RAND_MAX + 1); // generate random variables on (0,1)
-        (void)unirand(1, &U2);
-        temp_Rayleigh = sqrt(-2 * log(U2)); // create Rayleigh rho values
-
-        Z1 = temp_Rayleigh * cos(temp_theta);
+        // change to Cartesian coordinates
+        Z1 = rhoTemp * cos(thetaTemp);
         Z1 = sigma * Z1 + mu;
-        *(p_output + i) = Z1; // assign first of random variable pair
+        randValues[i] = Z1; // assign first of random variable pair
         i++;
-        if (i < n_output)
+        if (i < numbRand)
         {
             // if more variables are needed, generate second value of random pair
-            Z2 = temp_Rayleigh * sin(temp_theta);
+            Z2 = rhoTemp * sin(thetaTemp);
             Z2 = sigma * Z2 + mu;
-            *(p_output + i) = Z2; // assign second of random variable pair
+            randValues[i] = Z2; // assign second of random variable pair
             i++;
         }
         else
         {
-            break; // break if i hits n_max
+            break;
         }
     }
+    return randValues;
 }
 
-static double *unirand(unsigned numbRand, double *randValues)
+static double *unirand(double *randValues, unsigned numbRand)
 { // simulate numbRand uniform random variables on the unit interval
   // storing them in randValues which must be allocated by the caller
   // with enough space for numbRand doubles
@@ -206,4 +237,23 @@ static double *unirand(unsigned numbRand, double *randValues)
         randValues[i] = (double)rand() / RAND_MAX;
     }
     return randValues;
+}
+
+static double mean_var(double *set_sample, unsigned numbSim, double *varX)
+{
+    // mean and variance of set_sample
+    int i;
+    // initialize statistics variables (for testing results)
+    double meanX = 0;
+    double meanXSquared = 0;
+    double tempX;
+    for (i = 0; i < numbSim; i++)
+    {
+        tempX = *(set_sample + i);
+        meanX += tempX / ((double)numbSim);
+        meanXSquared += tempX * tempX / ((double)numbSim);
+    }
+
+    *varX = meanXSquared - meanX * meanX;
+    return meanX;
 }
