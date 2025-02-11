@@ -27,10 +27,11 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
+//helper function declarations; see below for definitions
 static double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma);
-static double pdf_single(double x_input, double y_input, double s);
-static double mean_var(double *set_sample, unsigned numbSim, double *varX);
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); //generate normal random variables
+static double pdf_single(double x_input, double y_input, double s); //define probability density to be simulated
+static double mean_var(double *set_sample, unsigned numbSim, double *varX); //calculate meana and variance
 
     
 int main(int argc, char *argv[])
