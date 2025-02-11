@@ -12,7 +12,7 @@
  * WARNING: This code uses the default C random number generator, which is known for failing various tests of randomness. 
  * Strongly recommended to use another generator for purposes beyond simple illustration.
  * 
- * Author: H. Paul Keeler, 2023.
+ * Author: H. Paul Keeler, 2024.
  * Website: hpaulkeeler.com
  * Repository: github.com/hpaulkeeler/posts
  *
@@ -27,9 +27,9 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-double *unirand(unsigned numbRand, double *randValues); // generate  uniform random variables on (0,1)
-void normrand(double *p_output, unsigned n_output, double mu, double sigma);
-double exppdf_single(double x_input, double m);
+static double *unirand(unsigned numbRand, double *randValues); // generate  uniform random variables on (0,1)
+static void normrand(double *p_output, unsigned n_output, double mu, double sigma);
+static double exppdf_single(double x_input, double m);
 
 int main()
 {
@@ -145,7 +145,7 @@ int main()
     return (0);
 }
 
-double exppdf_single(double x_input, double m)
+static double exppdf_single(double x_input, double m)
 { // simulate a single exponential random variable with mean m
     double pdf_output;
     if ((x_input) > 0)
@@ -159,7 +159,7 @@ double exppdf_single(double x_input, double m)
     return pdf_output;
 }
 
-void normrand(double *p_output, unsigned n_output, double mu, double sigma)
+static void normrand(double *p_output, unsigned n_output, double mu, double sigma)
 {
     // simulate pairs of iid normal variables using Box-Muller transform
     // https://en.wikipedia.org/wiki/Box%E2%80%93Muller_transform
@@ -196,7 +196,7 @@ void normrand(double *p_output, unsigned n_output, double mu, double sigma)
     }
 }
 
-double *unirand(unsigned numbRand, double *randValues)
+static double *unirand(unsigned numbRand, double *randValues)
 { // simulate numbRand uniform random variables on the unit interval
   // storing them in randValues which must be allocated by the caller
   // with enough space for numbRand doubles

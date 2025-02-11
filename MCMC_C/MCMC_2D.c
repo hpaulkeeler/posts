@@ -52,6 +52,7 @@ int main(int argc, char *argv[])
         // srand(42); //to reproduce results
 
         bool booleWriteData = true; // write data to file
+        bool booleStats = true; //perform simple mean/std stats
 
         // parameters
         unsigned numbSim = 1e4;   // number of random variables simulated
@@ -111,6 +112,9 @@ int main(int argc, char *argv[])
         free(p_numbNormX);
         free(p_numbNormY);
 
+        if (booleStats){
+
+
         // initialize statistics variables (for testing results)
         double meanX = 0;
         double meanY = 0;
@@ -126,6 +130,7 @@ int main(int argc, char *argv[])
         printf("The standard deviation of the X random  variables is %lf.\n", stdX);
         printf("The average of the Y random variables is %lf.\n", meanY);
         printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
+}
 
         if (booleWriteData)
         {
