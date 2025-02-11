@@ -66,19 +66,15 @@ int main(int argc, char *argv[])
 
         // Metropolis-Hastings variables
         double zxRand; // random step
-        // double zyRand;      // random step
         double pdfProposal; // density for proposed position
         double pdfCurrent;  // density of current position
         double ratioAccept; // ratio of densities (ie acceptance probability)
         double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
         double *p_numbNormX = (double *)malloc(1 * sizeof(double));
-        // double *p_numbNormY = (double *)malloc(1 * sizeof(double));
 
         double *p_xRand = (double *)malloc(numbSim * sizeof(double));
-        // double *p_yRand = (double *)malloc(numbSim * sizeof(double));
 
         (void)unirand(p_xRand, numbSim); // random initial values
-        // (void)unirand(p_yRand, numbSim); // random initial values
 
         unsigned i, j; // loop varibales
         for (i = 0; i < numbSim; i++)
@@ -91,10 +87,8 @@ int main(int argc, char *argv[])
             {
                 // loop through each step of the random walk
                 (void)normrand(p_numbNormX, 1, 0, sigma);
-                // (void)normrand(p_numbNormY, 1, 0, sigma);
                 // take a(normally distributed) random step in x and y
                 zxRand = (*(p_xRand + i)) + (*p_numbNormX);
-                // zyRand = (*(p_yRand + i)) + (*p_numbNormY);
 
                 pdfProposal = pdf_single(zxRand, m); // proposed probability density
 
@@ -105,7 +99,6 @@ int main(int argc, char *argv[])
                 {
                     // update state of random walk / Markov chain
                     *(p_xRand + i) = zxRand;
-                    //*(p_yRand + i) = zyRand;
                     pdfCurrent = pdfProposal;
                 }
             }
@@ -124,14 +117,10 @@ int main(int argc, char *argv[])
             // double varY = 0;
 
             meanX = mean_var(p_xRand, numbSim, &varX);
-            // meanY = mean_var(p_yRand, numbSim, &varY);
             double stdX = sqrt(varX);
-            // double stdY = sqrt(varY);
 
             printf("The average of the X random variables is %lf.\n", meanX);
             printf("The standard deviation of the X random  variables is %lf.\n", stdX);
-            // printf("The average of the Y random variables is %lf.\n", meanY);
-            // printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
         }
 
         if (booleWriteData)
