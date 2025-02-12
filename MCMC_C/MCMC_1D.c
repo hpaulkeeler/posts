@@ -29,7 +29,7 @@ const long double pi = 3.14159265358979323846; // constant pi for generating pol
 // helper function declarations; see below for definitions
 static double *unirand(double *randValues, unsigned numbRand);                           // generate  uniform random variables on (0,1)
 static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); // generate normal random variables
-static double pdf_single(double x_input, double m);                                      // define probability density to be simulated
+static double pdf_single(double x, double m);                                      // define probability density to be simulated
 static double mean_var(double *set_sample, unsigned numbSim, double *varX);              // calculate meana and variance
 
 int main(int argc, char *argv[])
@@ -65,13 +65,15 @@ int main(int argc, char *argv[])
         double m = 0.75; // parameter (ie mean) for distribution to be simulated
 
         // Metropolis-Hastings variables
-        double zxRand; // random step
+        // proposal for a new position in the random walk
+        double zxRandProposal; 
         double pdfProposal; // density for proposed position
         double pdfCurrent;  // density of current position
         double ratioAccept; // ratio of densities (ie acceptance probability)
         double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
+        // random step (normally distributed)
         double *p_numbNormX = (double *)malloc(1 * sizeof(double));
-
+        // positions of the random walk (ie the simualted random variables after numbSteps)
         double *p_xRand = (double *)malloc(numbSim * sizeof(double));
 
         (void)unirand(p_xRand, numbSim); // random initial values
@@ -88,9 +90,9 @@ int main(int argc, char *argv[])
                 // loop through each step of the random walk
                 (void)normrand(p_numbNormX, 1, 0, sigma);
                 // take a(normally distributed) random step in x and y
-                zxRand = (*(p_xRand + i)) + (*p_numbNormX);
+                zxRandProposal = (*(p_xRand + i)) + (*p_numbNormX);
 
-                pdfProposal = pdf_single(zxRand, m); // proposed probability density
+                pdfProposal = pdf_single(zxRandProposal, m); // proposed probability density
 
                 // acceptance rejection step
                 (void)unirand(&uRand, 1);
@@ -98,7 +100,7 @@ int main(int argc, char *argv[])
                 if (uRand < ratioAccept)
                 {
                     // update state of random walk / Markov chain
-                    *(p_xRand + i) = zxRand;
+                    *(p_xRand + i) = zxRandProposal;
                     pdfCurrent = pdfProposal;
                 }
             }
@@ -128,7 +130,6 @@ int main(int argc, char *argv[])
             // print to file
             FILE *outputFile;
             outputFile = fopen(strFilename, "w");
-            // fprintf(outputFile, "valueSim\n");
             for (i = 0; i < numbSim; i++)
             {
                 fprintf(outputFile, "%lf\n", *(p_xRand + i)); // output to file
@@ -166,12 +167,12 @@ int main(int argc, char *argv[])
     }
 }
 
-static double pdf_single(double x_input, double m)
+static double pdf_single(double x, double m)
 { // simulate a single exponential random variable with mean m
     double pdf_output;
-    if ((x_input) > 0)
+    if ((x) > 0)
     {
-        pdf_output = exp(-(x_input / m)) / m;
+        pdf_output = exp(-(x / m)) / m;
     }
     else
     {

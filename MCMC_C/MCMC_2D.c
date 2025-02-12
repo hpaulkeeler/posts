@@ -27,13 +27,12 @@
 
 const long double pi = 3.14159265358979323846; // constant pi for generating polar coordinates
 
-//helper function declarations; see below for definitions
-static double *unirand(double *randValues, unsigned numbRand); // generate  uniform random variables on (0,1)
-static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); //generate normal random variables
-static double pdf_single(double x_input, double y_input, double s); //define probability density to be simulated
-static double mean_var(double *set_sample, unsigned numbSim, double *varX); //calculate meana and variance
+// helper function declarations; see below for definitions
+static double *unirand(double *randValues, unsigned numbRand);                           // generate  uniform random variables on (0,1)
+static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); // generate normal random variables
+static double pdf_single(double x, double y, double s);                      // define probability density to be simulated
+static double mean_var(double *set_sample, unsigned numbSim, double *varX);              // calculate meana and variance
 
-    
 int main(int argc, char *argv[])
 {
 
@@ -53,7 +52,7 @@ int main(int argc, char *argv[])
         // srand(42); //to reproduce results
 
         bool booleWriteData = true; // write data to file
-        bool booleStats = true; //perform simple mean/std stats
+        bool booleStats = true;     // perform simple mean/std stats
 
         // parameters
         unsigned numbSim = 1e4;   // number of random variables simulated
@@ -64,15 +63,17 @@ int main(int argc, char *argv[])
         double s = .5; // scale parameter for distribution to be simulated
 
         // Metropolis-Hastings variables
-        double zxRand;      // random step
-        double zyRand;      // random step
+        // proposal for a new position in the random walk
+        double zxRandProposal;      
+        double zyRandProposal;      
         double pdfProposal; // density for proposed position
         double pdfCurrent;  // density of current position
         double ratioAccept; // ratio of densities (ie acceptance probability)
         double uRand;       // uniform variable for Bernoulli trial (ie a coin flip)
+        // random step (normally distributed)
         double *p_numbNormX = (double *)malloc(1 * sizeof(double));
         double *p_numbNormY = (double *)malloc(1 * sizeof(double));
-
+//positions of the random walk (ie the simualted random variables after numbSteps)
         double *p_xRand = (double *)malloc(numbSim * sizeof(double));
         double *p_yRand = (double *)malloc(numbSim * sizeof(double));
 
@@ -92,10 +93,10 @@ int main(int argc, char *argv[])
                 (void)normrand(p_numbNormX, 1, 0, sigma);
                 (void)normrand(p_numbNormY, 1, 0, sigma);
                 // take a(normally distributed) random step in x and y
-                zxRand = (*(p_xRand + i)) + (*p_numbNormX);
-                zyRand = (*(p_yRand + i)) + (*p_numbNormY);
+                zxRandProposal = (*(p_xRand + i)) + (*p_numbNormX);
+                zyRandProposal = (*(p_yRand + i)) + (*p_numbNormY);
 
-                pdfProposal = pdf_single(zxRand, zyRand, s); // proposed probability density
+                pdfProposal = pdf_single(zxRandProposal, zyRandProposal, s); // proposed probability density
 
                 // acceptance rejection step
                 (void)unirand(&uRand, 1);
@@ -103,8 +104,8 @@ int main(int argc, char *argv[])
                 if (uRand < ratioAccept)
                 {
                     // update state of random walk / Markov chain
-                    *(p_xRand + i) = zxRand;
-                    *(p_yRand + i) = zyRand;
+                    *(p_xRand + i) = zxRandProposal;
+                    *(p_yRand + i) = zyRandProposal;
                     pdfCurrent = pdfProposal;
                 }
             }
@@ -113,32 +114,31 @@ int main(int argc, char *argv[])
         free(p_numbNormX);
         free(p_numbNormY);
 
-        if (booleStats){
+        if (booleStats)
+        {
 
-
-        // initialize statistics variables (for testing results)
-        double meanX = 0;
-        double meanY = 0;
-        double varX = 0;
-        double varY = 0;
-
-        meanX = mean_var(p_xRand, numbSim, &varX);
-        meanY = mean_var(p_yRand, numbSim, &varY);
-        double stdX = sqrt(varX);
-        double stdY = sqrt(varY);
-
-        printf("The average of the X random variables is %lf.\n", meanX);
-        printf("The standard deviation of the X random  variables is %lf.\n", stdX);
-        printf("The average of the Y random variables is %lf.\n", meanY);
-        printf("The standard deviation of the Y random  variables is %lf.\n", stdY);
-}
+            // initialize statistics variables (for testing results)
+            char strVariable[] = "XY";
+            double *p_AllRand[] = {p_xRand, p_yRand};
+            double meanTemp = 0;
+            double varTemp = 0;
+            double stdTemp = 0;
+            char strTemp='X';
+            for (i = 0; i < 2; i++)
+            {
+                meanTemp = mean_var(p_AllRand[i], numbSim, &varTemp);
+                stdTemp = sqrt(varTemp);
+                strTemp=strVariable[i];
+                printf("The average of the %c random variables is %lf.\n", strTemp, meanTemp);
+                printf("The standard deviation of the %c random  variables is %lf.\n", strTemp, stdTemp);
+            }
+        }
 
         if (booleWriteData)
         {
             // print to file
             FILE *outputFile;
             outputFile = fopen(strFilename, "w");
-            // fprintf(outputFile, "valueSim\n");
             for (i = 0; i < numbSim; i++)
             {
                 fprintf(outputFile, "%lf,%lf\n", *(p_xRand + i), *(p_yRand + i)); // output to file
@@ -153,7 +153,7 @@ int main(int argc, char *argv[])
     }
 }
 
-static double pdf_single(double x_input, double y_input, double s)
+static double pdf_single(double x, double y, double s)
 {
     // returns the probability density of a single point (x,y) inside a simulation window defined below
     double pdf_output;
@@ -164,9 +164,9 @@ static double pdf_single(double x_input, double y_input, double s)
     double yMin = -1;
     double yMax = 1;
 
-    if ((x_input >= xMin) && (x_input <= xMax) && (y_input >= yMin) && (y_input <= yMax))
+    if ((x >= xMin) && (x <= xMax) && (y >= yMin) && (y <= yMax))
     {
-        pdf_output = exp(-((pow(x_input, 4) + x_input * y_input + pow(y_input, 2)) / (s * s)));
+        pdf_output = exp(-((pow(x, 4) + x * y + pow(y, 2)) / (s * s)));
     }
     else
     {
@@ -225,7 +225,7 @@ static double *unirand(double *randValues, unsigned numbRand)
 
 static double mean_var(double *set_sample, unsigned numbSim, double *varX)
 {
-    //mean and variance of set_sample
+    // mean and variance of set_sample
     int i;
     // initialize statistics variables (for testing results)
     double meanX = 0;
