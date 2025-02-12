@@ -2,7 +2,7 @@
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate n
  * jointly distributed random variables with probability density p(x,y).
  * For example:
- * p(x,y)=exp(-(x^4+x*y+y^2+z^4)/s^2)/consNorm, where s>0 and consNorm is a
+ * p(x,y)=exp(-(x^4+x*y+y^2+y*z+z^4)/s^2)/consNorm, where s>0 and consNorm is a
  * normalization constant. The probability density function is defined in
  * the function pdf_single.
  *
@@ -206,7 +206,7 @@ static double pdf_single(double *x_input, double *parameters)
     if ((x >= xMin) && (y <= xMax) && (y >= yMin) && (y <= yMax) && (z >= zMin) && (z <= zMax))
     {
         // define probability density
-        pdf_output = exp(-((pow(x, 4) + x * y + pow(y, 2) + x * z + pow(z, 4)) / (s * s)));
+        pdf_output = exp(-((pow(x, 4) + x * y + pow(y, 2) + y * z + pow(z, 4)) / (s * s)));
     }
     else
     {
