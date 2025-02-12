@@ -1,5 +1,5 @@
 /***********************************************************************
- * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate three
+ * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate n
  * jointly distributed random variables with probability density p(x,y).
  * For example:
  * p(x,y)=exp(-(x^4+x*y+y^2+z^4)/s^2)/consNorm, where s>0 and consNorm is a
