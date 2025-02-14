@@ -53,8 +53,9 @@ int main(int argc, char *argv[])
 
         bool booleWriteData = true; // write data to file
         bool booleStats = true;     // perform simple mean/std stats
+        unsigned numbDimMax = 3; //upper bound on number of dimensions for which stats are calculated and printed out
 
-        // parameters
+        // simulation parameters
         unsigned numbSim = 1e4;   // number of random variables simulated
         unsigned numbSteps = 200; // number of steps for the Markov process
         double sigma = 2;         // standard deviation for normal random steps
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
             double meanTemp = 0;
             double varTemp = 0;
             double stdTemp = 0;
-            unsigned numbDimStats = fmin(3, numbDim);
+            unsigned numbDimStats = fmin(numbDimMax, numbDim); //number of dimensions for which stats are calculated and printed out
             for (k = 0; k < numbDimStats; k++)
             {
                 // loop through all the dimensions
