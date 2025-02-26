@@ -43,7 +43,7 @@ namespace Poisson
                 //total sum of variables
                 sumPoisson += numbPoissonTemp;
                 //total sum of squared variables
-                sumPoissonSquared += Math.Pow (numbPoissonTemp, 2);
+                sumPoissonSquared += numbPoissonTemp*numbPoissonTemp;
 
                 if (i < 5) {
                     //print the first 5 numbers
@@ -54,7 +54,7 @@ namespace Poisson
 
             //calculate statistics 
             double meanPoisson = sumPoisson / ((double) numbSim);
-            double varPoisson = sumPoissonSquared / ((double) numbSim) - Math.Pow (meanPoisson, 2);
+            double varPoisson = sumPoissonSquared / ((double) numbSim) - meanPoisson*meanPoisson;
 
             ///print statistics
             Console.WriteLine ("The average of the Poisson variables is " + meanPoisson + ".");
