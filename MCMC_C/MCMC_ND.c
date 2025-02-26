@@ -2,7 +2,7 @@
  * Runs a simple Metropolis-Hastings (ie MCMC) algorithm to simulate n
  * jointly distributed random variables with probability density p(x,y).
  * For example:
- * p(x,y)=exp(-(x^4+x*y+y^2+z^4)/s^2)/consNorm, where s>0 and consNorm is a
+ * p(x,y)=exp(-(x^4+x*y+y^2+y*z+z^4)/s^2)/consNorm, where s>0 and consNorm is a
  * normalization constant. The probability density function is defined in
  * the function pdf_single.
  *
@@ -31,7 +31,7 @@ const long double pi = 3.14159265358979323846; // constant pi for generating pol
 // helper function declarations; see below for definitions
 static double *unirand(double *randValues, unsigned numbRand);                           // generate  uniform random variables on (0,1)
 static double *normrand(double *randValues, unsigned numbRand, double mu, double sigma); // generate normal random variables
-static double pdf_single(double *x_input, double *parameters);                           // define probability density to be simulated
+static double pdf_single(double *x_input, unsigned numbDim, double *parameters);           // define probability density to be simulated
 static double mean_var(double *set_sample, unsigned numbSim, double *varX);              // calculate meana and variance
 
 int main(int argc, char *argv[])
@@ -53,8 +53,9 @@ int main(int argc, char *argv[])
 
         bool booleWriteData = true; // write data to file
         bool booleStats = true;     // perform simple mean/std stats
+        unsigned numbDimMax = 3; //upper bound on number of dimensions for which stats are calculated and printed out
 
-        // parameters
+        // simulation parameters
         unsigned numbSim = 1e4;   // number of random variables simulated
         unsigned numbSteps = 200; // number of steps for the Markov process
         double sigma = 2;         // standard deviation for normal random steps
@@ -93,7 +94,7 @@ int main(int argc, char *argv[])
                 *(p_tRandCurrent + k) = *(p_tRand + indexSimDim);
             }
 
-            pdfCurrent = pdf_single(p_tRandCurrent, &s); // current probability density
+            pdfCurrent = pdf_single(p_tRandCurrent, numbDim, & s); // current probability density
 
             for (j = 0; j < numbSteps; j++)
             {
@@ -106,7 +107,7 @@ int main(int argc, char *argv[])
                     // take a(normally distributed) random step in x, y and y
                     *(tRandProposal+k) = *(p_tRand + indexSimDim) + *(p_numbNormT);
                 }
-                pdfProposal = pdf_single(tRandProposal, &s); // proposed probability density
+                pdfProposal = pdf_single(tRandProposal, numbDim, & s); // proposed probability density
 
                 // acceptance rejection step
                 (void)unirand(&uRand, 1);
@@ -134,7 +135,7 @@ int main(int argc, char *argv[])
             double meanTemp = 0;
             double varTemp = 0;
             double stdTemp = 0;
-            unsigned numbDimStats = fmin(3, numbDim);
+            unsigned numbDimStats = fmin(numbDimMax, numbDim); //number of dimensions for which stats are calculated and printed out
             for (k = 0; k < numbDimStats; k++)
             {
                 // loop through all the dimensions
@@ -183,30 +184,35 @@ int main(int argc, char *argv[])
     }
 }
 
-static double pdf_single(double *x_input, double *parameters)
+static double pdf_single(double *x_input, unsigned numbDim, double *parameters)
 {
     // returns the probability density of a single point inside a simulation window defined below
-    double pdf_output;
-
-    // non-zero density window parameters
+    
+    double pdf_output = 0; //probability density at a single point
+    
+    // non-zero density square window parameters
     double xMin = -1;
     double xMax = 1;
-    double yMin = -1;
-    double yMax = 1;
-    double zMin = -1;
-    double zMax = 1;
 
     // retrieve variables
     double x = *(x_input + 0);
     double y = *(x_input + 1);
     double z = *(x_input + 2);
-
+    // retrieve scale parameter
     double s = *(parameters + 0);
 
-    if ((x >= xMin) && (y <= xMax) && (y >= yMin) && (y <= yMax) && (z >= zMin) && (z <= zMax))
+    int i;
+    //check point is inside simulation window
+    bool booleInsideWindow = true;
+    for (i = 0; i < numbDim; i++){
+        booleInsideWindow = booleInsideWindow & ((x_input[i] >= xMin) & (x_input[i] <= xMax));
+    }
+
+    // define probability density
+    if (booleInsideWindow)
     {
-        // define probability density
-        pdf_output = exp(-((pow(x, 4) + x * y + pow(y, 2) + x * z + pow(z, 4)) / (s * s)));
+        // evaluate probability density
+        pdf_output = exp(-((pow(x, 4) + x * y + pow(y, 2) + y * z + pow(z, 4)) / (s * s)));
     }
     else
     {
