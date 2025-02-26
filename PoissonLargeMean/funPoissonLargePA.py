@@ -6,12 +6,12 @@
 #
 # 1979 - Atkinson - "The Computer Generation of Poisson Random Variables"
 #
-# In practice, you should *always* use the buil-in MATLAB function
-# poissrnd, which (for large Poisson parameter) uses Algorithm PG in the
+# In practice, you should *always* use the built-in NumPy function
+# random.poisson, which (for large Poisson parameter) uses Algorithm PTRS in the
 # paper:
 #
-# 1974 - Ahrens, Dieter - "Computer methods for sampling from gamma, beta,
-# poisson and bionomial distributions".
+# 1993 - Hörmann - "The transformed rejection method for generating Poisson
+# random variables"
 #
 # That method is also suggested by Knuth in Volume 2 of his classic
 # series "The Art of Computer Programming".

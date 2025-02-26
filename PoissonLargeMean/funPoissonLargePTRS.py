@@ -9,15 +9,9 @@
 #
 # WARNING: This code is for illustration purposes only.
 #
-# In practice, you should *always* use the buil-in MATLAB function
-# poissrnd, which (for large Poisson parameter) uses Algorithm PG in the
-# paper:
-#
-# 1974 - Ahrens, Dieter - "Computer methods for sampling from gamma, beta,
-# poisson and bionomial distributions".
-#
-# That method is also suggested by Knuth in Volume 2 of his classic
-# series "The Art of Computer Programming".
+# In practice, you should *always* use the built-in NumPy function
+# random.poisson, which (for large Poisson parameter) uses Algorithm PTRS in the
+# above paper.
 #
 # INPUT:
 # mu is a single Poisson parameter (or mean) such that mu>=0.
