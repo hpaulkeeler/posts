@@ -32,7 +32,7 @@ namespace Poisson
 
             RandomGenerator rand = new RandomGenerator ();
 
-            //generate a many poisson variables
+            //generate Poisson variables
             randPoisson = rand.funPoissonMany (lambda, numbSim);
 
             //loop through for each random variable
