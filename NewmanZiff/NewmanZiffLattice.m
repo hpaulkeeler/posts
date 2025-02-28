@@ -163,15 +163,7 @@ for i=1:numbSite
     indexOrder(j) = indexTemp;
 end
 
-% %TEMP!!!
-% % An inefficient way to generate the same random permutation in MATLAB and
-% % Python
-% rng(6);
-% [~,indexOrder]=sort(rand(1,numbSite));
-% %TEMP!!!
-
 end
-
 
 function [arrPointer,indexPoint]=funFindRootRec(arrPointer,indexPoint)
 % WARNING: This method can be slow for large systems (ie large numbSite),
@@ -192,7 +184,6 @@ end
 [~,arrPointer(indexPoint)] = funFindRootRec(arrPointer,arrPointer(indexPoint));
 indexPoint= arrPointer(indexPoint);
 end
-
 
 function [arrPointer,r]=funFindRootHalf(arrPointer,indexPoint)
 % This function performs a (graph) root-finding method
