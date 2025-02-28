@@ -122,7 +122,7 @@ if numbSite<1000
     end
     
 else
-    disp('Attempt to draw a latice with too many sites. Decrease size of lattice.');
+    disp('Attempt to draw a lattice with too many sites. Decrease size of lattice.');
 end
 
 end
