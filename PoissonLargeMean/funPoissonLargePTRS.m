@@ -66,7 +66,7 @@ while (result_n<0)
     lhs=log(V * one_over_alpha / (a/us/us + b));
     rhs= -mu + n * log_mu - logfac_n ;% NOTE: uses log factorial n
 
-    if lhs <= rhs
+    if (lhs <= rhs)
         result_n = n;
         return
     else
