@@ -73,7 +73,7 @@ def funBoundaries(dimLin):
     #end for-loop
 
     return matNeigh
-
+#end function
 
 def funRandPermute(numbSite):
     # This function generates a random permutation. It performs the
@@ -96,7 +96,7 @@ def funRandPermute(numbSite):
         indexOrder[j] = indexTemp
         
     return indexOrder
-
+#end function
 
 def funFindRootRec(arrPointer, indexPoint):
     #This function performs a root-finding method based
@@ -116,7 +116,7 @@ def funFindRootRec(arrPointer, indexPoint):
         arrPointer, arrPointer[indexPoint])
 
     return arrPointer, arrPointer[indexPoint]
-
+#end function
 
 def funFindRootHalf(arrPointer, indexPoint):
     # This function performs a (graph) root-finding method
@@ -133,7 +133,7 @@ def funFindRootHalf(arrPointer, indexPoint):
         r = arrPointer[r]
     #end while-loop
     return arrPointer, r
-
+#end function
 
 def funPercolate(matNeigh, numbSite, indexOrder):
     #This is the main function of the percolation simulation. It performs the
@@ -183,6 +183,7 @@ def funPercolate(matNeigh, numbSite, indexOrder):
     #end for-loop
 
     return numbBig, arrPointer
+#end function
 ### END Define functions END ###
 
 #Step 1

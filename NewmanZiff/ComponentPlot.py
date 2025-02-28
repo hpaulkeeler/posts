@@ -128,7 +128,7 @@ def funLatticeSite(arrPointer, valueEmpty):
         #end for-loop
 
     else:
-        print('Attempt to draw a latice with too many sites. Decrease size of lattice.')
+        print('Attempt to draw a lattice with too many sites. Decrease size of lattice.')
     #end if-statement
 
 #plot lattice of occupied and unoccupied sites
