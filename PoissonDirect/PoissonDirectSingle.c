@@ -54,7 +54,7 @@ int main()
         //total sum of variables
         sumPoisson += numbPoissonTemp;
         //total sum of squared variables
-        sumPoissonSquared += pow(numbPoissonTemp, 2);
+        sumPoissonSquared += numbPoissonTemp*numbPoissonTemp;
 
         if (i < 5)
         {
@@ -65,7 +65,7 @@ int main()
 
     //calculate statistics
     double meanPoisson = sumPoisson / ((double)numbSim);                             //need to cast before doing divisions
-    double varPoisson = sumPoissonSquared / ((double)numbSim) - pow(meanPoisson, 2); //need to cast before doing divisions
+    double varPoisson = sumPoissonSquared / ((double)numbSim) - meanPoisson*meanPoisson; //need to cast before doing divisions
 
     ///print statistics
     printf("The average of the Poisson variables is %f.\n", meanPoisson);
