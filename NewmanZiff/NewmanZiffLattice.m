@@ -58,6 +58,8 @@ indexOrder=randperm(numbSite);
 %percolation step ie finding clusters (or unions) for each configurations
 [numbBig,~] = funPercolate(matNeigh, dimLin, indexOrder);
 
+
+
 disp("The percolation magic is finished.");
 
 %%% START Define functions START %%%

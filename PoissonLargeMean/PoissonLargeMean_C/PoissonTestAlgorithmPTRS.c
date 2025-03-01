@@ -17,10 +17,12 @@ Website: hpaulkeeler.com
 Repository: github.com/hpaulkeeler/posts
 */
 
-/*WARNING:
-This code uses rand(), the standard pseudo-random number generating function in C,
-which is known for producing inadequately random numbers.
-Replace the function rand() in the function funUniformSingle with another standard uniform number generator.
+/*
+WARNING:
+This code uses rand(), the standard pseudo-random number generating function in 
+C, which is known for producing inadequately random numbers. Replace the 
+function rand() in the function funUniformSingle with another standard uniform 
+number generator, such as one based on the Mersenne Twister.
  */
 
 #include <stdio.h>
