@@ -142,7 +142,7 @@ def funPercolate(matNeigh, numbSite, indexOrder):
 
     numbBig = 0  # number of sites in the big component
     valueEmpty = -numbSite-1  # negative number to indicate unconnected sites
-    # initialize  array of (graph-theortic) pointers
+    # initialize  array of (graph-theoretic) pointers
     arrPointer = np.ones(numbSite, dtype=int)*valueEmpty
 
     #loop through sites of the sampled site permutation
