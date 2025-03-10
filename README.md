@@ -7,7 +7,7 @@ I have written the code mostly in Python, C, and MATLAB. Much of it concerns ran
 
 See the individual posts for more details. 
 
-[![My GitHub Language Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=hpaulkeeler&langs_count=5&theme=tokyonight)]()
+[![My GitHub Language Stats](https://github-readme-stats.vercel.app/api/top-langs/?username=hpaulkeeler&repo=posts&langs_count=5&theme=tokyonight)]()
 
 
 ## Directories
