@@ -45,6 +45,7 @@ close all;
 arrPointer=[-26,-1,-26,5,-3,-26,-26,-26,5,-26,-26,-26,-26,-26,-26,...
     -26,-26,-1,-26,-26,-1,-26,-26,-26,-26];
 
+
 numbSite=length(arrPointer);   % total number of sites
 valueEmpty = -numbSite-1; % negative number to indicate unconnected sites
 

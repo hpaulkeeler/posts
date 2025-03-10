@@ -1,4 +1,4 @@
-def funLatticeSite(arrPointer, valueEmpty):
+def plotLatticeSite(arrPointer, valueEmpty):
     #This is a helper function that draws a square lattice with occupied sites
     # on a unit square. Unoccupied sites are grey disks, whereas occupied sites
     # are coloured disk. Two or more sites of the same colour indicates them

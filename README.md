@@ -7,6 +7,7 @@ I have written the code mostly in Python, C, and MATLAB. Much of it concerns ran
 
 See the individual posts for more details. 
 
+
 ## Directories
 A selection of the code directories and the corresponding posts.
 
